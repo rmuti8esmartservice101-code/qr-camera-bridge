@@ -1,1178 +1,977 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
- content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#77b98a">
+  <meta charset="UTF-8">
 
-<title>ระบบกิจกรรมชุมชน</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
 
-<script type="module">
-import QrScanner from
-'https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.min.js';
+  <title>QR Camera Bridge</title>
 
-window.QrScanner = QrScanner;
-</script>
+  <meta
+    name="theme-color"
+    content="#315b43"
+  >
 
-<style>
-:root{
- --green:#78b98a;
- --dark:#28503a;
- --soft:#e5f5e9;
- --pale:#f4faf5;
- --border:#dcecdf;
- --muted:#718078;
- --red:#a94d4d;
- --gold:#d8a72e;
-}
+  <script
+    src="https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.umd.min.js">
+  </script>
 
-*{box-sizing:border-box}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-body{
- margin:0;
- background:linear-gradient(180deg,#f8fcf9,#edf7ef);
- color:#29382f;
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",sans-serif;
-}
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Tahoma,
+        sans-serif;
+      background: #f4faf5;
+      color: #234632;
+    }
 
-.hidden{display:none!important}
+    body {
+      padding:
+        max(20px, env(safe-area-inset-top))
+        18px
+        max(30px, env(safe-area-inset-bottom));
+    }
 
-header{
- padding:13px 5%;
- display:flex;
- align-items:center;
- justify-content:space-between;
- background:#fffffff2;
- border-bottom:1px solid var(--border);
- position:sticky;
- top:0;
- z-index:20;
-}
+    .app {
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto;
+    }
 
-.brand{display:flex;gap:10px;align-items:center}
-.logo{
- width:42px;height:42px;
- display:grid;place-items:center;
- border-radius:14px;background:var(--soft);
-}
-.brand small{display:block;color:var(--muted)}
+    .header {
+      text-align: center;
+      padding: 10px 0 20px;
+    }
 
-main{
- width:min(1050px,94%);
- margin:25px auto 70px;
-}
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 10px;
+      border-radius: 22px;
+      background: #e6f3e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
 
-.card{
- background:white;
- border:1px solid var(--border);
- border-radius:24px;
- padding:24px;
- box-shadow:0 10px 35px #28503a0b;
-}
+    h1 {
+      margin: 5px 0;
+      font-size: 28px;
+      color: #315b43;
+    }
 
-.hero{text-align:center;padding:38px 24px}
+    .subtitle {
+      color: #718077;
+      line-height: 1.6;
+    }
 
-.heroIcon{font-size:62px}
+    .card {
+      background: #fff;
+      border: 1px solid #dce9df;
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: 0 8px 28px rgba(49,91,67,.08);
+    }
 
-h1,h2,h3{color:var(--dark)}
+    .scanner-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #06150d;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 18px;
+    }
 
-.subtitle{
- color:var(--muted);
- line-height:1.7;
-}
+    #qrVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-button{
- border:0;
- border-radius:14px;
- padding:14px 18px;
- font:inherit;
- font-weight:700;
- cursor:pointer;
-}
+    .scan-frame {
+      pointer-events: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 68%;
+      height: 68%;
+      transform: translate(-50%, -50%);
+      border: 3px solid rgba(255,255,255,.95);
+      border-radius: 22px;
+      box-shadow:
+        0 0 0 999px rgba(0,0,0,.15);
+    }
 
-.primary{background:var(--green);color:white}
-.soft{background:var(--soft);color:var(--dark)}
-.outline{background:white;color:var(--dark);border:1px solid #add5b6}
-.full{width:100%}
-.big{padding:17px;font-size:16px}
+    .status {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 12px;
+      border-radius: 16px;
+      background: #eef7f0;
+      color: #315b43;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
 
-.homeActions{
- width:min(520px,100%);
- margin:25px auto;
- display:grid;
- gap:11px;
-}
+    .status.error {
+      background: #fff0ef;
+      color: #a5443f;
+    }
 
-.searchBox{
- width:min(620px,100%);
- margin:25px auto 0;
- padding:15px;
- background:var(--pale);
- border-radius:18px;
-}
+    .status.success {
+      background: #e7f6eb;
+      color: #226a39;
+    }
 
-.searchRow{display:flex;gap:8px}
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-input,textarea{
- width:100%;
- padding:14px;
- border:1px solid var(--border);
- border-radius:13px;
- outline:none;
- font:inherit;
- font-size:16px;
-}
+    .primary {
+      background: #315b43;
+      color: #fff;
+    }
 
-input:focus,textarea:focus{
- border-color:var(--green);
- box-shadow:0 0 0 3px #78b98a22;
-}
+    .secondary {
+      background: #e5f2e8;
+      color: #315b43;
+    }
 
-.result{
- padding:14px 0;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
- border-bottom:1px solid #edf3ee;
-}
+    .outline {
+      background: #fff;
+      color: #315b43;
+      border: 1px solid #bcd4c2;
+    }
 
-.result small{color:var(--muted)}
+    .hidden {
+      display: none !important;
+    }
 
-.memberHeader{
- background:linear-gradient(135deg,#dff3e4,#b9e0c2);
- padding:28px;
- border-radius:25px;
-}
+    .help {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid #e0ebe2;
+      color: #66746b;
+      font-size: 14px;
+      line-height: 1.7;
+    }
 
-.memberHeader h2{margin:6px 0}
+    .mode {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 99px;
+      background: #e6f3e9;
+      color: #315b43;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
 
-.rankGrid{
- margin:16px 0;
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:10px;
-}
-
-.stat{
- padding:18px 10px;
- text-align:center;
- background:white;
- border:1px solid var(--border);
- border-radius:18px;
-}
-
-.stat span{
- display:block;
- color:var(--muted);
- font-size:12px;
-}
-
-.stat b{
- display:block;
- margin-top:5px;
- color:var(--dark);
- font-size:28px;
-}
-
-.rankHero{
- font-size:34px!important;
- color:var(--gold)!important;
-}
-
-.today{
- margin:16px 0;
- padding:15px;
- background:var(--pale);
- border-radius:15px;
- line-height:1.7;
-}
-
-.two{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:16px;
- margin-top:16px;
-}
-
-.rankRow{
- padding:11px 0;
- display:flex;
- justify-content:space-between;
- border-bottom:1px solid #edf3ee;
-}
-
-.rankRow.me{
- padding:11px;
- background:var(--soft);
- border-radius:10px;
- font-weight:700;
-}
-
-.activities{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
-}
-
-.activity{
- padding:15px;
- border:1px solid var(--border);
- border-radius:15px;
- cursor:pointer;
-}
-
-.activity.selected{
- background:var(--soft);
- border-color:var(--green);
-}
-
-.photo{
- min-height:280px;
- margin:12px 0;
- display:grid;
- place-items:center;
- overflow:hidden;
- background:#edf5ef;
- border-radius:18px;
- color:var(--muted);
-}
-
-.photo img{
- width:100%;
- height:300px;
- object-fit:cover;
-}
-
-.privacy{
- margin:14px 0;
- padding:12px;
- color:var(--muted);
- background:var(--pale);
- border-radius:12px;
- font-size:12px;
- line-height:1.6;
-}
-
-.camera{
- width:min(600px,100%);
- margin:auto;
-}
-
-video{
- width:100%;
- background:#07150c;
- border-radius:20px;
-}
-
-.toast{
- position:fixed;
- left:50%;
- bottom:25px;
- width:min(500px,92%);
- padding:14px;
- color:white;
- background:var(--dark);
- text-align:center;
- border-radius:13px;
- transform:translateX(-50%);
- opacity:0;
- pointer-events:none;
- transition:.2s;
- z-index:100;
-}
-
-.toast.show{opacity:1}
-.toast.error{background:var(--red)}
-
-.loading{
- position:fixed;inset:0;
- display:grid;place-items:center;
- background:#18302166;
- z-index:200;
-}
-
-.loader{
- padding:22px 30px;
- background:white;
- border-radius:18px;
-}
-
-label{
- display:block;
- margin:13px 0 6px;
- font-weight:700;
- font-size:13px;
-}
-
-@media(max-width:700px){
- .two{grid-template-columns:1fr}
- .rankGrid{grid-template-columns:repeat(3,1fr)}
- .activities{grid-template-columns:1fr}
- .card{padding:18px}
-}
-
-@media(max-width:430px){
- .rankGrid{gap:6px}
- .stat{padding:13px 5px}
- .stat b{font-size:21px}
- .rankHero{font-size:27px!important}
-}
-</style>
+    input[type="file"] {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="loading" class="loading hidden">
- <div class="loader">กำลังประมวลผล...</div>
+<div class="app">
+
+  <div class="header">
+
+    <div class="logo">
+      🌿
+    </div>
+
+    <div
+      id="modeBadge"
+      class="mode">
+      QR Scanner
+    </div>
+
+    <h1>
+      📷 สแกน QR Code
+    </h1>
+
+    <div class="subtitle">
+      ระบบสมาชิกและเช็กอินกิจกรรม
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="scanner-box">
+
+      <video
+        id="qrVideo"
+        playsinline
+        webkit-playsinline
+        muted>
+      </video>
+
+      <div class="scan-frame"></div>
+
+    </div>
+
+
+    <div
+      id="status"
+      class="status">
+
+      กด “เปิดกล้อง” เพื่อเริ่มสแกน QR Code
+
+    </div>
+
+
+    <button
+      id="startButton"
+      class="btn primary"
+      type="button"
+      onclick="startCamera()">
+
+      📷 เปิดกล้องหลัง
+
+    </button>
+
+
+    <button
+      id="retryButton"
+      class="btn primary hidden"
+      type="button"
+      onclick="startCamera()">
+
+      🔄 ลองเปิดกล้องอีกครั้ง
+
+    </button>
+
+
+    <button
+      class="btn secondary"
+      type="button"
+      onclick="chooseImage()">
+
+      🖼️ เลือกรูป QR จากเครื่อง
+
+    </button>
+
+
+    <button
+      class="btn outline"
+      type="button"
+      onclick="cancelScanner()">
+
+      ← กลับระบบหลัก
+
+    </button>
+
+
+    <input
+      id="imageInput"
+      type="file"
+      accept="image/*"
+    >
+
+  </div>
+
+
+  <div class="help">
+
+    <b>วิธีใช้งาน</b><br>
+
+    1. กด “เปิดกล้องหลัง”<br>
+    2. อนุญาตให้เว็บไซต์ใช้ Camera<br>
+    3. หันกล้องไปที่ QR Code<br>
+    4. เมื่ออ่านสำเร็จ ระบบจะกลับไปยัง Web App โดยอัตโนมัติ
+
+    <br><br>
+
+    หากกล้องเปิดไม่ได้ สามารถเลือกภาพ QR
+    จากคลังรูปในโทรศัพท์ได้
+
+  </div>
+
 </div>
 
-<div id="toast" class="toast"></div>
-
-<header>
- <div class="brand">
-  <div class="logo">🌿</div>
-  <div>
-   <b id="appName">ระบบกิจกรรม</b>
-   <small id="orgName"></small>
-  </div>
- </div>
-
- <button class="soft" onclick="home()">หน้าหลัก</button>
-</header>
-
-<main>
-
-<!-- HOME -->
-<section id="homeView">
- <div class="card hero">
-  <div class="heroIcon">🌿</div>
-
-  <h1>ระบบสมาชิกและเช็กอินกิจกรรม</h1>
-
-  <p class="subtitle">
-   ค้นหาสมาชิก • ดูคะแนน • ดูอันดับ • เช็กอินกิจกรรม
-  </p>
-
-  <div class="homeActions">
-   <button class="primary big" onclick="openScanner()">
-    📷 สแกน QR Code
-   </button>
-  </div>
-
-  <div class="searchBox">
-   <h3>🔎 ค้นหาสมาชิก</h3>
-
-   <p class="subtitle">
-    ค้นหาด้วยชื่อ–นามสกุล หรือรหัสสมาชิก
-   </p>
-
-   <div class="searchRow">
-    <input id="searchInput"
-      placeholder="เช่น สมชาย หรือ MBR-000125"
-      onkeydown="if(event.key==='Enter')searchMember()">
-
-    <button class="primary" onclick="searchMember()">
-     ค้นหา
-    </button>
-   </div>
-
-   <div id="searchResults"></div>
-  </div>
- </div>
-</section>
-
-<!-- QR SCANNER -->
-<section id="scannerView" class="hidden">
- <div class="card camera">
-  <h2>📷 สแกน QR Code</h2>
-
-  <video id="qrVideo" playsinline></video>
-
-  <p id="scanStatus" class="subtitle">
-   กำลังเปิดกล้อง...
-  </p>
-
-  <button class="outline full" onclick="stopScanner();home()">
-   ยกเลิก
-  </button>
- </div>
-</section>
-
-<!-- REGISTER -->
-<section id="registerView" class="hidden">
- <div class="card" style="max-width:580px;margin:auto">
-  <h2>ลงทะเบียนสมาชิกใหม่</h2>
-
-  <p id="registerCode" class="subtitle"></p>
-
-  <label>ชื่อ–นามสกุล *</label>
-  <input id="regName">
-
-  <label>ที่อยู่ *</label>
-  <textarea id="regAddress"></textarea>
-
-  <label>เบอร์โทรศัพท์ *</label>
-  <input id="regPhone" inputmode="tel">
-
-  <div class="privacy">
-   ข้อมูลชื่อ ที่อยู่ และเบอร์โทรเป็นข้อมูลส่วนบุคคล
-   ใช้สำหรับการดำเนินโครงการและการประสานงานเท่านั้น
-  </div>
-
-  <button class="primary big full" onclick="registerMember()">
-   ลงทะเบียน
-  </button>
- </div>
-</section>
-
-<!-- PROFILE -->
-<section id="profileView" class="hidden">
-
- <div class="memberHeader">
-  <small>สมาชิกกิจกรรม</small>
-  <h2 id="profileName"></h2>
-  <div id="profileId"></div>
- </div>
-
- <div class="rankGrid">
-  <div class="stat">
-   <span>🏆 อันดับ</span>
-   <b id="profileRank" class="rankHero">-</b>
-  </div>
-
-  <div class="stat">
-   <span>⭐ คะแนน</span>
-   <b id="profilePoints">0</b>
-  </div>
-
-  <div class="stat">
-   <span>📅 วันที่เข้าร่วม</span>
-   <b id="profileDays">0</b>
-  </div>
- </div>
-
- <div id="todayStatus" class="today"></div>
-
- <div class="two">
-  <div class="card">
-   <h3>🏆 Ranking</h3>
-   <div id="ranking"></div>
-  </div>
-
-  <div class="card">
-   <h3>ข้อมูลอันดับของคุณ</h3>
-
-   <p id="rankSummary" class="subtitle"></p>
-
-   <button class="primary big full" onclick="openCheckin()">
-    🌱 เช็กอินกิจกรรมวันนี้
-   </button>
-  </div>
- </div>
-</section>
-
-<!-- CHECKIN -->
-<section id="checkinView" class="hidden">
- <div class="two">
-
-  <div class="card">
-   <h2>📷 ภาพยืนยัน</h2>
-
-   <div id="photoPreview" class="photo">
-    ยังไม่ได้ถ่ายภาพ
-   </div>
-
-   <input id="cameraInput"
-     type="file"
-     accept="image/*"
-     capture="user"
-     hidden
-     onchange="photoSelected(event)">
-
-   <button class="primary full"
-     onclick="document.getElementById('cameraInput').click()">
-    📷 ถ่ายภาพผู้เข้าร่วม
-   </button>
-
-   <div class="privacy">
-    ภาพใช้เป็นหลักฐานการเข้าร่วมกิจกรรม
-    และควรจำกัดการเข้าถึงเฉพาะเจ้าหน้าที่ที่เกี่ยวข้อง
-   </div>
-  </div>
-
-  <div class="card">
-   <h2>🌱 เลือกกิจกรรม</h2>
-
-   <div id="activities" class="activities"></div>
-
-   <div class="today">
-    <b>📍 ตำแหน่ง</b>
-    <div id="locationText">ยังไม่ได้ตรวจ GPS</div>
-   </div>
-
-   <button class="outline full" onclick="getLocation()">
-    📍 ตรวจ GPS
-   </button>
-
-   <br><br>
-
-   <button class="primary big full" onclick="submitCheckin()">
-    ยืนยันการเข้าร่วมกิจกรรม
-   </button>
-  </div>
-
- </div>
-</section>
-
-</main>
 
 <script>
-/***************************************************************
- * IMPORTANT
- *
- * ใส่ URL /exec ของ Apps Script ที่ Deploy แล้วตรงนี้
- ***************************************************************/
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbwavvCOY7JP7zzkS1YvP853hzgmNO68sxqbh66htri0ugkx9EG5Xh42kHmtktmPVUg/exec';
 
-let CURRENT_MEMBER = '';
-let CURRENT_QR_TOKEN = '';
-let CURRENT_ACTIVITY = '';
-let LOCATION = null;
-let PHOTO = '';
-let THUMB = '';
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const RETURN_URL =
+  params.get('returnUrl') || '';
+
+const MODE =
+  params.get('mode') ||
+  'member';
+
 let scanner = null;
 
-/***************************************************************
- * INIT
- ***************************************************************/
-window.addEventListener('load',async()=>{
- try{
-  const cfg = await apiGet('config');
-
-  document.getElementById('appName').textContent =
-    cfg.appName || 'ระบบกิจกรรม';
-
-  document.getElementById('orgName').textContent =
-    cfg.organizationName || '';
-
-  const params = new URLSearchParams(location.search);
-  const token = params.get('token');
-
-  if(token){
-   await handleQr(token);
-  }
- }catch(e){
-  error(e);
- }
-});
-
-/***************************************************************
- * API
- ***************************************************************/
-async function apiGet(action,params={}){
- const url = new URL(API_URL);
-
- url.searchParams.set('action',action);
-
- Object.entries(params).forEach(([k,v])=>{
-  url.searchParams.set(k,v);
- });
-
- const response = await fetch(url.toString(),{
-  method:'GET',
-  redirect:'follow'
- });
-
- const data = await response.json();
-
- if(data.success === false){
-  throw new Error(data.error || 'เกิดข้อผิดพลาด');
- }
-
- return data;
-}
-
-async function apiPost(action,payload={}){
- const response = await fetch(API_URL,{
-  method:'POST',
-  redirect:'follow',
-  headers:{
-   'Content-Type':'text/plain;charset=utf-8'
-  },
-  body:JSON.stringify({
-   action,
-   ...payload
-  })
- });
-
- const data = await response.json();
-
- if(data.success === false){
-  throw new Error(data.error || data.message || 'เกิดข้อผิดพลาด');
- }
-
- return data;
-}
-
-/***************************************************************
- * SEARCH
- ***************************************************************/
-async function searchMember(){
- const q = document.getElementById('searchInput').value.trim();
-
- if(q.length < 2){
-  toast('กรุณาพิมพ์อย่างน้อย 2 ตัวอักษร',true);
-  return;
- }
-
- busy(true);
-
- try{
-  const data = await apiGet('search',{q});
-  const root = document.getElementById('searchResults');
-
-  if(!data.results.length){
-   root.innerHTML =
-    '<p class="subtitle">ไม่พบสมาชิก</p>';
-   return;
-  }
-
-  root.innerHTML = data.results.map(r=>`
-   <div class="result">
-    <div>
-     <b>${esc(r.fullName)}</b><br>
-     <small>${esc(r.memberId)}</small>
-    </div>
-
-    <button class="soft"
-      onclick="loadProfile('${js(r.memberId)}')">
-     เลือก
-    </button>
-   </div>
-  `).join('');
-
- }catch(e){
-  error(e);
- }finally{
-  busy(false);
- }
-}
-
-/***************************************************************
- * QR
- ***************************************************************/
-async function openScanner(){
- show('scannerView');
-
- try{
-  if(!window.QrScanner){
-   throw new Error('QR Scanner ยังโหลดไม่สำเร็จ');
-  }
-
-  scanner = new window.QrScanner(
-   document.getElementById('qrVideo'),
-   result=>{
-    const value =
-      typeof result === 'string'
-       ? result
-       : result.data;
-
-    qrResult(value);
-   },
-   {
-    preferredCamera:'environment',
-    highlightScanRegion:true,
-    highlightCodeOutline:true,
-    returnDetailedScanResult:true
-   }
-  );
-
-  await scanner.start();
-
-  document.getElementById('scanStatus').textContent =
-   'พร้อมสแกน QR Code';
-
- }catch(e){
-  error(e);
- }
-}
-
-async function stopScanner(){
- if(scanner){
-  try{await scanner.stop()}catch(e){}
-  try{scanner.destroy()}catch(e){}
-  scanner=null;
- }
-}
-
-async function qrResult(value){
- await stopScanner();
-
- try{
-  let token = value;
-
-  try{
-   const u = new URL(value);
-   token = u.searchParams.get('token') || value;
-  }catch(e){}
-
-  await handleQr(token);
-
- }catch(e){
-  error(e);
- }
-}
-
-async function handleQr(token){
- busy(true);
-
- try{
-  const data = await apiGet('qr',{token});
-
-  CURRENT_QR_TOKEN = token;
-
-  if(data.status === 'UNASSIGNED'){
-   show('registerView');
-
-   document.getElementById('registerCode').textContent =
-    'QR Code: ' + data.displayCode;
-
-   return;
-  }
-
-  if(data.status === 'ACTIVE'){
-   await loadProfile(data.memberId);
-   return;
-  }
-
-  throw new Error('QR Code ไม่ถูกต้องหรือปิดใช้งาน');
-
- }finally{
-  busy(false);
- }
-}
-
-/***************************************************************
- * REGISTER
- ***************************************************************/
-async function registerMember(){
- const fullName =
-  document.getElementById('regName').value.trim();
-
- const address =
-  document.getElementById('regAddress').value.trim();
-
- const phone =
-  document.getElementById('regPhone').value.trim();
-
- if(!fullName || !address || !phone){
-  toast('กรุณากรอกข้อมูลให้ครบ',true);
-  return;
- }
-
- busy(true);
-
- try{
-  const data = await apiPost('register',{
-   qrToken:CURRENT_QR_TOKEN,
-   fullName,
-   address,
-   phone
-  });
-
-  toast('ลงทะเบียนสำเร็จ');
-
-  await loadProfile(data.memberId);
-
- }catch(e){
-  error(e);
- }finally{
-  busy(false);
- }
-}
-
-/***************************************************************
- * PROFILE
- ***************************************************************/
-async function loadProfile(memberId){
- busy(true);
-
- try{
-  const data = await apiGet('member',{id:memberId});
-
-  CURRENT_MEMBER = memberId;
-
-  document.getElementById('profileName').textContent =
-   data.member.fullName;
-
-  document.getElementById('profileId').textContent =
-   data.member.memberId;
-
-  document.getElementById('profileRank').textContent =
-   '#' + data.ranking.rank;
-
-  document.getElementById('profilePoints').textContent =
-   data.ranking.points;
-
-  document.getElementById('profileDays').textContent =
-   data.ranking.participationDays;
-
-  document.getElementById('rankSummary').innerHTML =
-   `อันดับของคุณ <b>#${data.ranking.rank}</b>
-    จากสมาชิก ${data.ranking.totalMembers} คน<br>
-    อันดับ 1 มี ${data.ranking.leaderPoints} คะแนน
-    ${
-     data.ranking.pointsToTop10 > 0
-      ? `<br>อีก ${data.ranking.pointsToTop10} คะแนน
-         เพื่อเข้าสู่ Top 10`
-      : '<br>🎉 คุณอยู่ใน Top 10'
-    }`;
-
-  document.getElementById('ranking').innerHTML =
-   data.ranking.top.map(r=>`
-    <div class="rankRow ${r.isMe?'me':''}">
-     <span>
-      ${r.rank}.
-      ${r.isMe?'คุณ':esc(r.name)}
-     </span>
-     <b>${r.points} คะแนน</b>
-    </div>
-   `).join('');
-
-  let today = 'วันนี้ยังไม่ได้เช็กอินกิจกรรม';
-
-  if(data.today.normal){
-   today =
-    `✅ วันนี้เข้าร่วม:
-     <b>${esc(data.today.normal.activity)}</b>
-     เวลา ${esc(data.today.normal.time)}
-     +${data.today.normal.points} คะแนน`;
-  }
-
-  if(data.today.health){
-   today +=
-    `<br>❤️ ตรวจสุขภาพ:
-     ${
-      data.today.health.status === 'PENDING'
-       ? 'รอผู้ดูแลอนุมัติ'
-       : data.today.health.status
-     }`;
-  }
-
-  document.getElementById('todayStatus').innerHTML = today;
-
-  show('profileView');
-
- }catch(e){
-  error(e);
- }finally{
-  busy(false);
- }
-}
-
-/***************************************************************
- * CHECKIN
- ***************************************************************/
-async function openCheckin(){
- if(!CURRENT_MEMBER){
-  toast('ไม่พบสมาชิก',true);
-  return;
- }
-
- show('checkinView');
-
- PHOTO='';
- THUMB='';
- LOCATION=null;
- CURRENT_ACTIVITY='';
-
- document.getElementById('photoPreview').innerHTML =
-  'ยังไม่ได้ถ่ายภาพ';
-
- document.getElementById('locationText').textContent =
-  'ยังไม่ได้ตรวจ GPS';
-
- try{
-  const data = await apiGet('activities');
-
-  document.getElementById('activities').innerHTML =
-   data.activities.map(a=>`
-    <div class="activity"
-      data-id="${esc(a.id)}"
-      onclick="selectActivity('${js(a.id)}')">
-
-     <b>${esc(a.icon)} ${esc(a.name)}</b><br>
-
-     <small>
-      ${a.point} คะแนน
-      ${a.requireApproval?' • รออนุมัติ':''}
-     </small>
-    </div>
-   `).join('');
-
- }catch(e){
-  error(e);
- }
-}
-
-function selectActivity(id){
- CURRENT_ACTIVITY=id;
-
- document.querySelectorAll('.activity').forEach(el=>{
-  el.classList.toggle(
-   'selected',
-   el.dataset.id === id
-  );
- });
-}
-
-/***************************************************************
- * PHOTO
- ***************************************************************/
-async function photoSelected(event){
- const file = event.target.files?.[0];
-
- if(!file)return;
-
- busy(true);
-
- try{
-  PHOTO = await resize(file,800,.76,false);
-  THUMB = await resize(file,180,.70,true);
-
-  document.getElementById('photoPreview').innerHTML =
-   `<img src="${PHOTO}" alt="ภาพผู้เข้าร่วม">`;
-
-  toast('บันทึกภาพแล้ว');
-
- }catch(e){
-  error(e);
- }finally{
-  busy(false);
- }
-}
-
-function resize(file,max,quality,square){
- return new Promise((resolve,reject)=>{
-  const reader=new FileReader();
-
-  reader.onerror=reject;
-
-  reader.onload=e=>{
-   const img=new Image();
-
-   img.onerror=reject;
-
-   img.onload=()=>{
-    const canvas=document.createElement('canvas');
-    const ctx=canvas.getContext('2d');
-
-    if(square){
-     const crop=Math.min(img.width,img.height);
-
-     canvas.width=max;
-     canvas.height=max;
-
-     ctx.drawImage(
-      img,
-      (img.width-crop)/2,
-      (img.height-crop)/2,
-      crop,crop,
-      0,0,max,max
-     );
-
-    }else{
-     const scale=Math.min(
-      1,
-      max / Math.max(img.width,img.height)
-     );
-
-     canvas.width=Math.round(img.width*scale);
-     canvas.height=Math.round(img.height*scale);
-
-     ctx.drawImage(
-      img,0,0,
-      canvas.width,
-      canvas.height
-     );
+let scannerRunning = false;
+
+let resultHandled = false;
+
+
+/*********************************************************
+ * INITIALIZE
+ *********************************************************/
+
+window.addEventListener(
+  'load',
+  function() {
+
+    if (
+      MODE ===
+      'admin-register'
+    ) {
+
+      document
+        .getElementById(
+          'modeBadge'
+        )
+        .textContent =
+          'สำหรับเจ้าหน้าที่ • ลงทะเบียนสมาชิก';
+
+    } else {
+
+      document
+        .getElementById(
+          'modeBadge'
+        )
+        .textContent =
+          'สำหรับสมาชิก';
     }
 
-    resolve(canvas.toDataURL('image/jpeg',quality));
-   };
 
-   img.src=e.target.result;
-  };
+    if (!RETURN_URL) {
 
-  reader.readAsDataURL(file);
- });
+      setStatus(
+        'ไม่พบ URL สำหรับกลับระบบหลัก กรุณาเปิด Scanner จาก Web App',
+        true
+      );
+
+      document
+        .getElementById(
+          'startButton'
+        )
+        .disabled =
+          true;
+    }
+
+
+    const imageInput =
+      document.getElementById(
+        'imageInput'
+      );
+
+    imageInput.addEventListener(
+      'change',
+      scanSelectedImage
+    );
+  }
+);
+
+
+/*********************************************************
+ * CAMERA
+ *********************************************************/
+
+async function startCamera() {
+
+  if (scannerRunning) {
+    return;
+  }
+
+  resultHandled = false;
+
+  hide(
+    'retryButton'
+  );
+
+  setStatus(
+    'กำลังขออนุญาตใช้กล้อง...'
+  );
+
+
+  try {
+
+    if (
+      typeof QrScanner ===
+      'undefined'
+    ) {
+
+      throw new Error(
+        'ไม่สามารถโหลดระบบอ่าน QR ได้'
+      );
+    }
+
+
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      throw new Error(
+        'เบราว์เซอร์นี้ไม่รองรับการเปิดกล้อง'
+      );
+    }
+
+
+    /*
+     * ขอ permission จาก browser ก่อน
+     */
+
+    const permissionStream =
+      await navigator.mediaDevices
+        .getUserMedia({
+
+          video: {
+
+            facingMode: {
+              ideal: 'environment'
+            }
+          },
+
+          audio: false
+        });
+
+
+    permissionStream
+      .getTracks()
+      .forEach(
+        track => track.stop()
+      );
+
+
+    const video =
+      document.getElementById(
+        'qrVideo'
+      );
+
+
+    scanner =
+      new QrScanner(
+
+        video,
+
+        result => {
+
+          const text =
+            typeof result ===
+            'string'
+              ? result
+              : result.data;
+
+          processQrResult(
+            text
+          );
+        },
+
+        {
+
+          preferredCamera:
+            'environment',
+
+          highlightScanRegion:
+            true,
+
+          highlightCodeOutline:
+            true,
+
+          returnDetailedScanResult:
+            true,
+
+          maxScansPerSecond:
+            10
+        }
+      );
+
+
+    await scanner.start();
+
+
+    scannerRunning =
+      true;
+
+
+    hide(
+      'startButton'
+    );
+
+
+    setStatus(
+      'พร้อมสแกน QR Code'
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    scannerRunning =
+      false;
+
+
+    let message =
+      'เปิดกล้องไม่สำเร็จ';
+
+
+    if (
+      error &&
+      (
+        error.name ===
+          'NotAllowedError' ||
+        error.name ===
+          'PermissionDeniedError'
+      )
+    ) {
+
+      message =
+        'ไม่ได้รับอนุญาตให้ใช้กล้อง กรุณาอนุญาต Camera ให้เว็บไซต์ GitHub Pages นี้';
+
+    } else if (
+      error &&
+      (
+        error.name ===
+          'NotFoundError' ||
+        /camera not found/i.test(
+          error.message || ''
+        )
+      )
+    ) {
+
+      message =
+        'ไม่พบกล้องที่ใช้งานได้';
+
+    } else if (
+      error &&
+      error.name ===
+        'NotReadableError'
+    ) {
+
+      message =
+        'ไม่สามารถใช้งานกล้องได้ อาจมีกล้องถูกใช้งานโดยแอปอื่น';
+
+    } else if (
+      error &&
+      error.message
+    ) {
+
+      message =
+        error.message;
+    }
+
+
+    setStatus(
+      message,
+      true
+    );
+
+
+    show(
+      'retryButton'
+    );
+  }
 }
 
-/***************************************************************
- * GPS
- ***************************************************************/
-function getLocation(){
- if(!navigator.geolocation){
-  toast('อุปกรณ์ไม่รองรับ GPS',true);
-  return;
- }
 
- document.getElementById('locationText').textContent =
-  'กำลังตรวจตำแหน่ง...';
+/*********************************************************
+ * STOP CAMERA
+ *********************************************************/
 
- navigator.geolocation.getCurrentPosition(
-  p=>{
-   LOCATION={
-    latitude:p.coords.latitude,
-    longitude:p.coords.longitude,
-    accuracy:p.coords.accuracy
-   };
+async function stopCamera() {
 
-   document.getElementById('locationText').textContent =
-    `GPS พร้อม • คลาดเคลื่อนประมาณ
-     ${Math.round(p.coords.accuracy)} เมตร`;
+  if (!scanner) {
 
-   toast('ตรวจตำแหน่งสำเร็จ');
-  },
-  e=>{
-   LOCATION=null;
+    scannerRunning =
+      false;
 
-   document.getElementById('locationText').textContent =
-    'ไม่สามารถอ่านตำแหน่งได้';
+    return;
+  }
 
-   toast(
-    e.code===1
-     ? 'กรุณาอนุญาต Location'
-     : 'ไม่สามารถอ่านตำแหน่งได้',
+
+  try {
+
+    await scanner.stop();
+
+  } catch (e) {}
+
+
+  try {
+
+    scanner.destroy();
+
+  } catch (e) {}
+
+
+  scanner = null;
+
+  scannerRunning =
+    false;
+}
+
+
+/*********************************************************
+ * QR RESULT
+ *********************************************************/
+
+async function processQrResult(
+  value
+) {
+
+  if (
+    resultHandled ||
+    !value
+  ) {
+    return;
+  }
+
+
+  resultHandled =
+    true;
+
+
+  await stopCamera();
+
+
+  setStatus(
+    'อ่าน QR สำเร็จ กำลังกลับระบบ...',
+    false,
     true
-   );
-  },
-  {
-   enableHighAccuracy:true,
-   timeout:20000,
-   maximumAge:0
-  }
- );
-}
+  );
 
-/***************************************************************
- * SUBMIT
- ***************************************************************/
-async function submitCheckin(){
- if(!CURRENT_ACTIVITY){
-  toast('กรุณาเลือกกิจกรรม',true);
-  return;
- }
 
- if(!PHOTO){
-  toast('กรุณาถ่ายภาพ',true);
-  return;
- }
+  let token =
+    String(value).trim();
 
- if(!LOCATION){
-  toast('กรุณาตรวจ GPS',true);
-  return;
- }
 
- busy(true);
+  /*
+   * QR ของระบบเป็น URL:
+   *
+   * WEB_APP_URL?token=xxxx
+   */
 
- try{
-  const result = await apiPost('checkin',{
-   memberId:CURRENT_MEMBER,
-   activityId:CURRENT_ACTIVITY,
-   latitude:LOCATION.latitude,
-   longitude:LOCATION.longitude,
-   accuracy:LOCATION.accuracy,
-   photoDataUrl:PHOTO,
-   thumbDataUrl:THUMB,
-   checkinMethod:'PUBLIC_WEB'
-  });
+  try {
 
-  toast(result.message,!result.success);
+    const qrUrl =
+      new URL(token);
 
-  if(result.success){
-   setTimeout(()=>{
-    loadProfile(CURRENT_MEMBER);
-   },1200);
+    const qrToken =
+      qrUrl.searchParams
+        .get('token');
+
+
+    if (qrToken) {
+
+      token =
+        qrToken;
+    }
+
+  } catch (e) {}
+
+
+  if (!token) {
+
+    resultHandled =
+      false;
+
+    setStatus(
+      'QR Code นี้ไม่มีข้อมูล token',
+      true
+    );
+
+    return;
   }
 
- }catch(e){
-  error(e);
- }finally{
-  busy(false);
- }
+
+  redirectBack(token);
 }
 
-/***************************************************************
- * VIEW
- ***************************************************************/
-function home(){
- stopScanner();
 
- CURRENT_MEMBER='';
- CURRENT_QR_TOKEN='';
+/*********************************************************
+ * RETURN TO APPS SCRIPT
+ *********************************************************/
 
- show('homeView');
+function redirectBack(
+  token
+) {
+
+  if (!RETURN_URL) {
+
+    setStatus(
+      'ไม่พบ URL สำหรับกลับระบบหลัก',
+      true
+    );
+
+    return;
+  }
+
+
+  try {
+
+    const url =
+      new URL(
+        RETURN_URL
+      );
+
+
+    url.searchParams.set(
+      'token',
+      token
+    );
+
+
+    if (
+      MODE ===
+      'admin-register'
+    ) {
+
+      url.searchParams.set(
+        'mode',
+        'admin-register'
+      );
+
+    } else {
+
+      url.searchParams.delete(
+        'mode'
+      );
+    }
+
+
+    /*
+     * replace ไม่ทิ้ง scanner
+     * ไว้ใน history
+     */
+
+    window.location.replace(
+      url.toString()
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    setStatus(
+      'URL ระบบหลักไม่ถูกต้อง',
+      true
+    );
+  }
 }
 
-function show(id){
- [
-  'homeView',
-  'scannerView',
-  'registerView',
-  'profileView',
-  'checkinView'
- ].forEach(v=>{
-  document.getElementById(v).classList.add('hidden');
- });
 
- document.getElementById(id).classList.remove('hidden');
+/*********************************************************
+ * IMAGE FALLBACK
+ *********************************************************/
 
- window.scrollTo(0,0);
+function chooseImage() {
+
+  const input =
+    document.getElementById(
+      'imageInput'
+    );
+
+  input.value = '';
+
+  input.click();
 }
 
-/***************************************************************
- * UI
- ***************************************************************/
-function busy(v){
- document.getElementById('loading')
-  .classList.toggle('hidden',!v);
+
+async function scanSelectedImage(
+  event
+) {
+
+  const file =
+    event.target.files &&
+    event.target.files[0];
+
+
+  if (!file) {
+    return;
+  }
+
+
+  try {
+
+    setStatus(
+      'กำลังอ่าน QR จากรูป...'
+    );
+
+
+    const result =
+      await QrScanner.scanImage(
+
+        file,
+
+        {
+          returnDetailedScanResult:
+            true
+        }
+      );
+
+
+    const text =
+      typeof result ===
+      'string'
+        ? result
+        : result.data;
+
+
+    if (!text) {
+
+      throw new Error(
+        'ไม่พบ QR Code'
+      );
+    }
+
+
+    processQrResult(
+      text
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+    setStatus(
+      'ไม่พบ QR Code ในภาพ กรุณาเลือกรูปที่เห็น QR ชัดเจน',
+      true
+    );
+  }
 }
 
-function toast(message,isError=false){
- const t=document.getElementById('toast');
 
- t.textContent=message;
- t.className='toast show'+(isError?' error':'');
+/*********************************************************
+ * CANCEL
+ *********************************************************/
 
- clearTimeout(window.toastTimer);
+async function cancelScanner() {
 
- window.toastTimer=setTimeout(()=>{
-  t.className='toast';
- },3500);
+  await stopCamera();
+
+
+  if (!RETURN_URL) {
+
+    window.history.back();
+
+    return;
+  }
+
+
+  window.location.replace(
+    RETURN_URL
+  );
 }
 
-function error(e){
- console.error(e);
- toast(e?.message || String(e),true);
+
+/*********************************************************
+ * VISIBILITY
+ *********************************************************/
+
+document.addEventListener(
+  'visibilitychange',
+  function() {
+
+    if (document.hidden) {
+
+      stopCamera();
+    }
+  }
+);
+
+
+/*********************************************************
+ * UI HELPERS
+ *********************************************************/
+
+function setStatus(
+  text,
+  error,
+  success
+) {
+
+  const el =
+    document.getElementById(
+      'status'
+    );
+
+
+  el.textContent =
+    text;
+
+
+  el.className =
+    'status' +
+    (
+      error
+        ? ' error'
+        : success
+          ? ' success'
+          : ''
+    );
 }
 
-function esc(v){
- return String(v??'')
-  .replace(/&/g,'&amp;')
-  .replace(/</g,'&lt;')
-  .replace(/>/g,'&gt;')
-  .replace(/"/g,'&quot;')
-  .replace(/'/g,'&#039;');
+
+function show(id) {
+
+  document
+    .getElementById(id)
+    .classList.remove(
+      'hidden'
+    );
 }
 
-function js(v){
- return String(v??'')
-  .replace(/\\/g,'\\\\')
-  .replace(/'/g,"\\'");
+
+function hide(id) {
+
+  document
+    .getElementById(id)
+    .classList.add(
+      'hidden'
+    );
 }
+
 </script>
 
 </body>
