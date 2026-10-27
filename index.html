@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1">
+
+<title>Camera Bridge</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#10291A;
+  color:white;
+}
+
+header{
+  padding:18px;
+  text-align:center;
+  font-weight:700;
+}
+
+main{
+  width:min(600px,94%);
+  margin:auto;
+}
+
+.camera{
+  position:relative;
+  overflow:hidden;
+  border-radius:25px;
+  background:#07170D;
+  min-height:480px;
+}
+
+video{
+  width:100%;
+  height:480px;
+  object-fit:cover;
+}
+
+.frame{
+  width:260px;
+  height:260px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  border:4px solid #9BE2AC;
+  border-radius:24px;
+  box-shadow:0 0 0 9999px rgba(0,0,0,.2);
+}
+
+.message{
+  padding:15px;
+  text-align:center;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  margin-top:10px;
+  border:0;
+  border-radius:15px;
+  background:#76BD87;
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+}
+
+.secondary{
+  background:#fff;
+  color:#315D42;
+}
+
+#error{
+  padding:15px;
+  color:#FFCBCB;
+  text-align:center;
+}
+
+#photoPreview{
+  width:100%;
+  height:480px;
+  object-fit:cover;
+}
+</style>
+
+</head>
+
+<body>
+
+<header id="title">
+  กล้องกิจกรรม
+</header>
+
+<main>
+
+  <div class="camera">
+
+    <video
+      id="video"
+      autoplay
+      muted
+      playsinline>
+    </video>
+
+    <div
+      id="qrFrame"
+      class="frame">
+    </div>
+
+    <img
+      id="photoPreview"
+      hidden>
+
+  </div>
+
+  <div
+    id="message"
+    class="message">
+    กำลังเปิดกล้อง...
+  </div>
+
+  <div id="error"></div>
+
+  <button
+    id="captureButton"
+    hidden>
+    📷 ถ่ายภาพ
+  </button>
+
+  <button
+    class="secondary"
+    onclick="window.close()">
+    ปิด
+  </button>
+
+</main>
+
+
+<script type="module">
+
+import QrScanner from
+  'https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.min.js';
+
+
+const params =
+  new URLSearchParams(location.search);
+
+const MODE =
+  params.get('mode') || 'qr';
+
+const NONCE =
+  params.get('nonce') || '';
+
+const TARGET_ORIGIN =
+  params.get('targetOrigin') || '';
+
+
+const video =
+  document.getElementById('video');
+
+const title =
+  document.getElementById('title');
+
+const message =
+  document.getElementById('message');
+
+const error =
+  document.getElementById('error');
+
+const qrFrame =
+  document.getElementById('qrFrame');
+
+const captureButton =
+  document.getElementById('captureButton');
+
+const photoPreview =
+  document.getElementById('photoPreview');
+
+
+let stream = null;
+let scanner = null;
+
+
+/*************************************************
+ SECURITY
+*************************************************/
+
+function safeTargetOrigin(){
+  try{
+    const u=new URL(TARGET_ORIGIN);
+
+    if(u.protocol !== 'https:'){
+      throw new Error('Target ต้องเป็น HTTPS');
+    }
+
+    return u.origin;
+
+  }catch(e){
+    return '';
+  }
+}
+
+
+function send(type,data={}){
+  const target=safeTargetOrigin();
+
+  if(!target){
+    showError(
+      'ไม่พบปลายทางที่ปลอดภัย'
+    );
+    return;
+  }
+
+  if(!window.opener){
+    showError(
+      'กรุณาเปิดกล้องจากระบบกิจกรรม'
+    );
+    return;
+  }
+
+  window.opener.postMessage(
+    {
+      app:'QR_ACTIVITY_CAMERA',
+      type,
+      nonce:NONCE,
+      ...data
+    },
+    target
+  );
+}
+
+
+/*************************************************
+ START
+*************************************************/
+
+async function start(){
+  if(MODE==='photo'){
+    await startPhotoMode();
+  }else{
+    await startQrMode();
+  }
+}
+
+
+async function startQrMode(){
+  title.textContent='🔳 สแกน QR Code';
+  captureButton.hidden=true;
+  qrFrame.hidden=false;
+
+  try{
+    scanner=new QrScanner(
+      video,
+      result=>{
+        const value=
+          typeof result==='string'
+            ? result
+            : result.data;
+
+        navigator.vibrate?.(100);
+
+        scanner.stop();
+
+        message.textContent=
+          'อ่าน QR สำเร็จ';
+
+        send(
+          'QR_RESULT',
+          {value}
+        );
+
+        setTimeout(
+          ()=>window.close(),
+          300
+        );
+      },
+      {
+        preferredCamera:'environment',
+        maxScansPerSecond:15,
+        highlightScanRegion:true,
+        highlightCodeOutline:true,
+        returnDetailedScanResult:true
+      }
+    );
+
+    await scanner.start();
+
+    message.textContent=
+      'นำ QR Code ให้อยู่ในกรอบ';
+
+  }catch(e){
+    showError(
+      cameraErrorText(e)
+    );
+  }
+}
+
+
+/*************************************************
+ PHOTO MODE
+*************************************************/
+
+async function startPhotoMode(){
+  title.textContent='📷 ถ่ายภาพผู้เข้าร่วม';
+  qrFrame.hidden=true;
+  captureButton.hidden=false;
+
+  try{
+    stream=
+      await navigator.mediaDevices.getUserMedia({
+        video:{
+          facingMode:{
+            ideal:'user'
+          },
+          width:{ideal:1280},
+          height:{ideal:720}
+        },
+        audio:false
+      });
+
+    video.srcObject=stream;
+
+    await video.play();
+
+    message.textContent=
+      'จัดใบหน้าให้อยู่ในภาพแล้วกดถ่าย';
+
+  }catch(e){
+    showError(
+      cameraErrorText(e)
+    );
+  }
+}
+
+
+captureButton.addEventListener(
+  'click',
+  capturePhoto
+);
+
+
+function capturePhoto(){
+  if(!video.videoWidth){
+    showError(
+      'กล้องยังไม่พร้อม'
+    );
+    return;
+  }
+
+  const photo =
+    frameDataUrl(
+      video,
+      800,
+      .76,
+      false
+    );
+
+  const thumb =
+    frameDataUrl(
+      video,
+      180,
+      .70,
+      true
+    );
+
+  photoPreview.src=photo;
+  photoPreview.hidden=false;
+  video.hidden=true;
+
+  stopStream();
+
+  message.textContent=
+    'ถ่ายภาพเรียบร้อย';
+
+  send(
+    'PHOTO_RESULT',
+    {
+      photo,
+      thumb
+    }
+  );
+
+  setTimeout(
+    ()=>window.close(),
+    500
+  );
+}
+
+
+function frameDataUrl(
+  video,
+  max,
+  quality,
+  square
+){
+  const canvas=
+    document.createElement('canvas');
+
+  const ctx=
+    canvas.getContext('2d');
+
+  const w=video.videoWidth;
+  const h=video.videoHeight;
+
+  if(square){
+    const s=Math.min(w,h);
+
+    canvas.width=max;
+    canvas.height=max;
+
+    ctx.drawImage(
+      video,
+      (w-s)/2,
+      (h-s)/2,
+      s,s,
+      0,0,
+      max,max
+    );
+
+  }else{
+    const scale=Math.min(1,max/w);
+
+    canvas.width=
+      Math.round(w*scale);
+
+    canvas.height=
+      Math.round(h*scale);
+
+    ctx.drawImage(
+      video,
+      0,0,
+      canvas.width,
+      canvas.height
+    );
+  }
+
+  return canvas.toDataURL(
+    'image/jpeg',
+    quality
+  );
+}
+
+
+/*************************************************
+ ERROR
+*************************************************/
+
+function cameraErrorText(e){
+  console.error(e);
+
+  switch(e?.name){
+    case 'NotAllowedError':
+      return 'ไม่ได้รับสิทธิ์ใช้กล้อง กรุณา Allow Camera';
+    case 'NotFoundError':
+      return 'ไม่พบกล้องในอุปกรณ์';
+    case 'NotReadableError':
+      return 'กล้องกำลังถูกโปรแกรมอื่นใช้งาน';
+    case 'OverconstrainedError':
+      return 'กล้องไม่รองรับค่าที่ร้องขอ';
+    default:
+      return 'เปิดกล้องไม่สำเร็จ: '+(e?.message || e);
+  }
+}
+
+
+function showError(text){
+  error.textContent=text;
+  message.textContent='เกิดข้อผิดพลาด';
+
+  send(
+    'CAMERA_ERROR',
+    {message:text}
+  );
+}
+
+
+function stopStream(){
+  if(stream){
+    stream
+      .getTracks()
+      .forEach(x=>x.stop());
+
+    stream=null;
+  }
+}
+
+
+window.addEventListener(
+  'beforeunload',
+  ()=>{
+    try{scanner?.destroy()}catch(e){}
+    stopStream();
+  }
+);
+
+
+start();
+
+</script>
+
+</body>
+</html>
