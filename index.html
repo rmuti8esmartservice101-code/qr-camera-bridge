@@ -9,251 +9,891 @@
   name="viewport"
   content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 
+<meta
+  name="theme-color"
+  content="#ffffff">
+
 <title>ระบบพกสุข</title>
 
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script
+  src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+</script>
+
 
 <style>
 
-:root{
-  --primary:#158077;
-  --soft:#eaf7f5;
-  --bg:#f6f8f7;
-  --text:#182321;
-  --muted:#7c8583;
-  --border:#e0e6e4;
-  --danger:#d74343;
+:root {
+
+  --primary:
+    #16877e;
+
+  --primary-dark:
+    #126e67;
+
+  --soft:
+    #e9f6f4;
+
+  --background:
+    #f7f9f8;
+
+  --card:
+    #ffffff;
+
+  --text:
+    #17211f;
+
+  --muted:
+    #7c8583;
+
+  --border:
+    #dfe5e3;
+
+  --danger:
+    #d34747;
+
+  --warning:
+    #d89315;
+
 }
 
-*{box-sizing:border-box}
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+* {
+  box-sizing:
+    border-box;
 }
 
-button,input{
-  font:inherit;
+
+html,
+body {
+
+  margin:
+    0;
+
+  padding:
+    0;
+
+  min-height:
+    100%;
+
+  background:
+    var(--background);
+
+  color:
+    var(--text);
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 }
 
-.hidden{
-  display:none!important;
+
+button,
+input {
+
+  font:
+    inherit;
 }
 
-.app{
-  max-width:680px;
-  margin:auto;
-  padding-bottom:30px;
+
+button {
+
+  cursor:
+    pointer;
 }
 
-header{
-  background:#fff;
-  padding:15px;
-  font-size:20px;
-  font-weight:900;
-  border-bottom:1px solid var(--border);
+
+.hidden {
+
+  display:
+    none !important;
 }
 
-main{
-  padding:10px;
+
+.app {
+
+  width:
+    100%;
+
+  max-width:
+    720px;
+
+  min-height:
+    100vh;
+
+  margin:
+    auto;
+
+  padding-bottom:
+    40px;
 }
 
-.card{
-  background:white;
-  padding:16px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  margin-bottom:10px;
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.header {
+
+  position:
+    sticky;
+
+  top:
+    0;
+
+  z-index:
+    100;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .96
+    );
+
+  backdrop-filter:
+    blur(12px);
+
+  border-bottom:
+    1px solid var(--border);
+
+  padding:
+    15px 18px;
 }
 
-.tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:7px;
+
+.brand {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    11px;
 }
 
-.tab{
-  min-height:46px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:white;
-  font-weight:800;
+
+.logo {
+
+  width:
+    46px;
+
+  height:
+    46px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    14px;
+
+  background:
+    var(--primary);
+
+  color:
+    white;
+
+  font-size:
+    26px;
 }
 
-.tab.active{
-  background:var(--primary);
-  color:white;
+
+.brand-name {
+
+  font-size:
+    22px;
+
+  font-weight:
+    900;
 }
 
-.title{
-  font-size:20px;
-  font-weight:900;
+
+.brand-subtitle {
+
+  margin-top:
+    2px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
 }
 
-.subtitle{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:4px;
+
+/* ==========================================================
+   MAIN
+   ========================================================== */
+
+main {
+
+  padding:
+    12px;
 }
 
-#reader{
-  margin-top:12px;
-  border-radius:16px;
-  overflow:hidden;
+
+.card {
+
+  margin-bottom:
+    12px;
+
+  padding:
+    17px;
+
+  background:
+    var(--card);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    20px;
 }
 
-.search{
-  width:100%;
-  margin-top:12px;
-  min-height:48px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:0 13px;
+
+.title {
+
+  font-size:
+    21px;
+
+  font-weight:
+    900;
 }
 
-.result{
-  margin-top:8px;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:13px;
-  background:white;
+
+.subtitle {
+
+  margin-top:
+    4px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
 }
 
-.result-name{
-  font-weight:900;
+
+/* ==========================================================
+   TABS
+   ========================================================== */
+
+.tabs {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap:
+    8px;
 }
 
-.result-id{
-  color:var(--muted);
-  font-size:11px;
+
+.tab {
+
+  min-height:
+    56px;
+
+  padding:
+    8px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    15px;
+
+  background:
+    white;
+
+  color:
+    var(--text);
+
+  font-weight:
+    800;
+
+  font-size:
+    16px;
 }
 
-.member-name{
-  font-size:25px;
-  font-weight:900;
+
+.tab.active {
+
+  border-color:
+    var(--primary);
+
+  background:
+    var(--primary);
+
+  color:
+    white;
 }
 
-.member-id{
-  color:var(--muted);
-  margin-top:3px;
+
+/* ==========================================================
+   QR
+   ========================================================== */
+
+#reader {
+
+  width:
+    100%;
+
+  margin-top:
+    15px;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    18px;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-top:13px;
+
+#reader video {
+
+  border-radius:
+    18px;
 }
 
-.stat{
-  padding:12px;
-  background:#f8faf9;
-  border:1px solid var(--border);
-  border-radius:13px;
+
+.scan-help {
+
+  margin-top:
+    12px;
+
+  text-align:
+    center;
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
 }
 
-.stat-label{
-  color:var(--muted);
-  font-size:10px;
+
+/* ==========================================================
+   SEARCH
+   ========================================================== */
+
+.search-input {
+
+  width:
+    100%;
+
+  height:
+    52px;
+
+  margin-top:
+    13px;
+
+  padding:
+    0 15px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    14px;
+
+  background:
+    white;
+
+  outline:
+    none;
 }
 
-.stat-value{
-  margin-top:4px;
-  font-weight:900;
-  font-size:21px;
+
+.search-input:focus {
+
+  border-color:
+    var(--primary);
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:12px;
+
+.search-result {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  margin-top:
+    9px;
+
+  padding:
+    14px;
+
+  text-align:
+    left;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    14px;
+
+  background:
+    white;
 }
 
-.activity,
-.reward{
-  padding:13px;
-  min-height:82px;
-  text-align:left;
-  border:1px solid var(--border);
-  border-radius:14px;
-  background:white;
-  font-weight:800;
+
+.search-result-name {
+
+  font-weight:
+    900;
+
+  font-size:
+    16px;
 }
 
-.activity.selected{
-  background:var(--soft);
-  border-color:var(--primary);
+
+.search-result-id {
+
+  margin-top:
+    3px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
 }
 
-.small{
-  display:block;
-  font-size:11px;
-  color:var(--muted);
-  margin-top:4px;
+
+/* ==========================================================
+   MEMBER
+   ========================================================== */
+
+.member-name {
+
+  font-size:
+    29px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1.2;
 }
 
-.button{
-  width:100%;
-  min-height:50px;
-  margin-top:10px;
-  border:0;
-  border-radius:13px;
-  background:var(--primary);
-  color:white;
-  font-weight:900;
+
+.member-id {
+
+  margin-top:
+    6px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    15px;
 }
 
-.button.soft{
-  color:var(--primary);
-  background:var(--soft);
+
+.stats {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap:
+    9px;
+
+  margin-top:
+    17px;
 }
 
-#photoInput{
-  display:none;
+
+.stat {
+
+  padding:
+    14px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    16px;
+
+  background:
+    #fafcfb;
 }
 
-#photoPreview{
-  width:100%;
-  max-height:300px;
-  object-fit:cover;
-  border-radius:14px;
-  margin-top:10px;
+
+.stat-label {
+
+  color:
+    var(--muted);
+
+  font-size:
+    11px;
 }
 
-#status{
-  text-align:center;
-  font-size:12px;
-  color:var(--muted);
-  padding:10px;
+
+.stat-value {
+
+  margin-top:
+    6px;
+
+  font-size:
+    25px;
+
+  font-weight:
+    900;
 }
 
-#status.error{
-  color:var(--danger);
+
+/* ==========================================================
+   ACTIVITIES
+   ========================================================== */
+
+.grid {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    10px;
+
+  margin-top:
+    14px;
 }
 
-.overlay{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:rgba(255,255,255,.92);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+.activity {
+
+  min-height:
+    100px;
+
+  padding:
+    15px;
+
+  text-align:
+    left;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  background:
+    white;
 }
 
-.overlay-box{
-  background:white;
-  padding:18px 22px;
-  border-radius:16px;
-  font-weight:900;
+
+.activity.selected {
+
+  border:
+    2px solid var(--primary);
+
+  background:
+    var(--soft);
+}
+
+
+.activity-name {
+
+  font-size:
+    18px;
+
+  font-weight:
+    900;
+}
+
+
+.activity-point {
+
+  margin-top:
+    8px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+}
+
+
+/* ==========================================================
+   PHOTO
+   ========================================================== */
+
+.button {
+
+  width:
+    100%;
+
+  min-height:
+    52px;
+
+  margin-top:
+    10px;
+
+  border:
+    0;
+
+  border-radius:
+    14px;
+
+  background:
+    var(--primary);
+
+  color:
+    white;
+
+  font-weight:
+    900;
+}
+
+
+.button:active {
+
+  background:
+    var(--primary-dark);
+}
+
+
+.button.secondary {
+
+  border:
+    1px solid var(--primary);
+
+  background:
+    white;
+
+  color:
+    var(--primary);
+}
+
+
+#photoInput {
+
+  display:
+    none;
+}
+
+
+#photoPreview {
+
+  width:
+    100%;
+
+  max-height:
+    320px;
+
+  margin-top:
+    12px;
+
+  object-fit:
+    cover;
+
+  border-radius:
+    16px;
+
+  border:
+    1px solid var(--border);
+}
+
+
+/* ==========================================================
+   REWARDS
+   ========================================================== */
+
+.reward {
+
+  padding:
+    15px;
+
+  text-align:
+    left;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  background:
+    white;
+}
+
+
+.reward-name {
+
+  font-size:
+    17px;
+
+  font-weight:
+    900;
+}
+
+
+.reward-detail {
+
+  margin-top:
+    7px;
+
+  color:
+    var(--muted);
+
+  font-size:
+    12px;
+}
+
+
+/* ==========================================================
+   STATUS
+   ========================================================== */
+
+#status {
+
+  margin:
+    10px 2px;
+
+  padding:
+    11px;
+
+  text-align:
+    center;
+
+  color:
+    var(--muted);
+
+  font-size:
+    13px;
+}
+
+
+#status.error {
+
+  color:
+    var(--danger);
+}
+
+
+/* ==========================================================
+   LOADING
+   ========================================================== */
+
+.overlay {
+
+  position:
+    fixed;
+
+  inset:
+    0;
+
+  z-index:
+    9999;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  padding:
+    20px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .88
+    );
+
+  backdrop-filter:
+    blur(5px);
+}
+
+
+.loading-box {
+
+  min-width:
+    220px;
+
+  padding:
+    20px;
+
+  text-align:
+    center;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:
+    18px;
+
+  background:
+    white;
+
+  font-weight:
+    800;
+}
+
+
+@media (
+  max-width: 420px
+) {
+
+  .tab {
+
+    font-size:
+      14px;
+  }
+
+
+  .member-name {
+
+    font-size:
+      25px;
+  }
+
+
+  .stat {
+
+    padding:
+      10px;
+  }
+
+
+  .stat-value {
+
+    font-size:
+      21px;
+  }
+
 }
 
 </style>
 
 </head>
+
 
 <body>
 
@@ -264,7 +904,7 @@ main{
 
   <div
     id="loadingText"
-    class="overlay-box">
+    class="loading-box">
 
     กำลังทำงาน...
 
@@ -275,46 +915,80 @@ main{
 
 <div class="app">
 
-<header>
-  ♥ ระบบพกสุข
+
+<header class="header">
+
+  <div class="brand">
+
+    <div class="logo">
+      ♥
+    </div>
+
+    <div>
+
+      <div class="brand-name">
+        ระบบพกสุข
+      </div>
+
+      <div class="brand-subtitle">
+        เครื่องส่วนกลาง
+      </div>
+
+    </div>
+
+  </div>
+
 </header>
+
 
 <main>
 
 
-<div class="card tabs">
+<!-- ======================================================
+     TABS
+     ====================================================== -->
 
-  <button
-    class="tab active"
-    id="tabQr"
-    onclick="showQr()">
+<div class="card">
 
-    📷 QR
+  <div class="tabs">
 
-  </button>
+    <button
+      id="tabQr"
+      class="tab active"
+      onclick="showQr()">
 
-  <button
-    class="tab"
-    id="tabSearch"
-    onclick="showSearch()">
+      📷 QR
 
-    🔎 ค้นชื่อ
+    </button>
 
-  </button>
 
-  <button
-    class="tab"
-    id="tabReward"
-    onclick="showRewards()">
+    <button
+      id="tabSearch"
+      class="tab"
+      onclick="showSearch()">
 
-    🎁 แลกแต้ม
+      🔎 ค้นชื่อ
 
-  </button>
+    </button>
+
+
+    <button
+      id="tabReward"
+      class="tab"
+      onclick="showRewards()">
+
+      🎁 แลกแต้ม
+
+    </button>
+
+  </div>
 
 </div>
 
 
-<!-- QR -->
+<!-- ======================================================
+     QR
+     ====================================================== -->
 
 <section
   id="qrSection"
@@ -324,12 +998,22 @@ main{
     สแกนสมาชิก
   </div>
 
+  <div class="subtitle">
+    นำ QR Code สมาชิกมาไว้ในกรอบ
+  </div>
+
   <div id="reader"></div>
+
+  <div class="scan-help">
+    ระบบจะเปิดข้อมูลสมาชิกโดยอัตโนมัติ
+  </div>
 
 </section>
 
 
-<!-- SEARCH -->
+<!-- ======================================================
+     SEARCH
+     ====================================================== -->
 
 <section
   id="searchSection"
@@ -339,22 +1023,33 @@ main{
     ค้นหาสมาชิก
   </div>
 
+  <div class="subtitle">
+    พิมพ์ชื่อ-สกุล หรือรหัสสมาชิก
+  </div>
+
+
   <input
     id="searchInput"
-    class="search"
-    placeholder="พิมพ์ชื่อ หรือรหัสสมาชิก"
+    class="search-input"
+    type="search"
+    placeholder="เช่น ปัญญา หรือ M000001"
+    autocomplete="off"
     oninput="searchChanged()">
+
 
   <div id="searchResults"></div>
 
 </section>
 
 
-<!-- MEMBER -->
+<!-- ======================================================
+     MEMBER
+     ====================================================== -->
 
 <section
   id="memberSection"
   class="hidden">
+
 
   <div class="card">
 
@@ -363,50 +1058,71 @@ main{
       class="member-name">
     </div>
 
+
     <div
       id="memberId"
       class="member-id">
     </div>
 
+
     <div class="stats">
 
       <div class="stat">
+
         <div class="stat-label">
           คะแนนสะสม
         </div>
+
         <div
           id="lifetimePoints"
           class="stat-value">
+
           0
+
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           แต้มคงเหลือ
         </div>
+
         <div
           id="availablePoints"
           class="stat-value">
+
           0
+
         </div>
+
       </div>
 
+
       <div class="stat">
+
         <div class="stat-label">
           อันดับ
         </div>
+
         <div
           id="currentRank"
           class="stat-value">
+
           -
+
         </div>
+
       </div>
 
     </div>
 
   </div>
 
+
+  <!-- ACTIVITIES -->
 
   <div
     id="activityCard"
@@ -416,6 +1132,7 @@ main{
       เลือกกิจกรรม
     </div>
 
+
     <div
       id="activityGrid"
       class="grid">
@@ -424,17 +1141,20 @@ main{
   </div>
 
 
+  <!-- PHOTO -->
+
   <div
     id="photoCard"
     class="card">
 
     <button
-      class="button soft"
+      class="button secondary"
       onclick="takePhoto()">
 
       📷 ถ่ายภาพ
 
     </button>
+
 
     <input
       id="photoInput"
@@ -443,11 +1163,15 @@ main{
       capture="environment"
       onchange="photoChanged(event)">
 
+
     <img
       id="photoPreview"
-      class="hidden">
+      class="hidden"
+      alt="ภาพยืนยันกิจกรรม">
+
 
     <button
+      id="confirmButton"
       class="button"
       onclick="confirmCheckin()">
 
@@ -458,13 +1182,20 @@ main{
   </div>
 
 
+  <!-- REWARDS -->
+
   <div
     id="rewardCard"
     class="card hidden">
 
     <div class="title">
-      ของรางวัล
+      เลือกของรางวัล
     </div>
+
+    <div class="subtitle">
+      การแลกแต้มจะไม่ลดคะแนนสะสมและอันดับ
+    </div>
+
 
     <div
       id="rewardGrid"
@@ -472,6 +1203,7 @@ main{
     </div>
 
   </div>
+
 
 </section>
 
@@ -482,30 +1214,59 @@ main{
 
 
 </main>
+
 </div>
 
 
 <script>
+
+/* ==========================================================
+   CONFIG
+   ========================================================== */
 
 const WORKER_URL =
   'https://poksuk-central-api.rmuti8-esmartservice1-01.workers.dev/';
 
 
 const state = {
-  scanner:null,
-  running:false,
-  locked:false,
-  member:null,
-  scannedQr:'',
-  selectedActivity:'',
-  photo:'',
-  activities:[],
-  mode:'QR'
+
+  scanner:
+    null,
+
+  running:
+    false,
+
+  locked:
+    false,
+
+  member:
+    null,
+
+  scannedQr:
+    '',
+
+  selectedActivity:
+    '',
+
+  photo:
+    '',
+
+  activities:
+    [],
+
+  mode:
+    'QR'
+
 };
 
 
-let searchTimer = null;
+let searchTimer =
+  null;
 
+
+/* ==========================================================
+   INIT
+   ========================================================== */
 
 document.addEventListener(
   'DOMContentLoaded',
@@ -513,72 +1274,235 @@ document.addEventListener(
 );
 
 
-async function init(){
+async function init() {
 
-  try{
+  showLoading(
+    'กำลังเชื่อมต่อระบบ...'
+  );
 
-    const result =
+
+  try {
+
+    /*
+     * โหลด PING + กิจกรรมพร้อมกัน
+     */
+    const results =
       await Promise.all([
-        api('PING'),
-        api('ACTIVITIES')
+        api(
+          'PING',
+          {}
+        ),
+
+        api(
+          'ACTIVITIES',
+          {}
+        )
       ]);
 
+
     state.activities =
-      result[1].activities || [];
+      Array.isArray(
+        results[1].activities
+      )
+        ? results[1].activities
+        : [];
+
 
     renderActivities();
 
-    setStatus('พร้อมใช้งาน');
+
+    setStatus(
+      'พร้อมใช้งาน'
+    );
+
 
     await startCamera();
 
-  }catch(error){
+
+  } catch (error) {
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
+
+  } finally {
+
+    hideLoading();
   }
 }
 
 
+/* ==========================================================
+   API
+   ========================================================== */
+
 async function api(
   action,
-  payload={}
-){
+  payload = {}
+) {
 
-  const response =
-    await fetch(
-      WORKER_URL,
-      {
-        method:'POST',
+  const controller =
+    new AbortController();
 
-        headers:{
-          'Content-Type':
-            'application/json'
-        },
 
-        body:JSON.stringify({
-          action:action,
-          payload:payload
-        })
-      }
+  const timeout =
+    setTimeout(
+      function() {
+
+        controller.abort();
+
+      },
+      20000
     );
 
-  const data =
-    await response.json();
 
-  if(
-    !response.ok ||
-    !data.success
-  ){
-    throw new Error(
-      data.message ||
-      'เกิดข้อผิดพลาด'
+  try {
+
+    const response =
+      await fetch(
+        WORKER_URL,
+        {
+
+          method:
+            'POST',
+
+          mode:
+            'cors',
+
+          cache:
+            'no-store',
+
+          headers: {
+
+            'Content-Type':
+              'application/json'
+
+          },
+
+          body:
+            JSON.stringify({
+
+              action:
+                action,
+
+              payload:
+                payload
+
+            }),
+
+          signal:
+            controller.signal
+
+        }
+      );
+
+
+    const text =
+      await response.text();
+
+
+    let data;
+
+
+    try {
+
+      data =
+        JSON.parse(
+          text
+        );
+
+    } catch (error) {
+
+      throw new Error(
+        'Central API ตอบกลับไม่ถูกต้อง'
+      );
+    }
+
+
+    if (!response.ok) {
+
+      throw new Error(
+
+        'HTTP ' +
+        response.status +
+        ': ' +
+        (
+          data.message ||
+          'Central API Error'
+        )
+
+      );
+    }
+
+
+    if (!data.success) {
+
+      throw new Error(
+        data.message ||
+        'ระบบไม่สามารถดำเนินการได้'
+      );
+    }
+
+
+    return data;
+
+
+  } catch (error) {
+
+    console.error(
+      'API ERROR',
+      action,
+      error
+    );
+
+
+    if (
+      error &&
+      error.name ===
+      'AbortError'
+    ) {
+
+      throw new Error(
+        'เชื่อมต่อระบบนานเกิน 20 วินาที กรุณาลองใหม่'
+      );
+    }
+
+
+    const message =
+      String(
+        error &&
+        error.message
+          ? error.message
+          : error
+      );
+
+
+    if (
+      message
+        .toLowerCase()
+        .includes(
+          'load failed'
+        )
+    ) {
+
+      throw new Error(
+        'เชื่อมต่อ Central API ไม่สำเร็จ กรุณาลองสแกนใหม่'
+      );
+    }
+
+
+    throw error;
+
+
+  } finally {
+
+    clearTimeout(
+      timeout
     );
   }
-
-  return data;
 }
 
 
@@ -586,83 +1510,193 @@ async function api(
    TABS
    ========================================================== */
 
-async function showQr(){
+async function showQr() {
 
-  state.mode='QR';
+  state.mode =
+    'QR';
 
-  tab('tabQr');
 
-  hide('searchSection');
+  activateTab(
+    'tabQr'
+  );
 
-  hide('memberSection');
 
-  show('qrSection');
+  hide(
+    'searchSection'
+  );
+
+
+  hide(
+    'memberSection'
+  );
+
+
+  show(
+    'qrSection'
+  );
+
 
   resetMember();
+
+
+  setStatus(
+    'พร้อมสแกน QR'
+  );
+
 
   await startCamera();
 }
 
 
-async function showSearch(){
+async function showSearch() {
 
-  state.mode='SEARCH';
+  state.mode =
+    'SEARCH';
 
-  tab('tabSearch');
+
+  activateTab(
+    'tabSearch'
+  );
+
 
   await stopCamera();
 
-  hide('qrSection');
 
-  hide('memberSection');
+  hide(
+    'qrSection'
+  );
 
-  show('searchSection');
+
+  hide(
+    'memberSection'
+  );
+
+
+  show(
+    'searchSection'
+  );
+
 
   resetMember();
+
+
+  document
+    .getElementById(
+      'searchInput'
+    )
+    .value =
+      '';
+
+
+  document
+    .getElementById(
+      'searchResults'
+    )
+    .innerHTML =
+      '';
+
 
   document
     .getElementById(
       'searchInput'
     )
     .focus();
-}
 
-
-async function showRewards(){
-
-  state.mode='REWARD';
-
-  tab('tabReward');
-
-  await stopCamera();
-
-  hide('qrSection');
-
-  show('searchSection');
-
-  hide('memberSection');
-
-  resetMember();
 
   setStatus(
-    'ค้นหาสมาชิกเพื่อแลกแต้ม'
+    'พิมพ์ชื่อสมาชิกอย่างน้อย 2 ตัวอักษร'
   );
 }
 
 
-function tab(id){
+async function showRewards() {
+
+  state.mode =
+    'REWARD';
+
+
+  activateTab(
+    'tabReward'
+  );
+
+
+  await stopCamera();
+
+
+  hide(
+    'qrSection'
+  );
+
+
+  hide(
+    'memberSection'
+  );
+
+
+  show(
+    'searchSection'
+  );
+
+
+  resetMember();
+
 
   document
-    .querySelectorAll('.tab')
-    .forEach(function(el){
-      el.classList.remove(
-        'active'
-      );
-    });
+    .getElementById(
+      'searchInput'
+    )
+    .value =
+      '';
+
 
   document
-    .getElementById(id)
-    .classList.add(
+    .getElementById(
+      'searchResults'
+    )
+    .innerHTML =
+      '';
+
+
+  document
+    .getElementById(
+      'searchInput'
+    )
+    .focus();
+
+
+  setStatus(
+    'ค้นหาสมาชิกที่ต้องการแลกแต้ม'
+  );
+}
+
+
+function activateTab(
+  id
+) {
+
+  document
+    .querySelectorAll(
+      '.tab'
+    )
+    .forEach(
+      function(element) {
+
+        element
+          .classList
+          .remove(
+            'active'
+          );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      id
+    )
+    .classList
+    .add(
       'active'
     );
 }
@@ -672,127 +1706,228 @@ function tab(id){
    CAMERA
    ========================================================== */
 
-async function startCamera(){
+async function startCamera() {
 
-  if(state.running){
+  if (
+    state.running
+  ) {
+
     return;
   }
 
-  try{
+
+  try {
 
     const cameras =
       await Html5Qrcode
         .getCameras();
 
-    if(!cameras.length){
+
+    if (
+      !cameras ||
+      cameras.length === 0
+    ) {
+
       throw new Error(
-        'ไม่พบกล้อง'
+        'ไม่พบกล้องในอุปกรณ์'
       );
     }
 
+
+    /*
+     * ใช้กล้องตัวท้าย
+     * โดยทั่วไปคือกล้องหลัง
+     */
     const camera =
       cameras[
-        cameras.length-1
+        cameras.length - 1
       ];
+
 
     state.scanner =
       new Html5Qrcode(
         'reader'
       );
 
+
     await state.scanner.start(
+
       camera.id,
+
       {
-        fps:12,
-        qrbox:{
-          width:250,
-          height:250
-        }
+
+        fps:
+          10,
+
+        qrbox: {
+
+          width:
+            260,
+
+          height:
+            260
+
+        },
+
+        aspectRatio:
+          1
+
       },
+
       qrSuccess,
-      function(){}
+
+      function() {
+
+        /*
+         * ไม่แสดง error
+         * ทุก frame
+         */
+      }
+
     );
 
-    state.running=true;
 
-  }catch(error){
+    state.running =
+      true;
+
+
+  } catch (error) {
+
+    state.running =
+      false;
+
 
     setStatus(
-      'เปิดกล้องไม่ได้: '+
-      error.message,
+      'ไม่สามารถเปิดกล้องได้: ' +
+      errorMessage(
+        error
+      ),
       true
     );
   }
 }
 
 
-async function stopCamera(){
+async function stopCamera() {
 
-  if(
+  if (
     !state.scanner
-  ){
-    state.running=false;
+  ) {
+
+    state.running =
+      false;
+
     return;
   }
 
-  try{
 
-    if(state.running){
+  try {
+
+    if (
+      state.running
+    ) {
+
       await state.scanner.stop();
     }
 
+
     state.scanner.clear();
 
-  }catch(error){}
+  } catch (error) {
 
-  state.scanner=null;
-  state.running=false;
+    console.log(
+      error
+    );
+  }
+
+
+  state.scanner =
+    null;
+
+
+  state.running =
+    false;
 }
 
 
-async function qrSuccess(text){
+/* ==========================================================
+   QR SUCCESS
+   ========================================================== */
 
-  if(state.locked){
+async function qrSuccess(
+  text
+) {
+
+  if (
+    state.locked ||
+    !text
+  ) {
+
     return;
   }
 
-  state.locked=true;
 
-  state.scannedQr=text;
+  state.locked =
+    true;
+
+
+  state.scannedQr =
+    String(
+      text
+    ).trim();
+
 
   showLoading(
-    'กำลังตรวจสมาชิก...'
+    'กำลังตรวจสอบสมาชิก...'
   );
 
-  try{
 
-    const promise =
-      api(
+  try {
+
+    /*
+     * สำคัญ:
+     * ให้ PREVIEW สำเร็จก่อน
+     * แล้วค่อยหยุดกล้อง
+     */
+    const member =
+      await api(
         'PREVIEW',
         {
-          scannedQr:text
+
+          scannedQr:
+            state.scannedQr
+
         }
       );
 
+
     await stopCamera();
 
-    const member =
-      await promise;
 
-    openMember(member);
+    openMember(
+      member
+    );
 
-  }catch(error){
+
+  } catch (error) {
+
+    state.locked =
+      false;
+
+
+    state.scannedQr =
+      '';
+
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
 
-    state.locked=false;
 
-    await startCamera();
-
-  }finally{
+  } finally {
 
     hideLoading();
   }
@@ -803,11 +1938,12 @@ async function qrSuccess(text){
    SEARCH
    ========================================================== */
 
-function searchChanged(){
+function searchChanged() {
 
   clearTimeout(
     searchTimer
   );
+
 
   searchTimer =
     setTimeout(
@@ -817,80 +1953,139 @@ function searchChanged(){
 }
 
 
-async function searchMembers(){
+async function searchMembers() {
+
+  const input =
+    document.getElementById(
+      'searchInput'
+    );
+
 
   const query =
-    document
-      .getElementById(
-        'searchInput'
-      )
-      .value
-      .trim();
+    input.value.trim();
 
-  const box =
+
+  const container =
     document.getElementById(
       'searchResults'
     );
 
-  if(query.length<2){
 
-    box.innerHTML='';
+  if (
+    query.length < 2
+  ) {
+
+    container.innerHTML =
+      '';
+
     return;
   }
 
-  try{
+
+  container.innerHTML =
+    '<div class="scan-help">กำลังค้นหา...</div>';
+
+
+  try {
 
     const result =
       await api(
         'SEARCH_MEMBER',
-        {query:query}
-      );
+        {
 
-    box.innerHTML='';
+          query:
+            query
 
-    (result.members||[])
-      .forEach(
-        function(member){
-
-          const item =
-            document
-              .createElement(
-                'button'
-              );
-
-          item.className =
-            'result';
-
-          item.style.width='100%';
-
-          item.innerHTML =
-            '<div class="result-name">'+
-            escapeHtml(
-              member.fullName
-            )+
-            '</div>'+
-            '<div class="result-id">'+
-            escapeHtml(
-              member.memberId
-            )+
-            '</div>';
-
-          item.onclick =
-            function(){
-
-              chooseMember(
-                member.memberId
-              );
-            };
-
-          box.appendChild(item);
         }
       );
 
-  }catch(error){
+
+    const members =
+      Array.isArray(
+        result.members
+      )
+        ? result.members
+        : [];
+
+
+    if (
+      members.length === 0
+    ) {
+
+      container.innerHTML =
+        '<div class="scan-help">ไม่พบสมาชิก</div>';
+
+      return;
+    }
+
+
+    container.innerHTML =
+      '';
+
+
+    members.forEach(
+      function(member) {
+
+        const button =
+          document
+            .createElement(
+              'button'
+            );
+
+
+        button.type =
+          'button';
+
+
+        button.className =
+          'search-result';
+
+
+        button.innerHTML =
+
+          '<div class="search-result-name">' +
+
+          escapeHtml(
+            member.fullName
+          ) +
+
+          '</div>' +
+
+          '<div class="search-result-id">' +
+
+          escapeHtml(
+            member.memberId
+          ) +
+
+          '</div>';
+
+
+        button.onclick =
+          function() {
+
+            chooseMember(
+              member.memberId
+            );
+
+          };
+
+
+        container.appendChild(
+          button
+        );
+      });
+
+
+  } catch (error) {
+
+    container.innerHTML =
+      '';
+
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
   }
@@ -899,32 +2094,43 @@ async function searchMembers(){
 
 async function chooseMember(
   memberId
-){
+) {
 
   showLoading(
     'กำลังเปิดข้อมูลสมาชิก...'
   );
 
-  try{
+
+  try {
 
     const member =
       await api(
         'PREVIEW_MEMBER',
         {
-          memberId:memberId
+
+          memberId:
+            memberId
+
         }
       );
 
-    openMember(member);
 
-  }catch(error){
+    openMember(
+      member
+    );
+
+
+  } catch (error) {
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
 
-  }finally{
+
+  } finally {
 
     hideLoading();
   }
@@ -932,33 +2138,49 @@ async function chooseMember(
 
 
 /* ==========================================================
-   MEMBER
+   OPEN MEMBER
    ========================================================== */
 
 async function openMember(
   member
-){
+) {
 
-  state.member=member;
+  state.member =
+    member;
 
-  hide('qrSection');
-  hide('searchSection');
 
-  show('memberSection');
+  hide(
+    'qrSection'
+  );
+
+
+  hide(
+    'searchSection'
+  );
+
+
+  show(
+    'memberSection'
+  );
+
 
   document
     .getElementById(
       'memberName'
     )
     .textContent =
-      member.fullName;
+      member.fullName ||
+      '-';
+
 
   document
     .getElementById(
       'memberId'
     )
     .textContent =
-      member.memberId;
+      member.memberId ||
+      '';
+
 
   document
     .getElementById(
@@ -966,8 +2188,10 @@ async function openMember(
     )
     .textContent =
       Number(
-        member.lifetimePoints||0
+        member.lifetimePoints ||
+        0
       );
+
 
   document
     .getElementById(
@@ -975,8 +2199,15 @@ async function openMember(
     )
     .textContent =
       Number(
-        member.availablePoints||0
+        member.availablePoints !==
+        undefined
+          ? member.availablePoints
+          : (
+              member.totalPoints ||
+              0
+            )
       );
+
 
   document
     .getElementById(
@@ -984,97 +2215,166 @@ async function openMember(
     )
     .textContent =
       member.currentRank
-        ? '#'+member.currentRank
+        ? '#' +
+          member.currentRank
         : '-';
 
 
-  if(
-    state.mode==='REWARD'
-  ){
+  if (
+    state.mode ===
+    'REWARD'
+  ) {
 
-    hide('activityCard');
-    hide('photoCard');
-    show('rewardCard');
+    hide(
+      'activityCard'
+    );
+
+
+    hide(
+      'photoCard'
+    );
+
+
+    show(
+      'rewardCard'
+    );
+
 
     await loadRewards();
 
-  }else{
+  } else {
 
-    show('activityCard');
-    show('photoCard');
-    hide('rewardCard');
+    show(
+      'activityCard'
+    );
+
+
+    show(
+      'photoCard'
+    );
+
+
+    hide(
+      'rewardCard'
+    );
+
+
+    setStatus(
+      'เลือกกิจกรรมและถ่ายภาพ'
+    );
   }
 }
 
 
 /* ==========================================================
-   ACTIVITY
+   ACTIVITIES
    ========================================================== */
 
-function renderActivities(){
+function renderActivities() {
 
-  const grid =
+  const container =
     document.getElementById(
       'activityGrid'
     );
 
-  grid.innerHTML='';
 
-  state.activities
-    .forEach(function(activity){
+  container.innerHTML =
+    '';
+
+
+  state.activities.forEach(
+    function(activity) {
 
       const button =
-        document.createElement(
-          'button'
-        );
+        document
+          .createElement(
+            'button'
+          );
 
-      button.className=
+
+      button.type =
+        'button';
+
+
+      button.className =
         'activity';
 
+
+      const health =
+        activity.activityType ===
+        'HEALTH_CHECK';
+
+
       button.innerHTML =
+
+        '<div class="activity-name">' +
+
         escapeHtml(
           activity.activityName
-        )+
-        '<span class="small">'+
+        ) +
+
+        '</div>' +
+
+        '<div class="activity-point">' +
+
         (
-          activity.activityType===
-          'HEALTH_CHECK'
-            ? 'รออนุมัติ +'+
-              activity.point+
+          health
+            ? 'รออนุมัติ +' +
+              Number(
+                activity.point ||
+                2
+              ) +
               ' คะแนน'
-            : '+'+
-              activity.point+
+            : '+' +
+              Number(
+                activity.point ||
+                0
+              ) +
               ' คะแนน'
-        )+
-        '</span>';
+        ) +
+
+        '</div>';
+
 
       button.onclick =
-        function(){
+        function() {
 
           state.selectedActivity =
             activity.activityId;
+
 
           document
             .querySelectorAll(
               '.activity'
             )
             .forEach(
-              function(el){
+              function(element) {
 
-                el.classList.remove(
-                  'selected'
-                );
+                element
+                  .classList
+                  .remove(
+                    'selected'
+                  );
+
               }
             );
+
 
           button
             .classList
             .add(
               'selected'
             );
+
+
+          setStatus(
+            'เลือก ' +
+            activity.activityName
+          );
         };
 
-      grid.appendChild(
+
+      container.appendChild(
         button
       );
     });
@@ -1085,52 +2385,82 @@ function renderActivities(){
    PHOTO
    ========================================================== */
 
-function takePhoto(){
+function takePhoto() {
 
   const input =
     document.getElementById(
       'photoInput'
     );
 
-  input.value='';
+
+  input.value =
+    '';
+
 
   input.click();
 }
 
 
-async function photoChanged(e){
+async function photoChanged(
+  event
+) {
 
   const file =
-    e.target.files[0];
+    event.target.files[0];
 
-  if(!file){
+
+  if (!file) {
     return;
   }
 
+
   showLoading(
-    'กำลังเตรียมรูป...'
+    'กำลังเตรียมภาพ...'
   );
 
-  try{
 
+  try {
+
+    /*
+     * ลดขนาดเพื่อให้เร็ว
+     */
     state.photo =
       await resizeImage(
         file,
-        500,
-        .58
+        600,
+        .62
       );
 
-    const image =
+
+    const preview =
       document.getElementById(
         'photoPreview'
       );
 
-    image.src=
+
+    preview.src =
       state.photo;
 
-    show('photoPreview');
 
-  }finally{
+    show(
+      'photoPreview'
+    );
+
+
+    setStatus(
+      'พร้อมยืนยันกิจกรรม'
+    );
+
+
+  } catch (error) {
+
+    setStatus(
+      'ไม่สามารถเตรียมรูปได้',
+      true
+    );
+
+
+  } finally {
 
     hideLoading();
   }
@@ -1139,34 +2469,43 @@ async function photoChanged(e){
 
 function resizeImage(
   file,
-  max,
+  maxSize,
   quality
-){
+) {
 
   return new Promise(
     function(
       resolve,
       reject
-    ){
+    ) {
 
       const reader =
         new FileReader();
 
+
       reader.onload =
-        function(event){
+        function(event) {
 
           const image =
             new Image();
 
+
           image.onload =
-            function(){
+            function() {
 
               const ratio =
                 Math.min(
+
                   1,
-                  max/image.width,
-                  max/image.height
+
+                  maxSize /
+                  image.width,
+
+                  maxSize /
+                  image.height
+
                 );
+
 
               const canvas =
                 document
@@ -1174,25 +2513,35 @@ function resizeImage(
                     'canvas'
                   );
 
+
               canvas.width =
                 Math.round(
-                  image.width*ratio
+                  image.width *
+                  ratio
                 );
+
 
               canvas.height =
                 Math.round(
-                  image.height*ratio
+                  image.height *
+                  ratio
                 );
 
-              canvas
-                .getContext('2d')
-                .drawImage(
-                  image,
-                  0,
-                  0,
-                  canvas.width,
-                  canvas.height
+
+              const context =
+                canvas.getContext(
+                  '2d'
                 );
+
+
+              context.drawImage(
+                image,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              );
+
 
               resolve(
                 canvas.toDataURL(
@@ -1202,17 +2551,24 @@ function resizeImage(
               );
             };
 
-          image.onerror=reject;
 
-          image.src=
+          image.onerror =
+            reject;
+
+
+          image.src =
             event.target.result;
         };
 
-      reader.onerror=reject;
+
+      reader.onerror =
+        reject;
+
 
       reader.readAsDataURL(
         file
       );
+
     }
   );
 }
@@ -1222,11 +2578,24 @@ function resizeImage(
    CHECK-IN
    ========================================================== */
 
-async function confirmCheckin(){
+async function confirmCheckin() {
 
-  if(
+  if (
+    !state.member
+  ) {
+
+    setStatus(
+      'ไม่พบสมาชิก',
+      true
+    );
+
+    return;
+  }
+
+
+  if (
     !state.selectedActivity
-  ){
+  ) {
 
     setStatus(
       'กรุณาเลือกกิจกรรม',
@@ -1236,7 +2605,10 @@ async function confirmCheckin(){
     return;
   }
 
-  if(!state.photo){
+
+  if (
+    !state.photo
+  ) {
 
     setStatus(
       'กรุณาถ่ายภาพ',
@@ -1246,29 +2618,41 @@ async function confirmCheckin(){
     return;
   }
 
+
   showLoading(
-    'กำลังบันทึก...'
+    'กำลังบันทึกกิจกรรม...'
   );
 
-  try{
+
+  try {
 
     const payload = {
+
       activityId:
         state.selectedActivity,
 
       photoDataUrl:
         state.photo
+
     };
 
 
-    if(
+    /*
+     * QR
+     */
+    if (
       state.scannedQr
-    ){
+    ) {
 
       payload.scannedQr =
         state.scannedQr;
 
-    }else{
+    }
+
+    /*
+     * SEARCH
+     */
+    else {
 
       payload.memberId =
         state.member.memberId;
@@ -1283,20 +2667,28 @@ async function confirmCheckin(){
 
 
     alert(
-      result.message
+      result.message ||
+      'ลงทะเบียนสำเร็จ'
     );
 
 
+    /*
+     * สำเร็จแล้วกลับสแกนใหม่
+     */
     await resetHome();
 
-  }catch(error){
+
+  } catch (error) {
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
 
-  }finally{
+
+  } finally {
 
     hideLoading();
   }
@@ -1307,82 +2699,146 @@ async function confirmCheckin(){
    REWARDS
    ========================================================== */
 
-async function loadRewards(){
+async function loadRewards() {
+
+  if (
+    !state.member
+  ) {
+    return;
+  }
+
 
   showLoading(
     'กำลังโหลดของรางวัล...'
   );
 
-  try{
+
+  try {
 
     const result =
       await api(
         'REWARDS',
         {
+
           memberId:
             state.member.memberId
+
         }
       );
+
 
     document
       .getElementById(
         'availablePoints'
       )
       .textContent =
-        result.availablePoints;
+        Number(
+          result.availablePoints ||
+          0
+        );
 
-    const grid =
+
+    const container =
       document.getElementById(
         'rewardGrid'
       );
 
-    grid.innerHTML='';
+
+    const rewards =
+      Array.isArray(
+        result.rewards
+      )
+        ? result.rewards
+        : [];
 
 
-    (result.rewards||[])
-      .forEach(
-        function(reward){
+    if (
+      rewards.length === 0
+    ) {
 
-          const button =
-            document.createElement(
+      container.innerHTML =
+        '<div class="subtitle">ยังไม่มีของรางวัล</div>';
+
+      return;
+    }
+
+
+    container.innerHTML =
+      '';
+
+
+    rewards.forEach(
+      function(reward) {
+
+        const button =
+          document
+            .createElement(
               'button'
             );
 
-          button.className=
-            'reward';
 
-          button.innerHTML =
-            escapeHtml(
-              reward.rewardName
-            )+
-            '<span class="small">'+
-            reward.pointsRequired+
-            ' แต้ม • เหลือ '+
-            reward.stock+
-            '</span>';
+        button.type =
+          'button';
 
-          button.onclick =
-            function(){
 
-              redeemReward(
-                reward
-              );
-            };
+        button.className =
+          'reward';
 
-          grid.appendChild(
-            button
-          );
-        }
-      );
 
-  }catch(error){
+        button.innerHTML =
+
+          '<div class="reward-name">' +
+
+          escapeHtml(
+            reward.rewardName
+          ) +
+
+          '</div>' +
+
+          '<div class="reward-detail">' +
+
+          Number(
+            reward.pointsRequired ||
+            0
+          ) +
+
+          ' แต้ม • คงเหลือ ' +
+
+          Number(
+            reward.stock ||
+            0
+          ) +
+
+          '</div>';
+
+
+        button.onclick =
+          function() {
+
+            redeemReward(
+              reward
+            );
+
+          };
+
+
+        container.appendChild(
+          button
+        );
+      });
+
+
+  } catch (error) {
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
 
-  }finally{
+
+  } finally {
 
     hideLoading();
   }
@@ -1391,60 +2847,94 @@ async function loadRewards(){
 
 async function redeemReward(
   reward
-){
+) {
 
-  if(
-    !confirm(
-      'ยืนยันแลก '+
-      reward.rewardName+
-      ' จำนวน '+
-      reward.pointsRequired+
-      ' แต้ม?'
-    )
-  ){
+  if (
+    !state.member
+  ) {
     return;
   }
+
+
+  const confirmed =
+    confirm(
+
+      'ยืนยันแลก ' +
+
+      reward.rewardName +
+
+      '\nใช้ ' +
+
+      reward.pointsRequired +
+
+      ' แต้ม?'
+
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
 
   showLoading(
     'กำลังแลกแต้ม...'
   );
 
-  try{
+
+  try {
 
     const result =
       await api(
         'REDEEM',
         {
+
           memberId:
             state.member.memberId,
 
           rewardId:
             reward.rewardId
+
         }
       );
 
-    alert(
-      'แลกสำเร็จ\nแต้มคงเหลือ '+
-      result.availablePoints
-    );
 
     document
       .getElementById(
         'availablePoints'
       )
       .textContent =
-        result.availablePoints;
+        Number(
+          result.availablePoints ||
+          0
+        );
+
+
+    alert(
+
+      'แลกของรางวัลสำเร็จ\n' +
+
+      'แต้มคงเหลือ ' +
+
+      result.availablePoints
+
+    );
+
 
     await loadRewards();
 
-  }catch(error){
+
+  } catch (error) {
 
     setStatus(
-      error.message,
+      errorMessage(
+        error
+      ),
       true
     );
 
-  }finally{
+
+  } finally {
 
     hideLoading();
   }
@@ -1455,49 +2945,104 @@ async function redeemReward(
    RESET
    ========================================================== */
 
-async function resetHome(){
+async function resetHome() {
 
   resetMember();
 
-  state.mode='QR';
 
-  tab('tabQr');
+  state.mode =
+    'QR';
 
-  hide('memberSection');
-  hide('searchSection');
 
-  show('qrSection');
+  activateTab(
+    'tabQr'
+  );
+
+
+  hide(
+    'memberSection'
+  );
+
+
+  hide(
+    'searchSection'
+  );
+
+
+  show(
+    'qrSection'
+  );
+
+
+  setStatus(
+    'พร้อมสแกนสมาชิกคนถัดไป'
+  );
+
 
   await startCamera();
 }
 
 
-function resetMember(){
+function resetMember() {
 
-  state.member=null;
-  state.scannedQr='';
-  state.selectedActivity='';
-  state.photo='';
-  state.locked=false;
+  state.member =
+    null;
+
+
+  state.scannedQr =
+    '';
+
+
+  state.selectedActivity =
+    '';
+
+
+  state.photo =
+    '';
+
+
+  state.locked =
+    false;
+
 
   document
     .querySelectorAll(
       '.activity'
     )
-    .forEach(function(el){
-      el.classList.remove(
-        'selected'
-      );
-    });
+    .forEach(
+      function(element) {
 
-  const image =
+        element
+          .classList
+          .remove(
+            'selected'
+          );
+
+      }
+    );
+
+
+  const preview =
     document.getElementById(
       'photoPreview'
     );
 
-  image.src='';
 
-  hide('photoPreview');
+  preview.src =
+    '';
+
+
+  hide(
+    'photoPreview'
+  );
+
+
+  document
+    .getElementById(
+      'photoInput'
+    )
+    .value =
+      '';
 }
 
 
@@ -1505,68 +3050,150 @@ function resetMember(){
    UI
    ========================================================== */
 
-function show(id){
+function show(
+  id
+) {
 
-  document
-    .getElementById(id)
-    .classList.remove(
-      'hidden'
+  const element =
+    document.getElementById(
+      id
     );
+
+
+  if (element) {
+
+    element
+      .classList
+      .remove(
+        'hidden'
+      );
+  }
 }
 
-function hide(id){
 
-  document
-    .getElementById(id)
-    .classList.add(
-      'hidden'
+function hide(
+  id
+) {
+
+  const element =
+    document.getElementById(
+      id
     );
+
+
+  if (element) {
+
+    element
+      .classList
+      .add(
+        'hidden'
+      );
+  }
 }
 
-function showLoading(text){
+
+function showLoading(
+  text
+) {
 
   document
     .getElementById(
       'loadingText'
     )
-    .textContent=text;
+    .textContent =
+      text ||
+      'กำลังทำงาน...';
 
-  show('loading');
+
+  show(
+    'loading'
+  );
 }
 
-function hideLoading(){
-  hide('loading');
+
+function hideLoading() {
+
+  hide(
+    'loading'
+  );
 }
+
 
 function setStatus(
   text,
   error
-){
+) {
 
-  const el =
+  const element =
     document.getElementById(
       'status'
     );
 
-  el.textContent=text;
 
-  el.className=
+  element.textContent =
+    text ||
+    '';
+
+
+  element.className =
     error
       ? 'error'
       : '';
 }
 
-function escapeHtml(value){
 
-  return String(value||'')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+function errorMessage(
+  error
+) {
+
+  if (
+    error &&
+    error.message
+  ) {
+
+    return error.message;
+  }
+
+
+  return String(
+    error ||
+    'เกิดข้อผิดพลาด'
+  );
+}
+
+
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value || ''
+  )
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+    .replace(
+      /</g,
+      '&lt;'
+    )
+    .replace(
+      />/g,
+      '&gt;'
+    )
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+    .replace(
+      /'/g,
+      '&#39;'
+    );
 }
 
 </script>
 
+
 </body>
+
 </html>
