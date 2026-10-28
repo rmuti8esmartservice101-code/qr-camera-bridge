@@ -23,64 +23,28 @@
 <style>
 
 :root {
-
-  --primary:
-    #16877e;
-
-  --primary-dark:
-    #126e67;
-
-  --soft:
-    #e9f6f4;
-
-  --background:
-    #f7f9f8;
-
-  --card:
-    #ffffff;
-
-  --text:
-    #17211f;
-
-  --muted:
-    #7c8583;
-
-  --border:
-    #dfe5e3;
-
-  --danger:
-    #d34747;
-
-  --warning:
-    #d89315;
-
+  --primary:#16877e;
+  --dark:#116d66;
+  --soft:#e9f6f4;
+  --bg:#f6f8f7;
+  --white:#ffffff;
+  --text:#17211f;
+  --muted:#7b8582;
+  --border:#dfe5e3;
+  --danger:#d64747;
 }
-
 
 * {
-  box-sizing:
-    border-box;
+  box-sizing:border-box;
 }
-
 
 html,
 body {
-
-  margin:
-    0;
-
-  padding:
-    0;
-
-  min-height:
-    100%;
-
-  background:
-    var(--background);
-
-  color:
-    var(--text);
-
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -88,806 +52,274 @@ body {
     sans-serif;
 }
 
-
 button,
 input {
-
-  font:
-    inherit;
+  font:inherit;
 }
-
 
 button {
-
-  cursor:
-    pointer;
+  cursor:pointer;
 }
-
 
 .hidden {
-
-  display:
-    none !important;
+  display:none!important;
 }
-
 
 .app {
-
-  width:
-    100%;
-
-  max-width:
-    720px;
-
-  min-height:
-    100vh;
-
-  margin:
-    auto;
-
-  padding-bottom:
-    40px;
+  max-width:720px;
+  margin:auto;
+  min-height:100vh;
 }
 
-
-/* ==========================================================
-   HEADER
-   ========================================================== */
-
-.header {
-
-  position:
-    sticky;
-
-  top:
-    0;
-
-  z-index:
-    100;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      .96
-    );
-
-  backdrop-filter:
-    blur(12px);
-
-  border-bottom:
-    1px solid var(--border);
-
-  padding:
-    15px 18px;
+header {
+  padding:16px 18px;
+  background:white;
+  border-bottom:1px solid var(--border);
 }
-
 
 .brand {
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    11px;
+  display:flex;
+  gap:12px;
+  align-items:center;
 }
-
 
 .logo {
-
-  width:
-    46px;
-
-  height:
-    46px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  border-radius:
-    14px;
-
-  background:
-    var(--primary);
-
-  color:
-    white;
-
-  font-size:
-    26px;
+  width:47px;
+  height:47px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:15px;
+  background:var(--primary);
+  color:white;
+  font-size:26px;
 }
-
 
 .brand-name {
-
-  font-size:
-    22px;
-
-  font-weight:
-    900;
+  font-size:23px;
+  font-weight:900;
 }
 
-
-.brand-subtitle {
-
-  margin-top:
-    2px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
+.brand-sub {
+  margin-top:2px;
+  font-size:12px;
+  color:var(--muted);
 }
-
-
-/* ==========================================================
-   MAIN
-   ========================================================== */
 
 main {
-
-  padding:
-    12px;
+  padding:12px;
 }
-
 
 .card {
-
-  margin-bottom:
-    12px;
-
-  padding:
-    17px;
-
-  background:
-    var(--card);
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    20px;
+  margin-bottom:12px;
+  padding:17px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:20px;
 }
-
-
-.title {
-
-  font-size:
-    21px;
-
-  font-weight:
-    900;
-}
-
-
-.subtitle {
-
-  margin-top:
-    4px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    13px;
-}
-
-
-/* ==========================================================
-   TABS
-   ========================================================== */
 
 .tabs {
-
-  display:
-    grid;
-
+  display:grid;
   grid-template-columns:
-    repeat(3, 1fr);
-
-  gap:
-    8px;
+    repeat(3,1fr);
+  gap:8px;
 }
-
 
 .tab {
-
-  min-height:
-    56px;
-
-  padding:
-    8px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    15px;
-
-  background:
-    white;
-
-  color:
-    var(--text);
-
-  font-weight:
-    800;
-
-  font-size:
-    16px;
+  min-height:55px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:white;
+  font-weight:800;
 }
-
 
 .tab.active {
-
-  border-color:
-    var(--primary);
-
-  background:
-    var(--primary);
-
-  color:
-    white;
+  background:var(--primary);
+  border-color:var(--primary);
+  color:white;
 }
 
+.title {
+  font-size:22px;
+  font-weight:900;
+}
 
-/* ==========================================================
-   QR
-   ========================================================== */
+.subtitle {
+  margin-top:4px;
+  font-size:12px;
+  color:var(--muted);
+}
 
 #reader {
-
-  width:
-    100%;
-
-  margin-top:
-    15px;
-
-  overflow:
-    hidden;
-
-  border-radius:
-    18px;
+  width:100%;
+  margin-top:15px;
+  overflow:hidden;
+  border-radius:18px;
 }
 
-
-#reader video {
-
-  border-radius:
-    18px;
+.search {
+  width:100%;
+  height:52px;
+  margin-top:14px;
+  padding:0 14px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  outline:none;
 }
 
-
-.scan-help {
-
-  margin-top:
-    12px;
-
-  text-align:
-    center;
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
+.search:focus {
+  border-color:var(--primary);
 }
 
-
-/* ==========================================================
-   SEARCH
-   ========================================================== */
-
-.search-input {
-
-  width:
-    100%;
-
-  height:
-    52px;
-
-  margin-top:
-    13px;
-
-  padding:
-    0 15px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    14px;
-
-  background:
-    white;
-
-  outline:
-    none;
+.result {
+  display:block;
+  width:100%;
+  margin-top:8px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:white;
+  text-align:left;
 }
 
-
-.search-input:focus {
-
-  border-color:
-    var(--primary);
+.result-name {
+  font-weight:900;
 }
 
-
-.search-result {
-
-  display:
-    block;
-
-  width:
-    100%;
-
-  margin-top:
-    9px;
-
-  padding:
-    14px;
-
-  text-align:
-    left;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    14px;
-
-  background:
-    white;
+.result-id {
+  margin-top:4px;
+  color:var(--muted);
+  font-size:12px;
 }
-
-
-.search-result-name {
-
-  font-weight:
-    900;
-
-  font-size:
-    16px;
-}
-
-
-.search-result-id {
-
-  margin-top:
-    3px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-}
-
-
-/* ==========================================================
-   MEMBER
-   ========================================================== */
 
 .member-name {
-
-  font-size:
-    29px;
-
-  font-weight:
-    900;
-
-  line-height:
-    1.2;
+  font-size:28px;
+  font-weight:900;
 }
-
 
 .member-id {
-
-  margin-top:
-    6px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    15px;
+  margin-top:4px;
+  color:var(--muted);
 }
-
 
 .stats {
-
-  display:
-    grid;
-
+  display:grid;
   grid-template-columns:
-    repeat(3, 1fr);
-
-  gap:
-    9px;
-
-  margin-top:
-    17px;
+    repeat(3,1fr);
+  gap:8px;
+  margin-top:15px;
 }
-
 
 .stat {
-
-  padding:
-    14px;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    16px;
-
-  background:
-    #fafcfb;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:#fafcfb;
 }
-
 
 .stat-label {
-
-  color:
-    var(--muted);
-
-  font-size:
-    11px;
+  color:var(--muted);
+  font-size:10px;
 }
-
 
 .stat-value {
-
-  margin-top:
-    6px;
-
-  font-size:
-    25px;
-
-  font-weight:
-    900;
+  margin-top:5px;
+  font-size:23px;
+  font-weight:900;
 }
-
-
-/* ==========================================================
-   ACTIVITIES
-   ========================================================== */
 
 .grid {
-
-  display:
-    grid;
-
+  display:grid;
   grid-template-columns:
     1fr 1fr;
-
-  gap:
-    10px;
-
-  margin-top:
-    14px;
+  gap:9px;
+  margin-top:13px;
 }
 
-
-.activity {
-
-  min-height:
-    100px;
-
-  padding:
-    15px;
-
-  text-align:
-    left;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    18px;
-
-  background:
-    white;
+.activity,
+.reward {
+  min-height:95px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:white;
+  text-align:left;
 }
-
 
 .activity.selected {
-
-  border:
-    2px solid var(--primary);
-
-  background:
-    var(--soft);
+  border:2px solid var(--primary);
+  background:var(--soft);
 }
 
-
-.activity-name {
-
-  font-size:
-    18px;
-
-  font-weight:
-    900;
+.item-title {
+  font-size:17px;
+  font-weight:900;
 }
 
-
-.activity-point {
-
-  margin-top:
-    8px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    13px;
+.item-sub {
+  margin-top:7px;
+  color:var(--muted);
+  font-size:12px;
 }
-
-
-/* ==========================================================
-   PHOTO
-   ========================================================== */
 
 .button {
-
-  width:
-    100%;
-
-  min-height:
-    52px;
-
-  margin-top:
-    10px;
-
-  border:
-    0;
-
-  border-radius:
-    14px;
-
-  background:
-    var(--primary);
-
-  color:
-    white;
-
-  font-weight:
-    900;
+  width:100%;
+  min-height:52px;
+  margin-top:10px;
+  border:0;
+  border-radius:14px;
+  background:var(--primary);
+  color:white;
+  font-weight:900;
 }
-
-
-.button:active {
-
-  background:
-    var(--primary-dark);
-}
-
 
 .button.secondary {
-
-  border:
-    1px solid var(--primary);
-
-  background:
-    white;
-
-  color:
-    var(--primary);
+  background:white;
+  color:var(--primary);
+  border:1px solid var(--primary);
 }
-
 
 #photoInput {
-
-  display:
-    none;
+  display:none;
 }
-
 
 #photoPreview {
-
-  width:
-    100%;
-
-  max-height:
-    320px;
-
-  margin-top:
-    12px;
-
-  object-fit:
-    cover;
-
-  border-radius:
-    16px;
-
-  border:
-    1px solid var(--border);
+  width:100%;
+  max-height:300px;
+  margin-top:12px;
+  border-radius:15px;
+  object-fit:cover;
 }
-
-
-/* ==========================================================
-   REWARDS
-   ========================================================== */
-
-.reward {
-
-  padding:
-    15px;
-
-  text-align:
-    left;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    18px;
-
-  background:
-    white;
-}
-
-
-.reward-name {
-
-  font-size:
-    17px;
-
-  font-weight:
-    900;
-}
-
-
-.reward-detail {
-
-  margin-top:
-    7px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    12px;
-}
-
-
-/* ==========================================================
-   STATUS
-   ========================================================== */
 
 #status {
-
-  margin:
-    10px 2px;
-
-  padding:
-    11px;
-
-  text-align:
-    center;
-
-  color:
-    var(--muted);
-
-  font-size:
-    13px;
+  padding:10px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
 }
-
 
 #status.error {
-
-  color:
-    var(--danger);
+  color:var(--danger);
 }
-
-
-/* ==========================================================
-   LOADING
-   ========================================================== */
 
 .overlay {
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    9999;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  padding:
-    20px;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      .88
-    );
-
-  backdrop-filter:
-    blur(5px);
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.9);
 }
 
-
-.loading-box {
-
-  min-width:
-    220px;
-
-  padding:
-    20px;
-
-  text-align:
-    center;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    18px;
-
-  background:
-    white;
-
-  font-weight:
-    800;
-}
-
-
-@media (
-  max-width: 420px
-) {
-
-  .tab {
-
-    font-size:
-      14px;
-  }
-
-
-  .member-name {
-
-    font-size:
-      25px;
-  }
-
-
-  .stat {
-
-    padding:
-      10px;
-  }
-
-
-  .stat-value {
-
-    font-size:
-      21px;
-  }
-
+.loading {
+  min-width:210px;
+  padding:19px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:white;
+  text-align:center;
+  font-weight:900;
 }
 
 </style>
@@ -904,7 +336,7 @@ main {
 
   <div
     id="loadingText"
-    class="loading-box">
+    class="loading">
 
     กำลังทำงาน...
 
@@ -916,7 +348,7 @@ main {
 <div class="app">
 
 
-<header class="header">
+<header>
 
   <div class="brand">
 
@@ -930,7 +362,7 @@ main {
         ระบบพกสุข
       </div>
 
-      <div class="brand-subtitle">
+      <div class="brand-sub">
         เครื่องส่วนกลาง
       </div>
 
@@ -943,10 +375,6 @@ main {
 
 <main>
 
-
-<!-- ======================================================
-     TABS
-     ====================================================== -->
 
 <div class="card">
 
@@ -961,7 +389,6 @@ main {
 
     </button>
 
-
     <button
       id="tabSearch"
       class="tab"
@@ -971,11 +398,10 @@ main {
 
     </button>
 
-
     <button
       id="tabReward"
       class="tab"
-      onclick="showRewards()">
+      onclick="showRewardSearch()">
 
       🎁 แลกแต้ม
 
@@ -986,10 +412,6 @@ main {
 </div>
 
 
-<!-- ======================================================
-     QR
-     ====================================================== -->
-
 <section
   id="qrSection"
   class="card">
@@ -999,21 +421,13 @@ main {
   </div>
 
   <div class="subtitle">
-    นำ QR Code สมาชิกมาไว้ในกรอบ
+    นำ QR Code มาไว้ในกรอบ
   </div>
 
   <div id="reader"></div>
 
-  <div class="scan-help">
-    ระบบจะเปิดข้อมูลสมาชิกโดยอัตโนมัติ
-  </div>
-
 </section>
 
-
-<!-- ======================================================
-     SEARCH
-     ====================================================== -->
 
 <section
   id="searchSection"
@@ -1023,28 +437,17 @@ main {
     ค้นหาสมาชิก
   </div>
 
-  <div class="subtitle">
-    พิมพ์ชื่อ-สกุล หรือรหัสสมาชิก
-  </div>
-
-
   <input
     id="searchInput"
-    class="search-input"
+    class="search"
     type="search"
-    placeholder="เช่น ปัญญา หรือ M000001"
-    autocomplete="off"
+    placeholder="พิมพ์ชื่อหรือรหัสสมาชิก"
     oninput="searchChanged()">
-
 
   <div id="searchResults"></div>
 
 </section>
 
-
-<!-- ======================================================
-     MEMBER
-     ====================================================== -->
 
 <section
   id="memberSection"
@@ -1057,7 +460,6 @@ main {
       id="memberName"
       class="member-name">
     </div>
-
 
     <div
       id="memberId"
@@ -1076,9 +478,7 @@ main {
         <div
           id="lifetimePoints"
           class="stat-value">
-
           0
-
         </div>
 
       </div>
@@ -1093,9 +493,7 @@ main {
         <div
           id="availablePoints"
           class="stat-value">
-
           0
-
         </div>
 
       </div>
@@ -1108,11 +506,9 @@ main {
         </div>
 
         <div
-          id="currentRank"
+          id="rank"
           class="stat-value">
-
           -
-
         </div>
 
       </div>
@@ -1122,8 +518,6 @@ main {
   </div>
 
 
-  <!-- ACTIVITIES -->
-
   <div
     id="activityCard"
     class="card">
@@ -1132,7 +526,6 @@ main {
       เลือกกิจกรรม
     </div>
 
-
     <div
       id="activityGrid"
       class="grid">
@@ -1140,8 +533,6 @@ main {
 
   </div>
 
-
-  <!-- PHOTO -->
 
   <div
     id="photoCard"
@@ -1155,7 +546,6 @@ main {
 
     </button>
 
-
     <input
       id="photoInput"
       type="file"
@@ -1163,17 +553,13 @@ main {
       capture="environment"
       onchange="photoChanged(event)">
 
-
     <img
       id="photoPreview"
-      class="hidden"
-      alt="ภาพยืนยันกิจกรรม">
-
+      class="hidden">
 
     <button
-      id="confirmButton"
       class="button"
-      onclick="confirmCheckin()">
+      onclick="submitCheckin()">
 
       ✓ ยืนยันกิจกรรม
 
@@ -1182,8 +568,6 @@ main {
   </div>
 
 
-  <!-- REWARDS -->
-
   <div
     id="rewardCard"
     class="card hidden">
@@ -1191,11 +575,6 @@ main {
     <div class="title">
       เลือกของรางวัล
     </div>
-
-    <div class="subtitle">
-      การแลกแต้มจะไม่ลดคะแนนสะสมและอันดับ
-    </div>
-
 
     <div
       id="rewardGrid"
@@ -1220,53 +599,34 @@ main {
 
 <script>
 
-/* ==========================================================
-   CONFIG
-   ========================================================== */
-
-const WORKER_URL =
+const API_URL =
   'https://poksuk-central-api.rmuti8-esmartservice1-01.workers.dev/';
 
 
 const state = {
 
-  scanner:
-    null,
+  scanner:null,
 
-  running:
-    false,
+  running:false,
 
-  locked:
-    false,
+  lock:false,
 
-  member:
-    null,
+  member:null,
 
-  scannedQr:
-    '',
+  qr:'',
 
-  selectedActivity:
-    '',
+  activityId:'',
 
-  photo:
-    '',
+  photo:'',
 
-  activities:
-    [],
+  activities:[],
 
-  mode:
-    'QR'
-
+  mode:'QR'
 };
 
 
-let searchTimer =
-  null;
+let searchTimer = null;
 
-
-/* ==========================================================
-   INIT
-   ========================================================== */
 
 document.addEventListener(
   'DOMContentLoaded',
@@ -1276,61 +636,40 @@ document.addEventListener(
 
 async function init() {
 
-  showLoading(
+  loading(
+    true,
     'กำลังเชื่อมต่อระบบ...'
   );
 
-
   try {
 
-    /*
-     * โหลด PING + กิจกรรมพร้อมกัน
-     */
-    const results =
+    const responses =
       await Promise.all([
-        api(
-          'PING',
-          {}
-        ),
-
-        api(
-          'ACTIVITIES',
-          {}
-        )
+        api('PING'),
+        api('ACTIVITIES')
       ]);
 
-
     state.activities =
-      Array.isArray(
-        results[1].activities
-      )
-        ? results[1].activities
-        : [];
-
+      responses[1].activities || [];
 
     renderActivities();
-
 
     setStatus(
       'พร้อมใช้งาน'
     );
 
-
     await startCamera();
-
 
   } catch (error) {
 
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
 
   } finally {
 
-    hideLoading();
+    loading(false);
   }
 }
 
@@ -1341,19 +680,16 @@ async function init() {
 
 async function api(
   action,
-  payload = {}
+  payload={}
 ) {
 
   const controller =
     new AbortController();
 
-
-  const timeout =
+  const timer =
     setTimeout(
       function() {
-
         controller.abort();
-
       },
       20000
     );
@@ -1363,39 +699,28 @@ async function api(
 
     const response =
       await fetch(
-        WORKER_URL,
+        API_URL,
         {
 
-          method:
-            'POST',
+          method:'POST',
 
-          mode:
-            'cors',
+          mode:'cors',
 
-          cache:
-            'no-store',
+          cache:'no-store',
 
-          headers: {
-
+          headers:{
             'Content-Type':
               'application/json'
-
           },
 
           body:
             JSON.stringify({
-
-              action:
-                action,
-
-              payload:
-                payload
-
+              action:action,
+              payload:payload
             }),
 
           signal:
             controller.signal
-
         }
       );
 
@@ -1406,18 +731,15 @@ async function api(
 
     let data;
 
-
     try {
 
       data =
-        JSON.parse(
-          text
-        );
+        JSON.parse(text);
 
     } catch (error) {
 
       throw new Error(
-        'Central API ตอบกลับไม่ถูกต้อง'
+        'API ตอบกลับผิดรูปแบบ'
       );
     }
 
@@ -1425,15 +747,13 @@ async function api(
     if (!response.ok) {
 
       throw new Error(
-
         'HTTP ' +
         response.status +
         ': ' +
         (
           data.message ||
-          'Central API Error'
+          'API Error'
         )
-
       );
     }
 
@@ -1442,7 +762,7 @@ async function api(
 
       throw new Error(
         data.message ||
-        'ระบบไม่สามารถดำเนินการได้'
+        'ไม่สามารถดำเนินการได้'
       );
     }
 
@@ -1452,36 +772,21 @@ async function api(
 
   } catch (error) {
 
-    console.error(
-      'API ERROR',
-      action,
-      error
-    );
-
-
     if (
-      error &&
       error.name ===
       'AbortError'
     ) {
 
       throw new Error(
-        'เชื่อมต่อระบบนานเกิน 20 วินาที กรุณาลองใหม่'
+        'เชื่อมต่อระบบนานเกินไป'
       );
     }
 
 
-    const message =
-      String(
-        error &&
-        error.message
-          ? error.message
-          : error
-      );
-
-
     if (
-      message
+      String(
+        error.message || error
+      )
         .toLowerCase()
         .includes(
           'load failed'
@@ -1489,7 +794,7 @@ async function api(
     ) {
 
       throw new Error(
-        'เชื่อมต่อ Central API ไม่สำเร็จ กรุณาลองสแกนใหม่'
+        'เชื่อมต่อระบบไม่สำเร็จ กรุณาลองใหม่'
       );
     }
 
@@ -1499,206 +804,8 @@ async function api(
 
   } finally {
 
-    clearTimeout(
-      timeout
-    );
+    clearTimeout(timer);
   }
-}
-
-
-/* ==========================================================
-   TABS
-   ========================================================== */
-
-async function showQr() {
-
-  state.mode =
-    'QR';
-
-
-  activateTab(
-    'tabQr'
-  );
-
-
-  hide(
-    'searchSection'
-  );
-
-
-  hide(
-    'memberSection'
-  );
-
-
-  show(
-    'qrSection'
-  );
-
-
-  resetMember();
-
-
-  setStatus(
-    'พร้อมสแกน QR'
-  );
-
-
-  await startCamera();
-}
-
-
-async function showSearch() {
-
-  state.mode =
-    'SEARCH';
-
-
-  activateTab(
-    'tabSearch'
-  );
-
-
-  await stopCamera();
-
-
-  hide(
-    'qrSection'
-  );
-
-
-  hide(
-    'memberSection'
-  );
-
-
-  show(
-    'searchSection'
-  );
-
-
-  resetMember();
-
-
-  document
-    .getElementById(
-      'searchInput'
-    )
-    .value =
-      '';
-
-
-  document
-    .getElementById(
-      'searchResults'
-    )
-    .innerHTML =
-      '';
-
-
-  document
-    .getElementById(
-      'searchInput'
-    )
-    .focus();
-
-
-  setStatus(
-    'พิมพ์ชื่อสมาชิกอย่างน้อย 2 ตัวอักษร'
-  );
-}
-
-
-async function showRewards() {
-
-  state.mode =
-    'REWARD';
-
-
-  activateTab(
-    'tabReward'
-  );
-
-
-  await stopCamera();
-
-
-  hide(
-    'qrSection'
-  );
-
-
-  hide(
-    'memberSection'
-  );
-
-
-  show(
-    'searchSection'
-  );
-
-
-  resetMember();
-
-
-  document
-    .getElementById(
-      'searchInput'
-    )
-    .value =
-      '';
-
-
-  document
-    .getElementById(
-      'searchResults'
-    )
-    .innerHTML =
-      '';
-
-
-  document
-    .getElementById(
-      'searchInput'
-    )
-    .focus();
-
-
-  setStatus(
-    'ค้นหาสมาชิกที่ต้องการแลกแต้ม'
-  );
-}
-
-
-function activateTab(
-  id
-) {
-
-  document
-    .querySelectorAll(
-      '.tab'
-    )
-    .forEach(
-      function(element) {
-
-        element
-          .classList
-          .remove(
-            'active'
-          );
-
-      }
-    );
-
-
-  document
-    .getElementById(
-      id
-    )
-    .classList
-    .add(
-      'active'
-    );
 }
 
 
@@ -1708,10 +815,7 @@ function activateTab(
 
 async function startCamera() {
 
-  if (
-    state.running
-  ) {
-
+  if (state.running) {
     return;
   }
 
@@ -1723,21 +827,14 @@ async function startCamera() {
         .getCameras();
 
 
-    if (
-      !cameras ||
-      cameras.length === 0
-    ) {
+    if (!cameras.length) {
 
       throw new Error(
-        'ไม่พบกล้องในอุปกรณ์'
+        'ไม่พบกล้อง'
       );
     }
 
 
-    /*
-     * ใช้กล้องตัวท้าย
-     * โดยทั่วไปคือกล้องหลัง
-     */
     const camera =
       cameras[
         cameras.length - 1
@@ -1755,35 +852,17 @@ async function startCamera() {
       camera.id,
 
       {
+        fps:10,
 
-        fps:
-          10,
-
-        qrbox: {
-
-          width:
-            260,
-
-          height:
-            260
-
-        },
-
-        aspectRatio:
-          1
-
+        qrbox:{
+          width:260,
+          height:260
+        }
       },
 
       qrSuccess,
 
-      function() {
-
-        /*
-         * ไม่แสดง error
-         * ทุก frame
-         */
-      }
-
+      function(){}
     );
 
 
@@ -1793,15 +872,9 @@ async function startCamera() {
 
   } catch (error) {
 
-    state.running =
-      false;
-
-
     setStatus(
-      'ไม่สามารถเปิดกล้องได้: ' +
-      errorMessage(
-        error
-      ),
+      'เปิดกล้องไม่ได้: ' +
+      getError(error),
       true
     );
   }
@@ -1810,9 +883,7 @@ async function startCamera() {
 
 async function stopCamera() {
 
-  if (
-    !state.scanner
-  ) {
+  if (!state.scanner) {
 
     state.running =
       false;
@@ -1823,27 +894,18 @@ async function stopCamera() {
 
   try {
 
-    if (
-      state.running
-    ) {
+    if (state.running) {
 
       await state.scanner.stop();
     }
 
-
     state.scanner.clear();
 
-  } catch (error) {
-
-    console.log(
-      error
-    );
-  }
+  } catch (error) {}
 
 
   state.scanner =
     null;
-
 
   state.running =
     false;
@@ -1851,58 +913,47 @@ async function stopCamera() {
 
 
 /* ==========================================================
-   QR SUCCESS
+   QR
    ========================================================== */
 
 async function qrSuccess(
-  text
+  value
 ) {
 
   if (
-    state.locked ||
-    !text
+    state.lock ||
+    !value
   ) {
-
     return;
   }
 
 
-  state.locked =
+  state.lock =
     true;
 
-
-  state.scannedQr =
-    String(
-      text
-    ).trim();
+  state.qr =
+    String(value).trim();
 
 
-  showLoading(
+  loading(
+    true,
     'กำลังตรวจสอบสมาชิก...'
   );
 
 
   try {
 
-    /*
-     * สำคัญ:
-     * ให้ PREVIEW สำเร็จก่อน
-     * แล้วค่อยหยุดกล้อง
-     */
     const member =
       await api(
         'PREVIEW',
         {
-
           scannedQr:
-            state.scannedQr
-
+            state.qr
         }
       );
 
 
     await stopCamera();
-
 
     openMember(
       member
@@ -1911,26 +962,122 @@ async function qrSuccess(
 
   } catch (error) {
 
-    state.locked =
+    state.lock =
       false;
 
-
-    state.scannedQr =
+    state.qr =
       '';
 
-
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
 
 
   } finally {
 
-    hideLoading();
+    loading(false);
   }
+}
+
+
+/* ==========================================================
+   TABS
+   ========================================================== */
+
+async function showQr() {
+
+  state.mode =
+    'QR';
+
+  activateTab(
+    'tabQr'
+  );
+
+  resetMember();
+
+  hide('searchSection');
+  hide('memberSection');
+
+  show('qrSection');
+
+  setStatus(
+    'พร้อมสแกน QR'
+  );
+
+  await startCamera();
+}
+
+
+async function showSearch() {
+
+  state.mode =
+    'SEARCH';
+
+  activateTab(
+    'tabSearch'
+  );
+
+  await stopCamera();
+
+  resetMember();
+
+  hide('qrSection');
+  hide('memberSection');
+
+  show('searchSection');
+
+  clearSearch();
+
+  setStatus(
+    'ค้นหาสมาชิก'
+  );
+}
+
+
+async function showRewardSearch() {
+
+  state.mode =
+    'REWARD';
+
+  activateTab(
+    'tabReward'
+  );
+
+  await stopCamera();
+
+  resetMember();
+
+  hide('qrSection');
+  hide('memberSection');
+
+  show('searchSection');
+
+  clearSearch();
+
+  setStatus(
+    'ค้นหาสมาชิกเพื่อแลกแต้ม'
+  );
+}
+
+
+function activateTab(id) {
+
+  document
+    .querySelectorAll('.tab')
+    .forEach(
+      function(element) {
+
+        element
+          .classList
+          .remove('active');
+      }
+    );
+
+  document
+    .getElementById(id)
+    .classList
+    .add('active');
 }
 
 
@@ -1938,12 +1085,29 @@ async function qrSuccess(
    SEARCH
    ========================================================== */
 
+function clearSearch() {
+
+  document
+    .getElementById(
+      'searchInput'
+    )
+    .value =
+      '';
+
+  document
+    .getElementById(
+      'searchResults'
+    )
+    .innerHTML =
+      '';
+}
+
+
 function searchChanged() {
 
   clearTimeout(
     searchTimer
   );
-
 
   searchTimer =
     setTimeout(
@@ -1955,25 +1119,23 @@ function searchChanged() {
 
 async function searchMembers() {
 
-  const input =
-    document.getElementById(
-      'searchInput'
-    );
-
-
   const query =
-    input.value.trim();
+    document
+      .getElementById(
+        'searchInput'
+      )
+      .value
+      .trim();
 
 
   const container =
-    document.getElementById(
-      'searchResults'
-    );
+    document
+      .getElementById(
+        'searchResults'
+      );
 
 
-  if (
-    query.length < 2
-  ) {
+  if (query.length < 2) {
 
     container.innerHTML =
       '';
@@ -1983,7 +1145,7 @@ async function searchMembers() {
 
 
   container.innerHTML =
-    '<div class="scan-help">กำลังค้นหา...</div>';
+    '<div class="subtitle">กำลังค้นหา...</div>';
 
 
   try {
@@ -1992,28 +1154,19 @@ async function searchMembers() {
       await api(
         'SEARCH_MEMBER',
         {
-
-          query:
-            query
-
+          query:query
         }
       );
 
 
     const members =
-      Array.isArray(
-        result.members
-      )
-        ? result.members
-        : [];
+      result.members || [];
 
 
-    if (
-      members.length === 0
-    ) {
+    if (!members.length) {
 
       container.innerHTML =
-        '<div class="scan-help">ไม่พบสมาชิก</div>';
+        '<div class="subtitle">ไม่พบสมาชิก</div>';
 
       return;
     }
@@ -2032,43 +1185,31 @@ async function searchMembers() {
               'button'
             );
 
-
         button.type =
           'button';
 
-
         button.className =
-          'search-result';
-
+          'result';
 
         button.innerHTML =
-
-          '<div class="search-result-name">' +
-
+          '<div class="result-name">' +
           escapeHtml(
             member.fullName
           ) +
-
           '</div>' +
-
-          '<div class="search-result-id">' +
-
+          '<div class="result-id">' +
           escapeHtml(
             member.memberId
           ) +
-
           '</div>';
-
 
         button.onclick =
           function() {
 
-            chooseMember(
+            selectMember(
               member.memberId
             );
-
           };
-
 
         container.appendChild(
           button
@@ -2078,26 +1219,21 @@ async function searchMembers() {
 
   } catch (error) {
 
-    container.innerHTML =
-      '';
-
-
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
   }
 }
 
 
-async function chooseMember(
+async function selectMember(
   memberId
 ) {
 
-  showLoading(
-    'กำลังเปิดข้อมูลสมาชิก...'
+  loading(
+    true,
+    'กำลังเปิดสมาชิก...'
   );
 
 
@@ -2107,13 +1243,9 @@ async function chooseMember(
       await api(
         'PREVIEW_MEMBER',
         {
-
-          memberId:
-            memberId
-
+          memberId:memberId
         }
       );
-
 
     openMember(
       member
@@ -2123,22 +1255,20 @@ async function chooseMember(
   } catch (error) {
 
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
 
 
   } finally {
 
-    hideLoading();
+    loading(false);
   }
 }
 
 
 /* ==========================================================
-   OPEN MEMBER
+   MEMBER
    ========================================================== */
 
 async function openMember(
@@ -2149,19 +1279,10 @@ async function openMember(
     member;
 
 
-  hide(
-    'qrSection'
-  );
+  hide('qrSection');
+  hide('searchSection');
 
-
-  hide(
-    'searchSection'
-  );
-
-
-  show(
-    'memberSection'
-  );
+  show('memberSection');
 
 
   document
@@ -2169,8 +1290,7 @@ async function openMember(
       'memberName'
     )
     .textContent =
-      member.fullName ||
-      '-';
+      member.fullName || '-';
 
 
   document
@@ -2178,8 +1298,7 @@ async function openMember(
       'memberId'
     )
     .textContent =
-      member.memberId ||
-      '';
+      member.memberId || '';
 
 
   document
@@ -2188,8 +1307,7 @@ async function openMember(
     )
     .textContent =
       Number(
-        member.lifetimePoints ||
-        0
+        member.lifetimePoints || 0
       );
 
 
@@ -2203,15 +1321,14 @@ async function openMember(
         undefined
           ? member.availablePoints
           : (
-              member.totalPoints ||
-              0
+              member.totalPoints || 0
             )
       );
 
 
   document
     .getElementById(
-      'currentRank'
+      'rank'
     )
     .textContent =
       member.currentRank
@@ -2225,39 +1342,19 @@ async function openMember(
     'REWARD'
   ) {
 
-    hide(
-      'activityCard'
-    );
+    hide('activityCard');
+    hide('photoCard');
 
-
-    hide(
-      'photoCard'
-    );
-
-
-    show(
-      'rewardCard'
-    );
-
+    show('rewardCard');
 
     await loadRewards();
 
   } else {
 
-    show(
-      'activityCard'
-    );
+    show('activityCard');
+    show('photoCard');
 
-
-    show(
-      'photoCard'
-    );
-
-
-    hide(
-      'rewardCard'
-    );
-
+    hide('rewardCard');
 
     setStatus(
       'เลือกกิจกรรมและถ่ายภาพ'
@@ -2273,9 +1370,10 @@ async function openMember(
 function renderActivities() {
 
   const container =
-    document.getElementById(
-      'activityGrid'
-    );
+    document
+      .getElementById(
+        'activityGrid'
+      );
 
 
   container.innerHTML =
@@ -2291,10 +1389,8 @@ function renderActivities() {
             'button'
           );
 
-
       button.type =
         'button';
-
 
       button.className =
         'activity';
@@ -2306,29 +1402,25 @@ function renderActivities() {
 
 
       button.innerHTML =
-
-        '<div class="activity-name">' +
-
+        '<div class="item-title">' +
         escapeHtml(
           activity.activityName
         ) +
-
         '</div>' +
 
-        '<div class="activity-point">' +
+        '<div class="item-sub">' +
 
         (
           health
             ? 'รออนุมัติ +' +
               Number(
-                activity.point ||
-                2
+                activity.point || 2
               ) +
               ' คะแนน'
+
             : '+' +
               Number(
-                activity.point ||
-                0
+                activity.point || 0
               ) +
               ' คะแนน'
         ) +
@@ -2339,7 +1431,7 @@ function renderActivities() {
       button.onclick =
         function() {
 
-          state.selectedActivity =
+          state.activityId =
             activity.activityId;
 
 
@@ -2348,36 +1440,28 @@ function renderActivities() {
               '.activity'
             )
             .forEach(
-              function(element) {
+              function(item) {
 
-                element
-                  .classList
+                item.classList
                   .remove(
                     'selected'
                   );
-
               }
             );
 
 
-          button
-            .classList
+          button.classList
             .add(
               'selected'
             );
-
-
-          setStatus(
-            'เลือก ' +
-            activity.activityName
-          );
         };
 
 
       container.appendChild(
         button
       );
-    });
+    }
+  );
 }
 
 
@@ -2388,14 +1472,13 @@ function renderActivities() {
 function takePhoto() {
 
   const input =
-    document.getElementById(
-      'photoInput'
-    );
-
+    document
+      .getElementById(
+        'photoInput'
+      );
 
   input.value =
     '';
-
 
   input.click();
 }
@@ -2414,64 +1497,43 @@ async function photoChanged(
   }
 
 
-  showLoading(
-    'กำลังเตรียมภาพ...'
+  loading(
+    true,
+    'กำลังเตรียมรูป...'
   );
 
 
   try {
 
-    /*
-     * ลดขนาดเพื่อให้เร็ว
-     */
     state.photo =
-      await resizeImage(
-        file,
-        600,
-        .62
+      await resizePhoto(
+        file
       );
 
 
     const preview =
-      document.getElementById(
-        'photoPreview'
-      );
+      document
+        .getElementById(
+          'photoPreview'
+        );
 
 
     preview.src =
       state.photo;
-
 
     show(
       'photoPreview'
     );
 
 
-    setStatus(
-      'พร้อมยืนยันกิจกรรม'
-    );
-
-
-  } catch (error) {
-
-    setStatus(
-      'ไม่สามารถเตรียมรูปได้',
-      true
-    );
-
-
   } finally {
 
-    hideLoading();
+    loading(false);
   }
 }
 
 
-function resizeImage(
-  file,
-  maxSize,
-  quality
-) {
+function resizePhoto(file) {
 
   return new Promise(
     function(
@@ -2495,15 +1557,9 @@ function resizeImage(
 
               const ratio =
                 Math.min(
-
                   1,
-
-                  maxSize /
-                  image.width,
-
-                  maxSize /
-                  image.height
-
+                  600 / image.width,
+                  600 / image.height
                 );
 
 
@@ -2528,25 +1584,21 @@ function resizeImage(
                 );
 
 
-              const context =
-                canvas.getContext(
-                  '2d'
+              canvas
+                .getContext('2d')
+                .drawImage(
+                  image,
+                  0,
+                  0,
+                  canvas.width,
+                  canvas.height
                 );
-
-
-              context.drawImage(
-                image,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-              );
 
 
               resolve(
                 canvas.toDataURL(
                   'image/jpeg',
-                  quality
+                  .62
                 )
               );
             };
@@ -2554,7 +1606,6 @@ function resizeImage(
 
           image.onerror =
             reject;
-
 
           image.src =
             event.target.result;
@@ -2564,11 +1615,9 @@ function resizeImage(
       reader.onerror =
         reject;
 
-
       reader.readAsDataURL(
         file
       );
-
     }
   );
 }
@@ -2578,11 +1627,9 @@ function resizeImage(
    CHECK-IN
    ========================================================== */
 
-async function confirmCheckin() {
+async function submitCheckin() {
 
-  if (
-    !state.member
-  ) {
+  if (!state.member) {
 
     setStatus(
       'ไม่พบสมาชิก',
@@ -2593,9 +1640,7 @@ async function confirmCheckin() {
   }
 
 
-  if (
-    !state.selectedActivity
-  ) {
+  if (!state.activityId) {
 
     setStatus(
       'กรุณาเลือกกิจกรรม',
@@ -2606,9 +1651,7 @@ async function confirmCheckin() {
   }
 
 
-  if (
-    !state.photo
-  ) {
+  if (!state.photo) {
 
     setStatus(
       'กรุณาถ่ายภาพ',
@@ -2619,8 +1662,9 @@ async function confirmCheckin() {
   }
 
 
-  showLoading(
-    'กำลังบันทึกกิจกรรม...'
+  loading(
+    true,
+    'กำลังบันทึก...'
   );
 
 
@@ -2629,30 +1673,19 @@ async function confirmCheckin() {
     const payload = {
 
       activityId:
-        state.selectedActivity,
+        state.activityId,
 
       photoDataUrl:
         state.photo
-
     };
 
 
-    /*
-     * QR
-     */
-    if (
-      state.scannedQr
-    ) {
+    if (state.qr) {
 
       payload.scannedQr =
-        state.scannedQr;
+        state.qr;
 
-    }
-
-    /*
-     * SEARCH
-     */
-    else {
+    } else {
 
       payload.memberId =
         state.member.memberId;
@@ -2672,43 +1705,32 @@ async function confirmCheckin() {
     );
 
 
-    /*
-     * สำเร็จแล้วกลับสแกนใหม่
-     */
-    await resetHome();
+    await backToScanner();
 
 
   } catch (error) {
 
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
 
 
   } finally {
 
-    hideLoading();
+    loading(false);
   }
 }
 
 
 /* ==========================================================
-   REWARDS
+   REWARD
    ========================================================== */
 
 async function loadRewards() {
 
-  if (
-    !state.member
-  ) {
-    return;
-  }
-
-
-  showLoading(
+  loading(
+    true,
     'กำลังโหลดของรางวัล...'
   );
 
@@ -2719,10 +1741,8 @@ async function loadRewards() {
       await api(
         'REWARDS',
         {
-
           memberId:
             state.member.memberId
-
         }
       );
 
@@ -2733,38 +1753,32 @@ async function loadRewards() {
       )
       .textContent =
         Number(
-          result.availablePoints ||
-          0
+          result.availablePoints || 0
         );
 
 
     const container =
-      document.getElementById(
-        'rewardGrid'
-      );
+      document
+        .getElementById(
+          'rewardGrid'
+        );
+
+
+    container.innerHTML =
+      '';
 
 
     const rewards =
-      Array.isArray(
-        result.rewards
-      )
-        ? result.rewards
-        : [];
+      result.rewards || [];
 
 
-    if (
-      rewards.length === 0
-    ) {
+    if (!rewards.length) {
 
       container.innerHTML =
         '<div class="subtitle">ยังไม่มีของรางวัล</div>';
 
       return;
     }
-
-
-    container.innerHTML =
-      '';
 
 
     rewards.forEach(
@@ -2776,39 +1790,27 @@ async function loadRewards() {
               'button'
             );
 
+        button.className =
+          'reward';
 
         button.type =
           'button';
 
-
-        button.className =
-          'reward';
-
-
         button.innerHTML =
-
-          '<div class="reward-name">' +
-
+          '<div class="item-title">' +
           escapeHtml(
             reward.rewardName
           ) +
-
           '</div>' +
 
-          '<div class="reward-detail">' +
-
+          '<div class="item-sub">' +
           Number(
-            reward.pointsRequired ||
-            0
+            reward.pointsRequired || 0
           ) +
-
-          ' แต้ม • คงเหลือ ' +
-
+          ' แต้ม • เหลือ ' +
           Number(
-            reward.stock ||
-            0
+            reward.stock || 0
           ) +
-
           '</div>';
 
 
@@ -2818,29 +1820,27 @@ async function loadRewards() {
             redeemReward(
               reward
             );
-
           };
 
 
         container.appendChild(
           button
         );
-      });
+      }
+    );
 
 
   } catch (error) {
 
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
 
 
   } finally {
 
-    hideLoading();
+    loading(false);
   }
 }
 
@@ -2850,34 +1850,21 @@ async function redeemReward(
 ) {
 
   if (
-    !state.member
-  ) {
-    return;
-  }
-
-
-  const confirmed =
-    confirm(
-
+    !confirm(
       'ยืนยันแลก ' +
-
       reward.rewardName +
-
-      '\nใช้ ' +
-
+      ' จำนวน ' +
       reward.pointsRequired +
-
       ' แต้ม?'
+    )
+  ) {
 
-    );
-
-
-  if (!confirmed) {
     return;
   }
 
 
-  showLoading(
+  loading(
+    true,
     'กำลังแลกแต้ม...'
   );
 
@@ -2894,7 +1881,6 @@ async function redeemReward(
 
           rewardId:
             reward.rewardId
-
         }
       );
 
@@ -2904,20 +1890,12 @@ async function redeemReward(
         'availablePoints'
       )
       .textContent =
-        Number(
-          result.availablePoints ||
-          0
-        );
+        result.availablePoints;
 
 
     alert(
-
-      'แลกของรางวัลสำเร็จ\n' +
-
-      'แต้มคงเหลือ ' +
-
+      'แลกสำเร็จ\nแต้มคงเหลือ ' +
       result.availablePoints
-
     );
 
 
@@ -2927,16 +1905,14 @@ async function redeemReward(
   } catch (error) {
 
     setStatus(
-      errorMessage(
-        error
-      ),
+      getError(error),
       true
     );
 
 
   } finally {
 
-    hideLoading();
+    loading(false);
   }
 }
 
@@ -2945,39 +1921,25 @@ async function redeemReward(
    RESET
    ========================================================== */
 
-async function resetHome() {
+async function backToScanner() {
 
   resetMember();
 
-
   state.mode =
     'QR';
-
 
   activateTab(
     'tabQr'
   );
 
+  hide('memberSection');
+  hide('searchSection');
 
-  hide(
-    'memberSection'
-  );
-
-
-  hide(
-    'searchSection'
-  );
-
-
-  show(
-    'qrSection'
-  );
-
+  show('qrSection');
 
   setStatus(
     'พร้อมสแกนสมาชิกคนถัดไป'
   );
-
 
   await startCamera();
 }
@@ -2988,20 +1950,16 @@ function resetMember() {
   state.member =
     null;
 
-
-  state.scannedQr =
+  state.qr =
     '';
 
-
-  state.selectedActivity =
+  state.activityId =
     '';
-
 
   state.photo =
     '';
 
-
-  state.locked =
+  state.lock =
     false;
 
 
@@ -3010,39 +1968,28 @@ function resetMember() {
       '.activity'
     )
     .forEach(
-      function(element) {
+      function(item) {
 
-        element
-          .classList
+        item.classList
           .remove(
             'selected'
           );
-
       }
     );
 
 
   const preview =
-    document.getElementById(
-      'photoPreview'
-    );
-
+    document
+      .getElementById(
+        'photoPreview'
+      );
 
   preview.src =
     '';
 
-
   hide(
     'photoPreview'
   );
-
-
-  document
-    .getElementById(
-      'photoInput'
-    )
-    .value =
-      '';
 }
 
 
@@ -3050,72 +1997,53 @@ function resetMember() {
    UI
    ========================================================== */
 
-function show(
-  id
-) {
+function show(id) {
 
   const element =
-    document.getElementById(
-      id
-    );
-
+    document.getElementById(id);
 
   if (element) {
 
-    element
-      .classList
-      .remove(
-        'hidden'
-      );
+    element.classList
+      .remove('hidden');
   }
 }
 
 
-function hide(
-  id
-) {
+function hide(id) {
 
   const element =
-    document.getElementById(
-      id
-    );
-
+    document.getElementById(id);
 
   if (element) {
 
-    element
-      .classList
-      .add(
-        'hidden'
-      );
+    element.classList
+      .add('hidden');
   }
 }
 
 
-function showLoading(
+function loading(
+  enabled,
   text
 ) {
 
-  document
-    .getElementById(
-      'loadingText'
-    )
-    .textContent =
-      text ||
-      'กำลังทำงาน...';
+  if (enabled) {
 
+    document
+      .getElementById(
+        'loadingText'
+      )
+      .textContent =
+        text ||
+        'กำลังทำงาน...';
 
-  show(
-    'loading'
-  );
-}
+    show('loading');
 
+  } else {
 
-function hideLoading() {
-
-  hide(
-    'loading'
-  );
+    hide('loading');
+  }
 }
 
 
@@ -3125,15 +2053,13 @@ function setStatus(
 ) {
 
   const element =
-    document.getElementById(
-      'status'
-    );
-
+    document
+      .getElementById(
+        'status'
+      );
 
   element.textContent =
-    text ||
-    '';
-
+    text || '';
 
   element.className =
     error
@@ -3142,58 +2068,33 @@ function setStatus(
 }
 
 
-function errorMessage(
-  error
-) {
+function getError(error) {
 
-  if (
+  return (
     error &&
     error.message
-  ) {
-
-    return error.message;
-  }
-
-
-  return String(
-    error ||
-    'เกิดข้อผิดพลาด'
-  );
+  )
+    ? error.message
+    : String(
+        error ||
+        'เกิดข้อผิดพลาด'
+      );
 }
 
 
-function escapeHtml(
-  value
-) {
+function escapeHtml(value) {
 
   return String(
     value || ''
   )
-    .replace(
-      /&/g,
-      '&amp;'
-    )
-    .replace(
-      /</g,
-      '&lt;'
-    )
-    .replace(
-      />/g,
-      '&gt;'
-    )
-    .replace(
-      /"/g,
-      '&quot;'
-    )
-    .replace(
-      /'/g,
-      '&#39;'
-    );
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
 }
 
 </script>
 
-
 </body>
-
 </html>
