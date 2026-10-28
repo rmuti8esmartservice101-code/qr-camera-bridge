@@ -17,13 +17,22 @@
     :root {
       --primary: #0f766e;
       --primary-dark: #115e59;
+      --primary-soft: #ccfbf1;
+
+      --green: #15803d;
+      --green-soft: #dcfce7;
+
+      --red: #dc2626;
+      --red-soft: #fee2e2;
+
+      --orange: #ea580c;
+
       --bg: #f4f8f7;
       --card: #ffffff;
       --border: #dbe5e3;
+
       --text: #172123;
       --muted: #64748b;
-      --red: #dc2626;
-      --green: #15803d;
     }
 
     * {
@@ -52,11 +61,25 @@
       background: var(--bg);
     }
 
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
     .app {
       width: min(100%, 720px);
       margin: 0 auto;
       min-height: 100vh;
     }
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
 
     .header {
       display: flex;
@@ -69,7 +92,9 @@
         14px;
 
       background: white;
-      border-bottom: 1px solid var(--border);
+
+      border-bottom:
+        1px solid var(--border);
     }
 
     .logo {
@@ -87,23 +112,30 @@
       font-size: 25px;
     }
 
-    .title {
+    .brand-title {
       font-size: 18px;
       font-weight: 900;
     }
 
-    .subtitle {
+    .brand-subtitle {
       margin-top: 2px;
 
       color: var(--muted);
       font-size: 12px;
     }
 
+    /* =====================================================
+       LAYOUT
+       ===================================================== */
+
     .container {
       padding: 14px;
 
       padding-bottom:
-        calc(40px + env(safe-area-inset-bottom));
+        calc(
+          40px +
+          env(safe-area-inset-bottom)
+        );
     }
 
     .card {
@@ -111,12 +143,19 @@
 
       background: var(--card);
 
-      border: 1px solid var(--border);
+      border:
+        1px solid var(--border);
+
       border-radius: 18px;
 
       box-shadow:
         0 6px 24px
-        rgba(15, 118, 110, 0.06);
+        rgba(
+          15,
+          118,
+          110,
+          0.06
+        );
     }
 
     h1 {
@@ -131,8 +170,12 @@
       color: var(--muted);
 
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
+
+    /* =====================================================
+       CAMERA
+       ===================================================== */
 
     #reader {
       width: 100%;
@@ -142,6 +185,8 @@
       background: #0f172a;
 
       border-radius: 18px;
+
+      min-height: 260px;
     }
 
     #reader video {
@@ -150,11 +195,34 @@
       border-radius: 18px;
     }
 
+    #reader img {
+      display: none !important;
+    }
+
+    .camera-info {
+      margin-top: 10px;
+
+      padding: 10px 12px;
+
+      border-radius: 12px;
+
+      background: #f8fafc;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       BUTTON
+       ===================================================== */
+
     .button {
       width: 100%;
       min-height: 54px;
 
-      margin-top: 14px;
+      margin-top: 12px;
       padding: 12px 16px;
 
       border: 0;
@@ -163,25 +231,74 @@
       background: var(--primary);
       color: white;
 
-      font: inherit;
       font-weight: 900;
 
       cursor: pointer;
     }
 
+    .button.secondary {
+      color: var(--primary-dark);
+
+      background: #ecfdf5;
+
+      border:
+        1px solid #99f6e4;
+    }
+
     .button.danger {
       color: var(--red);
+
       background: #fff1f2;
 
-      border: 1px solid #fecdd3;
+      border:
+        1px solid #fecdd3;
     }
 
     .button:disabled {
       opacity: 0.55;
+      cursor: not-allowed;
     }
+
+    /* =====================================================
+       CAMERA SELECT
+       ===================================================== */
+
+    .camera-select-group {
+      margin-top: 12px;
+    }
+
+    .camera-select-group label {
+      display: block;
+
+      margin-bottom: 6px;
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .camera-select {
+      width: 100%;
+      min-height: 48px;
+
+      padding: 10px 12px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      background: white;
+
+      color: var(--text);
+    }
+
+    /* =====================================================
+       STATUS
+       ===================================================== */
 
     .status {
       margin-top: 14px;
+
       padding: 12px;
 
       border-radius: 12px;
@@ -191,24 +308,75 @@
       color: var(--muted);
 
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
 
       text-align: center;
     }
 
     .status.success {
-      background: #dcfce7;
+      background: var(--green-soft);
       color: var(--green);
 
       font-weight: 800;
     }
 
     .status.error {
-      background: #fee2e2;
+      background: var(--red-soft);
       color: var(--red);
 
       font-weight: 800;
     }
+
+    .status.warning {
+      background: #fff7ed;
+      color: var(--orange);
+
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       FALLBACK PHOTO
+       ===================================================== */
+
+    .fallback {
+      margin-top: 16px;
+
+      padding-top: 16px;
+
+      border-top:
+        1px solid var(--border);
+    }
+
+    .fallback-title {
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .fallback-text {
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    #qrFileInput {
+      display: none;
+    }
+
+    #file-reader {
+      width: 100%;
+      margin-top: 10px;
+
+      overflow: hidden;
+
+      border-radius: 12px;
+    }
+
+    /* =====================================================
+       PRIVACY
+       ===================================================== */
 
     .privacy {
       margin-top: 16px;
@@ -216,16 +384,13 @@
       color: var(--muted);
 
       font-size: 12px;
-      line-height: 1.5;
+      line-height: 1.55;
 
       text-align: center;
     }
-
-    .hidden {
-      display: none !important;
-    }
   </style>
 </head>
+
 
 <body>
 
@@ -238,11 +403,11 @@
     </div>
 
     <div>
-      <div class="title">
+      <div class="brand-title">
         ระบบพกสุข
       </div>
 
-      <div class="subtitle">
+      <div class="brand-subtitle">
         กล้องสแกน QR ส่วนกลาง
       </div>
     </div>
@@ -258,13 +423,33 @@
         📷 สแกน QR สมาชิก
       </h1>
 
+
       <div class="description">
+
         นำ QR Code ของสมาชิกมาไว้ในกรอบ
-        เมื่ออ่านสำเร็จระบบจะกลับไปยังเครื่องลงทะเบียนโดยอัตโนมัติ
+        เมื่อระบบอ่านสำเร็จ จะกลับไปยังระบบพกสุขโดยอัตโนมัติ
+
       </div>
 
 
-      <div id="reader"></div>
+      <div id="reader">
+      </div>
+
+
+      <div
+        id="cameraSelectGroup"
+        class="camera-select-group hidden">
+
+        <label for="cameraSelect">
+          เลือกกล้อง
+        </label>
+
+        <select
+          id="cameraSelect"
+          class="camera-select">
+        </select>
+
+      </div>
 
 
       <button
@@ -273,6 +458,16 @@
         type="button">
 
         📷 เปิดกล้องสแกน QR
+
+      </button>
+
+
+      <button
+        id="switchButton"
+        class="button secondary hidden"
+        type="button">
+
+        🔄 สลับกล้อง
 
       </button>
 
@@ -296,10 +491,56 @@
       </div>
 
 
+      <div
+        id="cameraInfo"
+        class="camera-info hidden">
+      </div>
+
+
+      <!-- ================================================
+           FALLBACK
+           ================================================ -->
+
+      <div class="fallback">
+
+        <div class="fallback-title">
+          ถ้ากล้องสดเปิดไม่ได้
+        </div>
+
+        <div class="fallback-text">
+          สามารถถ่ายภาพ QR แล้วให้ระบบอ่านจากภาพได้
+        </div>
+
+
+        <button
+          id="photoScanButton"
+          type="button"
+          class="button secondary">
+
+          📸 ถ่ายภาพ QR แทน
+
+        </button>
+
+
+        <input
+          id="qrFileInput"
+          type="file"
+          accept="image/*"
+          capture="environment">
+
+
+        <div id="file-reader">
+        </div>
+
+      </div>
+
+
       <div class="privacy">
-        หน้านี้ใช้กล้องเพื่ออ่าน QR เท่านั้น
+
+        หน้านี้ใช้กล้องเพื่ออ่าน QR Code เท่านั้น
         ไม่บันทึกภาพ ไม่เก็บชื่อสมาชิก คะแนน PIN
-        หรือฐานข้อมูลสมาชิกไว้บน GitHub
+        หรือฐานข้อมูลสมาชิกบน GitHub
+
       </div>
 
     </section>
@@ -310,6 +551,10 @@
 
 
 <script>
+  /* =======================================================
+     RETURN URL
+     ======================================================= */
+
   const params =
     new URLSearchParams(
       window.location.search
@@ -322,7 +567,15 @@
     ).trim();
 
 
+  /* =======================================================
+     STATE
+     ======================================================= */
+
   let scanner =
+    null;
+
+
+  let fileScanner =
     null;
 
 
@@ -333,6 +586,18 @@
   let completed =
     false;
 
+
+  let cameras =
+    [];
+
+
+  let selectedCameraIndex =
+    0;
+
+
+  /* =======================================================
+     ELEMENTS
+     ======================================================= */
 
   const startButton =
     document.getElementById(
@@ -346,10 +611,67 @@
     );
 
 
+  const switchButton =
+    document.getElementById(
+      'switchButton'
+    );
+
+
   const statusBox =
     document.getElementById(
       'status'
     );
+
+
+  const cameraInfo =
+    document.getElementById(
+      'cameraInfo'
+    );
+
+
+  const cameraSelectGroup =
+    document.getElementById(
+      'cameraSelectGroup'
+    );
+
+
+  const cameraSelect =
+    document.getElementById(
+      'cameraSelect'
+    );
+
+
+  const photoScanButton =
+    document.getElementById(
+      'photoScanButton'
+    );
+
+
+  const qrFileInput =
+    document.getElementById(
+      'qrFileInput'
+    );
+
+
+  /* =======================================================
+     INIT
+     ======================================================= */
+
+  if (!returnUrl) {
+
+    setStatus(
+      'ไม่พบปลายทางสำหรับส่งผลกลับ กรุณาเปิดกล้องจากระบบพกสุข',
+      'error'
+    );
+
+
+    startButton.disabled =
+      true;
+
+
+    photoScanButton.disabled =
+      true;
+  }
 
 
   startButton.addEventListener(
@@ -364,18 +686,275 @@
   );
 
 
-  if (!returnUrl) {
+  switchButton.addEventListener(
+    'click',
+    switchCamera
+  );
+
+
+  cameraSelect.addEventListener(
+    'change',
+    async function() {
+
+      const newIndex =
+        Number(
+          cameraSelect.value
+        );
+
+
+      if (
+        Number.isNaN(
+          newIndex
+        )
+      ) {
+        return;
+      }
+
+
+      selectedCameraIndex =
+        newIndex;
+
+
+      if (running) {
+
+        await restartSelectedCamera();
+
+      }
+
+    }
+  );
+
+
+  photoScanButton.addEventListener(
+    'click',
+    function() {
+
+      qrFileInput.value =
+        '';
+
+
+      qrFileInput.click();
+
+    }
+  );
+
+
+  qrFileInput.addEventListener(
+    'change',
+    handleQrFile
+  );
+
+
+  /* =======================================================
+     CAMERA DISCOVERY
+     ======================================================= */
+
+  async function discoverCameras() {
 
     setStatus(
-      'ไม่พบปลายทางสำหรับส่ง QR กลับ กรุณาเปิดกล้องจากระบบพกสุข',
-      'error'
+      'กำลังตรวจสอบกล้อง...'
     );
 
 
-    startButton.disabled =
-      true;
+    try {
+
+      cameras =
+        await Html5Qrcode
+          .getCameras();
+
+
+      if (
+        !Array.isArray(
+          cameras
+        ) ||
+        cameras.length === 0
+      ) {
+
+        throw new Error(
+          'ไม่พบกล้องในอุปกรณ์'
+        );
+
+      }
+
+
+      renderCameraList();
+
+
+      selectedCameraIndex =
+        chooseBestRearCameraIndex();
+
+
+      cameraSelect.value =
+        String(
+          selectedCameraIndex
+        );
+
+
+      showCameraInfo();
+
+
+      return true;
+
+
+    } catch (error) {
+
+      console.error(
+        'discoverCameras:',
+        error
+      );
+
+
+      setStatus(
+        friendlyCameraError(
+          error
+        ),
+        'error'
+      );
+
+
+      return false;
+    }
   }
 
+
+  function renderCameraList() {
+
+    cameraSelect.innerHTML =
+      '';
+
+
+    cameras.forEach(
+      function(camera, index) {
+
+        const option =
+          document.createElement(
+            'option'
+          );
+
+
+        option.value =
+          String(
+            index
+          );
+
+
+        option.textContent =
+          camera.label
+            ? camera.label
+            : (
+                'กล้อง ' +
+                (
+                  index + 1
+                )
+              );
+
+
+        cameraSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    if (
+      cameras.length > 1
+    ) {
+
+      cameraSelectGroup
+        .classList
+        .remove(
+          'hidden'
+        );
+
+
+      switchButton
+        .classList
+        .remove(
+          'hidden'
+        );
+
+    } else {
+
+      cameraSelectGroup
+        .classList
+        .add(
+          'hidden'
+        );
+
+
+      switchButton
+        .classList
+        .add(
+          'hidden'
+        );
+    }
+  }
+
+
+  function chooseBestRearCameraIndex() {
+
+    if (
+      cameras.length === 1
+    ) {
+
+      return 0;
+
+    }
+
+
+    const rearWords = [
+      'back',
+      'rear',
+      'environment',
+      'หลัง'
+    ];
+
+
+    for (
+      let index = 0;
+      index < cameras.length;
+      index++
+    ) {
+
+      const label =
+        String(
+          cameras[index].label ||
+          ''
+        ).toLowerCase();
+
+
+      const matched =
+        rearWords.some(
+          function(word) {
+
+            return label.includes(
+              word
+            );
+
+          }
+        );
+
+
+      if (matched) {
+
+        return index;
+
+      }
+    }
+
+
+    /*
+     * iPhone ส่วนมาก list
+     * กล้องหลังไว้ช่วงท้าย
+     */
+    return cameras.length - 1;
+  }
+
+
+  /* =======================================================
+     START CAMERA
+     ======================================================= */
 
   async function startScanner() {
 
@@ -383,6 +962,7 @@
       running ||
       completed
     ) {
+
       return;
     }
 
@@ -393,7 +973,7 @@
     ) {
 
       setStatus(
-        'โหลดระบบสแกน QR ไม่สำเร็จ',
+        'โหลดระบบอ่าน QR ไม่สำเร็จ กรุณาตรวจอินเทอร์เน็ต',
         'error'
       );
 
@@ -406,12 +986,88 @@
       true;
 
 
+    const discovered =
+      await discoverCameras();
+
+
+    if (!discovered) {
+
+      startButton.disabled =
+        false;
+
+      return;
+    }
+
+
+    await startSelectedCamera();
+  }
+
+
+  async function startSelectedCamera() {
+
+    if (
+      !cameras.length
+    ) {
+
+      setStatus(
+        'ไม่พบกล้อง',
+        'error'
+      );
+
+
+      startButton.disabled =
+        false;
+
+
+      return;
+    }
+
+
+    const selected =
+      cameras[
+        selectedCameraIndex
+      ];
+
+
+    if (!selected) {
+
+      setStatus(
+        'ไม่พบกล้องที่เลือก',
+        'error'
+      );
+
+
+      startButton.disabled =
+        false;
+
+
+      return;
+    }
+
+
     setStatus(
       'กำลังเปิดกล้อง...'
     );
 
 
     try {
+
+      if (scanner) {
+
+        try {
+
+          scanner.clear();
+
+        } catch (error) {
+
+          console.log(
+            error
+          );
+
+        }
+
+      }
+
 
       scanner =
         new Html5Qrcode(
@@ -421,16 +1077,11 @@
 
       await scanner.start(
 
-        {
-          facingMode: {
-            ideal:
-              'environment'
-          }
-        },
+        selected.id,
 
         {
           fps:
-            12,
+            10,
 
           qrbox:
             function(
@@ -443,7 +1094,8 @@
                   Math.min(
                     width,
                     height
-                  ) * 0.72
+                  ) *
+                  0.70
                 );
 
 
@@ -456,14 +1108,14 @@
               };
             },
 
-          aspectRatio:
-            1
+          disableFlip:
+            false
         },
 
         onQrSuccess,
 
         function() {
-          // ไม่แจ้ง scan miss ทุก frame
+          // ไม่แจ้ง miss ทุก frame
         }
       );
 
@@ -472,14 +1124,34 @@
         true;
 
 
-      startButton.classList.add(
-        'hidden'
-      );
+      startButton
+        .classList
+        .add(
+          'hidden'
+        );
 
 
-      stopButton.classList.remove(
-        'hidden'
-      );
+      stopButton
+        .classList
+        .remove(
+          'hidden'
+        );
+
+
+      if (
+        cameras.length > 1
+      ) {
+
+        switchButton
+          .classList
+          .remove(
+            'hidden'
+          );
+
+      }
+
+
+      showCameraInfo();
 
 
       setStatus(
@@ -488,6 +1160,12 @@
 
 
     } catch (error) {
+
+      console.error(
+        'start camera:',
+        error
+      );
+
 
       scanner =
         null;
@@ -501,16 +1179,33 @@
         false;
 
 
+      startButton
+        .classList
+        .remove(
+          'hidden'
+        );
+
+
+      stopButton
+        .classList
+        .add(
+          'hidden'
+        );
+
+
       setStatus(
-        error &&
-        error.message
-          ? error.message
-          : 'ไม่สามารถเปิดกล้องได้',
+        friendlyCameraError(
+          error
+        ),
         'error'
       );
     }
   }
 
+
+  /* =======================================================
+     STOP CAMERA
+     ======================================================= */
 
   async function stopScanner() {
 
@@ -559,14 +1254,31 @@
       false;
 
 
-    startButton.classList.remove(
-      'hidden'
-    );
+    startButton
+      .classList
+      .remove(
+        'hidden'
+      );
 
 
-    stopButton.classList.add(
-      'hidden'
-    );
+    stopButton
+      .classList
+      .add(
+        'hidden'
+      );
+
+
+    if (
+      cameras.length > 1
+    ) {
+
+      switchButton
+        .classList
+        .remove(
+          'hidden'
+        );
+
+    }
 
 
     setStatus(
@@ -574,6 +1286,145 @@
     );
   }
 
+
+  /* =======================================================
+     SWITCH CAMERA
+     ======================================================= */
+
+  async function switchCamera() {
+
+    if (
+      cameras.length <= 1
+    ) {
+
+      return;
+    }
+
+
+    selectedCameraIndex =
+      (
+        selectedCameraIndex +
+        1
+      ) %
+      cameras.length;
+
+
+    cameraSelect.value =
+      String(
+        selectedCameraIndex
+      );
+
+
+    if (running) {
+
+      await restartSelectedCamera();
+
+    } else {
+
+      showCameraInfo();
+
+    }
+  }
+
+
+  async function restartSelectedCamera() {
+
+    setStatus(
+      'กำลังสลับกล้อง...'
+    );
+
+
+    if (scanner) {
+
+      try {
+
+        if (running) {
+
+          await scanner.stop();
+
+        }
+
+      } catch (error) {
+
+        console.log(
+          error
+        );
+
+      }
+
+
+      try {
+
+        scanner.clear();
+
+      } catch (error) {
+
+        console.log(
+          error
+        );
+
+      }
+
+    }
+
+
+    scanner =
+      null;
+
+
+    running =
+      false;
+
+
+    await startSelectedCamera();
+  }
+
+
+  function showCameraInfo() {
+
+    const camera =
+      cameras[
+        selectedCameraIndex
+      ];
+
+
+    if (!camera) {
+
+      cameraInfo
+        .classList
+        .add(
+          'hidden'
+        );
+
+      return;
+    }
+
+
+    cameraInfo.textContent =
+      'กล้องที่เลือก: ' +
+      (
+        camera.label ||
+        (
+          'กล้อง ' +
+          (
+            selectedCameraIndex +
+            1
+          )
+        )
+      );
+
+
+    cameraInfo
+      .classList
+      .remove(
+        'hidden'
+      );
+  }
+
+
+  /* =======================================================
+     QR SUCCESS
+     ======================================================= */
 
   async function onQrSuccess(
     decodedText
@@ -583,12 +1434,9 @@
       completed ||
       !decodedText
     ) {
+
       return;
     }
-
-
-    completed =
-      true;
 
 
     const scannedValue =
@@ -599,11 +1447,12 @@
 
     if (!scannedValue) {
 
-      completed =
-        false;
-
       return;
     }
+
+
+    completed =
+      true;
 
 
     setStatus(
@@ -612,23 +1461,23 @@
     );
 
 
-    try {
+    if (scanner) {
 
-      if (
-        scanner &&
-        running
-      ) {
+      try {
 
-        await scanner.stop();
+        if (running) {
+
+          await scanner.stop();
+
+        }
+
+      } catch (error) {
+
+        console.log(
+          error
+        );
 
       }
-
-    } catch (error) {
-
-      console.log(
-        error
-      );
-
     }
 
 
@@ -636,12 +1485,147 @@
       false;
 
 
-    /*
-     * ส่ง QR กลับ Apps Script ด้วย query parameter
-     *
-     * returnUrl มี ?page=scanner อยู่แล้ว
-     * จึงต่อด้วย &scan=
-     */
+    returnToPoksuk(
+      scannedValue
+    );
+  }
+
+
+  /* =======================================================
+     FALLBACK FILE QR
+     ======================================================= */
+
+  async function handleQrFile(
+    event
+  ) {
+
+    const file =
+      event &&
+      event.target &&
+      event.target.files
+        ? event.target.files[0]
+        : null;
+
+
+    if (!file) {
+
+      return;
+    }
+
+
+    if (
+      typeof Html5Qrcode ===
+      'undefined'
+    ) {
+
+      setStatus(
+        'โหลดระบบอ่าน QR ไม่สำเร็จ',
+        'error'
+      );
+
+
+      return;
+    }
+
+
+    setStatus(
+      'กำลังอ่าน QR จากภาพ...'
+    );
+
+
+    try {
+
+      if (!fileScanner) {
+
+        fileScanner =
+          new Html5Qrcode(
+            'file-reader'
+          );
+
+      }
+
+
+      const decodedText =
+        await fileScanner.scanFile(
+          file,
+          true
+        );
+
+
+      const scannedValue =
+        String(
+          decodedText || ''
+        ).trim();
+
+
+      if (!scannedValue) {
+
+        throw new Error(
+          'ไม่พบ QR ในภาพ'
+        );
+
+      }
+
+
+      completed =
+        true;
+
+
+      setStatus(
+        '✅ อ่าน QR สำเร็จ กำลังกลับระบบพกสุข...',
+        'success'
+      );
+
+
+      returnToPoksuk(
+        scannedValue
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        'scan file:',
+        error
+      );
+
+
+      completed =
+        false;
+
+
+      setStatus(
+        'อ่าน QR จากภาพไม่สำเร็จ กรุณาถ่ายให้ QR ชัดและเห็นครบทั้ง 4 มุม',
+        'error'
+      );
+    }
+  }
+
+
+  /* =======================================================
+     RETURN TO APPS SCRIPT
+     ======================================================= */
+
+  function returnToPoksuk(
+    scannedValue
+  ) {
+
+    if (!returnUrl) {
+
+      completed =
+        false;
+
+
+      setStatus(
+        'ไม่พบ URL ปลายทาง',
+        'error'
+      );
+
+
+      return;
+    }
+
+
     const separator =
       returnUrl.includes('?')
         ? '&'
@@ -662,6 +1646,113 @@
     );
   }
 
+
+  /* =======================================================
+     ERROR TEXT
+     ======================================================= */
+
+  function friendlyCameraError(
+    error
+  ) {
+
+    const raw =
+      error &&
+      error.message
+        ? error.message
+        : String(
+            error ||
+            ''
+          );
+
+
+    const text =
+      raw.toLowerCase();
+
+
+    if (
+      raw.includes(
+        'NotAllowedError'
+      ) ||
+      text.includes(
+        'permission'
+      ) ||
+      text.includes(
+        'denied'
+      )
+    ) {
+
+      return (
+        'ไม่ได้รับอนุญาตให้ใช้กล้อง ' +
+        'กรุณาตั้งค่าสิทธิ์ Camera ของเว็บไซต์เป็น Allow แล้วลองใหม่'
+      );
+    }
+
+
+    if (
+      raw.includes(
+        'NotFoundError'
+      ) ||
+      text.includes(
+        'not found'
+      )
+    ) {
+
+      return 'ไม่พบกล้องในอุปกรณ์';
+    }
+
+
+    if (
+      raw.includes(
+        'NotReadableError'
+      ) ||
+      text.includes(
+        'could not start'
+      )
+    ) {
+
+      return (
+        'ไม่สามารถใช้งานกล้องได้ ' +
+        'อาจมีกล้องถูกใช้งานโดยแอปอื่น กรุณาปิดแอปกล้องหรือวิดีโอแล้วลองใหม่'
+      );
+    }
+
+
+    if (
+      raw.includes(
+        'OverconstrainedError'
+      )
+    ) {
+
+      return (
+        'กล้องไม่รองรับค่าที่ร้องขอ ' +
+        'กรุณาลองเลือกกล้องอื่น'
+      );
+    }
+
+
+    if (
+      raw.includes(
+        'SecurityError'
+      )
+    ) {
+
+      return (
+        'Browser ไม่อนุญาตการใช้กล้อง ' +
+        'กรุณาเปิดเว็บไซต์ผ่าน HTTPS'
+      );
+    }
+
+
+    return (
+      raw ||
+      'ไม่สามารถเปิดกล้องได้'
+    );
+  }
+
+
+  /* =======================================================
+     STATUS
+     ======================================================= */
 
   function setStatus(
     message,
@@ -685,13 +1776,28 @@
         'success'
       );
 
-    } else if (
+    }
+
+
+    else if (
       type ===
       'error'
     ) {
 
       statusBox.classList.add(
         'error'
+      );
+
+    }
+
+
+    else if (
+      type ===
+      'warning'
+    ) {
+
+      statusBox.classList.add(
+        'warning'
       );
 
     }
