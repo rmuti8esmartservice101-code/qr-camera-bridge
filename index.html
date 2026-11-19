@@ -1,4180 +1,1041 @@
+
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f1f8f4">
+<title>พกสุข</title>
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-
-<meta
-  name="theme-color"
-  content="#eaf7f0">
-
-<title>
-  พกสุข Central Station
-</title>
-
-
-<script
-  src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-</script>
-
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 <style>
-
-:root {
-
-  --green-950:#173f35;
-  --green-900:#215347;
-  --green-800:#2c6758;
-  --green-700:#37806d;
-  --green-600:#479783;
-  --green-500:#65ad98;
-  --green-300:#addbc9;
-  --green-200:#cfeadd;
-  --green-100:#e5f5ed;
-  --green-50:#f3fbf7;
-
-  --mint:#e6f6ee;
-  --lime:#eff7df;
-  --cream:#faf4e5;
-  --rose:#fdeceb;
-
+:root{
+  --green:#167b61;
+  --green-dark:#105b49;
+  --mint:#e5f5ed;
+  --mint2:#f3faf6;
+  --lime:#eff6dc;
+  --cream:#fff8e9;
+  --blue:#eaf3fb;
+  --pink:#fff0ee;
   --text:#203b32;
-  --muted:#71837c;
+  --muted:#71847b;
+  --border:#dce9e1;
+  --white:#fff;
+  --danger:#c74c4c;
+  --shadow:0 8px 28px rgba(30,75,55,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:"Noto Sans Thai",Tahoma,Arial,sans-serif;color:var(--text);background:#f3f8f5}
+body{overflow:hidden;font-size:16px}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
-  --border:#dce9e3;
+/* TOP NAV */
+.topbar{
+  height:68px;background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;gap:16px;
+}
+.brandmark{display:flex;align-items:center;gap:10px;font-size:25px;font-weight:900;color:var(--green)}
+.brand-icon{
+  width:42px;height:42px;border-radius:14px;background:var(--mint);
+  display:grid;place-items:center;font-size:26px;
+}
+.nav{display:flex;align-items:center;gap:9px}
+.nav button{
+  border:1px solid transparent;background:transparent;color:#53685e;
+  border-radius:13px;padding:10px 17px;font-weight:800;font-size:16px;
+  display:flex;align-items:center;gap:9px;
+}
+.nav button .ico{font-size:23px}
+.nav button.active{background:var(--green);color:white;box-shadow:0 5px 15px #167b612c}
+.admin-button{
+  border:1px solid var(--border);background:#fff;color:var(--green-dark);
+  border-radius:13px;padding:10px 15px;font-weight:800;
+}
+.admin-button:hover,.nav button:hover{background:var(--mint)}
 
-  --danger:#c95a58;
+/* APP LAYOUT */
+main{
+  height:calc(100dvh - 68px);
+  padding:16px 20px 18px;
+  max-width:1600px;margin:auto;
+}
+.workspace{
+  height:100%;display:grid;grid-template-columns:minmax(340px, .88fr) minmax(520px,1.35fr);
+  gap:16px;min-height:0;
+}
+.panel{
+  background:#fff;border:1px solid var(--border);border-radius:22px;
+  box-shadow:var(--shadow);padding:19px;min-height:0;overflow:hidden;
+}
+.left-panel,.right-panel{display:flex;flex-direction:column;min-height:0}
+.panel-title{font-size:22px;font-weight:900;margin:0 0 5px}
+.panel-subtitle{font-size:14px;color:var(--muted);margin:0 0 13px}
+.scanner-wrap{
+  flex:1;min-height:220px;display:flex;align-items:center;justify-content:center;
+  border-radius:18px;background:#f6faf7;border:1px dashed #c8ddd1;overflow:hidden;
+}
+#reader{width:100%;max-width:520px}
+#reader video{border-radius:14px;object-fit:cover}
+.status{
+  margin-top:12px;padding:11px 14px;background:var(--mint2);
+  border-radius:12px;color:var(--green-dark);font-weight:700;min-height:44px;
+}
+.status.error{background:var(--pink);color:var(--danger)}
+.muted{color:var(--muted)}
+.search-input,.form-input{
+  width:100%;height:54px;border:1px solid var(--border);border-radius:13px;
+  padding:0 16px;background:#fbfdfb;font-size:18px;outline:none;
+}
+.search-input:focus,.form-input:focus{border-color:var(--green);box-shadow:0 0 0 3px #167b6117}
+.search-results{overflow:auto;min-height:0;margin-top:10px}
+.search-result{
+  width:100%;padding:13px 15px;margin-bottom:8px;border:1px solid var(--border);
+  border-radius:13px;background:#fff;text-align:left;display:flex;justify-content:space-between;
+  align-items:center;gap:12px;
+}
+.search-result:hover{background:var(--mint2);border-color:#9bcbb4}
+.search-result b{font-size:17px}
+.search-result small{display:block;color:var(--muted);margin-top:3px}
+.empty-state{
+  height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;color:var(--muted);padding:25px;
+}
+.empty-icon{font-size:76px;line-height:1.2;margin-bottom:13px}
+.empty-state strong{font-size:21px;color:#52695e}
 
-  --white:#ffffff;
+/* MEMBER PROFILE */
+.member-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:14px;
+  padding:4px 2px 15px;border-bottom:1px solid var(--border);
+}
+.member-name{font-size:27px;font-weight:900;line-height:1.3}
+.member-id{font-size:14px;color:var(--muted);margin-top:3px}
+.member-badge{
+  padding:7px 12px;border-radius:99px;background:var(--mint);
+  color:var(--green-dark);font-size:13px;font-weight:900;white-space:nowrap;
+}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stat{
+  border-radius:15px;padding:13px 14px;background:var(--mint2);
+  border:1px solid #e3eee7;
+}
+.stat:nth-child(2){background:var(--cream)}
+.stat:nth-child(3){background:var(--blue)}
+.stat small{display:block;font-size:13px;color:var(--muted);font-weight:700}
+.stat b{display:block;font-size:27px;font-weight:900;margin-top:3px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;margin:7px 0 11px}
+.section-heading h3{margin:0;font-size:19px}
+.activity-grid,.reward-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
+  overflow:auto;padding:2px 2px 8px;min-height:0;
+}
+.activity{
+  min-height:112px;border:1px solid var(--border);border-radius:16px;
+  background:#fff;padding:12px 8px;text-align:center;color:var(--text);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  transition:.15s;
+}
+.activity:hover{transform:translateY(-2px);border-color:#9bcbb4;background:var(--mint2)}
+.activity.selected{border:2px solid var(--green);background:var(--mint)}
+.activity .activity-icon{font-size:38px;line-height:1.2}
+.activity .activity-name{font-size:15px;font-weight:900;line-height:1.3}
+.activity .activity-point{font-size:13px;color:var(--green);font-weight:800}
+.activity.pending{background:var(--cream)}
+.activity.mou{background:#f3efff}
+.right-bottom{margin-top:auto;padding-top:12px}
+.photo-row{display:flex;gap:10px;align-items:center}
+.photo-preview{
+  width:78px;height:78px;border-radius:13px;object-fit:cover;
+  border:1px solid var(--border);background:#f5f8f6;
+}
+.primary-button,.secondary-button,.danger-button{
+  min-height:52px;border:0;border-radius:14px;padding:11px 18px;
+  font-weight:900;font-size:17px;
+}
+.primary-button{background:var(--green);color:#fff}
+.primary-button:hover{background:var(--green-dark)}
+.primary-button:disabled{opacity:.45;cursor:not-allowed}
+.secondary-button{background:var(--mint);color:var(--green-dark);border:1px solid #cce6d8}
+.danger-button{background:var(--pink);color:var(--danger)}
+.full{width:100%}
+.capture-button{flex:1}
+.selected-activity-note{font-size:14px;color:var(--muted);margin:0 0 9px}
+.reward-card{
+  border:1px solid var(--border);border-radius:15px;padding:14px;background:#fff;
+}
+.reward-card b{font-size:17px;display:block}
+.reward-card small{display:block;color:var(--muted);margin:5px 0 10px}
+.reward-card button{width:100%;min-height:40px;border:0;border-radius:10px;background:var(--green);color:#fff;font-weight:800}
 
-  --shadow:
-    0 14px 36px
-    rgba(43,83,69,.08);
+/* MODALS */
+.modal{
+  position:fixed;inset:0;background:#122b2299;z-index:1000;
+  display:grid;place-items:center;padding:18px;
+}
+.modal-card{
+  width:min(480px,100%);background:#fff;border-radius:22px;padding:23px;
+  box-shadow:0 25px 80px #0003;max-height:92dvh;overflow:auto;
+}
+.modal-title{font-size:23px;font-weight:900;margin:0 0 5px}
+.modal-desc{color:var(--muted);margin:0 0 17px}
+.form-label{display:block;font-weight:800;margin:12px 0 5px}
+.modal-actions{display:flex;gap:9px;margin-top:17px}
+.modal-actions>*{flex:1}
+.camera-card{width:min(720px,100%);text-align:center}
+.camera-stage{
+  position:relative;background:#101c17;border-radius:17px;overflow:hidden;
+  aspect-ratio:4/3;margin:14px 0;
+}
+#captureVideo{width:100%;height:100%;object-fit:cover}
+.countdown{
+  position:absolute;inset:0;display:grid;place-items:center;
+  color:#fff;font-size:100px;font-weight:900;text-shadow:0 4px 20px #000;
+  background:#0003;
+}
+.camera-actions{display:flex;gap:10px}
+.camera-actions>*{flex:1}
+.loading{
+  position:fixed;inset:0;background:#ffffffcf;z-index:2000;
+  display:grid;place-items:center;backdrop-filter:blur(4px);
+}
+.loading-box{padding:23px 30px;background:#fff;border-radius:18px;box-shadow:var(--shadow);font-weight:900}
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:3000;background:#173f35;color:#fff;padding:13px 20px;
+  border-radius:13px;box-shadow:var(--shadow);font-weight:800;max-width:90%;
+}
+.toast.error{background:#9f3737}
 
-  --shadow-lg:
-    0 24px 70px
-    rgba(35,73,60,.18);
-
+/* LAPTOP */
+@media(min-width:721px) and (max-height:760px){
+  .topbar{height:60px}
+  main{height:calc(100dvh - 60px);padding:10px 16px}
+  .panel{padding:14px;border-radius:18px}
+  .scanner-wrap{min-height:190px}
+  .activity{min-height:94px}
+  .activity .activity-icon{font-size:32px}
+  .stats{margin:10px 0}
+  .stat{padding:9px 12px}
+  .stat b{font-size:23px}
 }
 
-
-* {
-
-  box-sizing:border-box;
-
+/* TABLET / MOBILE */
+@media(max-width:900px){
+  body{overflow:auto}
+  .topbar{height:auto;min-height:64px;padding:10px 13px;flex-wrap:wrap}
+  .brandmark{font-size:20px}
+  .brand-icon{width:36px;height:36px}
+  .nav{order:3;width:100%;justify-content:space-between}
+  .nav button{flex:1;justify-content:center;padding:9px 5px;font-size:14px}
+  .nav button .ico{font-size:20px}
+  .admin-button{font-size:13px}
+  main{height:auto;min-height:calc(100dvh - 110px);padding:10px}
+  .workspace{height:auto;grid-template-columns:1fr}
+  .panel{min-height:330px;padding:15px}
+  .left-panel{min-height:300px}
+  .right-panel{min-height:460px}
+  .activity-grid,.reward-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .scanner-wrap{min-height:260px}
 }
-
-
-html {
-
-  -webkit-text-size-adjust:
-    100%;
-
+@media(max-width:480px){
+  .stats{gap:6px}
+  .stat{padding:9px}
+  .stat b{font-size:22px}
+  .member-name{font-size:22px}
+  .activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .photo-row{align-items:stretch}
+  .photo-preview{width:68px;height:68px}
 }
-
-
-body {
-
-  margin:
-    0;
-
-  min-height:
-    100vh;
-
-  color:
-    var(--text);
-
-  background:
-    linear-gradient(
-      180deg,
-      #f9fcfa,
-      #f2f8f5
-    );
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Noto Sans Thai",
-    sans-serif;
-
-  font-size:
-    17px;
-
-}
-
-
-button,
-input {
-
-  font:
-    inherit;
-
-}
-
-
-button {
-
-  cursor:
-    pointer;
-
-}
-
-
-.hidden {
-
-  display:
-    none !important;
-
-}
-
-
-/* ==========================================================
-   HEADER
-   ========================================================== */
-
-header {
-
-  position:
-    sticky;
-
-  top:
-    0;
-
-  z-index:
-    80;
-
-  padding:
-    16px
-    clamp(16px,4vw,38px);
-
-  background:
-    rgba(255,255,255,.93);
-
-  border-bottom:
-    1px solid var(--border);
-
-  backdrop-filter:
-    blur(16px);
-
-}
-
-
-.header-inner {
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  width:
-    min(1080px,100%);
-
-  margin:
-    auto;
-
-}
-
-
-.brand {
-
-  color:
-    var(--green-800);
-
-  font-size:
-    clamp(27px,4vw,35px);
-
-  font-weight:
-    900;
-
-}
-
-
-.subtitle {
-
-  margin-top:
-    3px;
-
-  color:
-    var(--muted);
-
-  font-size:
-    15px;
-
-}
-
-
-/* ==========================================================
-   LAYOUT
-   ========================================================== */
-
-main {
-
-  width:
-    min(1040px,100%);
-
-  margin:
-    auto;
-
-  padding:
-    clamp(12px,3vw,28px);
-
-}
-
-
-.card {
-
-  margin-bottom:
-    15px;
-
-  padding:
-    clamp(18px,3vw,28px);
-
-  background:
-    rgba(255,255,255,.97);
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    26px;
-
-  box-shadow:
-    var(--shadow);
-
-}
-
-
-h2 {
-
-  margin:
-    0 0 6px;
-
-  color:
-    var(--green-950);
-
-  font-size:
-    clamp(25px,4vw,34px);
-
-}
-
-
-h3 {
-
-  margin:
-    0 0 14px;
-
-  color:
-    var(--green-950);
-
-  font-size:
-    clamp(21px,3vw,27px);
-
-}
-
-
-.muted {
-
-  color:
-    var(--muted);
-
-}
-
-
-/* ==========================================================
-   TABS
-   ========================================================== */
-
-.tabs {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:
-    9px;
-
-}
-
-
-.tab {
-
-  min-height:
-    65px;
-
-  color:
-    var(--green-800);
-
-  background:
-    #fff;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    17px;
-
-  font-weight:
-    900;
-
-}
-
-
-.tab.active {
-
-  color:
-    white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--green-700),
-      var(--green-600)
-    );
-
-  border-color:
-    transparent;
-
-}
-
-
-/* ==========================================================
-   INPUT / BUTTON
-   ========================================================== */
-
-.input {
-
-  width:
-    100%;
-
-  min-height:
-    57px;
-
-  margin:
-    6px 0;
-
-  padding:
-    12px 15px;
-
-  color:
-    var(--text);
-
-  background:
-    #fbfdfc;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    14px;
-
-  outline:
-    none;
-
-}
-
-
-.input:focus {
-
-  border-color:
-    var(--green-400,#89c6b4);
-
-  box-shadow:
-    0 0 0 4px
-    rgba(101,173,152,.12);
-
-}
-
-
-.input[readonly] {
-
-  color:
-    var(--green-800);
-
-  background:
-    var(--green-50);
-
-  font-weight:
-    800;
-
-}
-
-
-.label {
-
-  display:
-    block;
-
-  margin:
-    14px 0 3px;
-
-  color:
-    var(--green-900);
-
-  font-size:
-    14px;
-
-  font-weight:
-    800;
-
-}
-
-
-.btn {
-
-  width:
-    100%;
-
-  min-height:
-    56px;
-
-  margin-top:
-    10px;
-
-  padding:
-    11px 16px;
-
-  color:
-    white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--green-700),
-      var(--green-600)
-    );
-
-  border:
-    0;
-
-  border-radius:
-    15px;
-
-  font-weight:
-    900;
-
-}
-
-
-.btn.outline {
-
-  color:
-    var(--green-800);
-
-  background:
-    white;
-
-  border:
-    1px solid var(--green-300);
-
-}
-
-
-/* ==========================================================
-   QR
-   ========================================================== */
-
-#reader {
-
-  margin-top:
-    15px;
-
-  overflow:
-    hidden;
-
-  background:
-    var(--green-50);
-
-  border:
-    1px solid var(--green-200);
-
-  border-radius:
-    20px;
-
-}
-
-
-/* ==========================================================
-   MEMBER
-   ========================================================== */
-
-.member-name {
-
-  color:
-    var(--green-950);
-
-  font-size:
-    clamp(30px,5vw,44px);
-
-  font-weight:
-    900;
-
-}
-
-
-.stats {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:
-    10px;
-
-  margin-top:
-    18px;
-
-}
-
-
-.stat {
-
-  padding:
-    15px;
-
-  background:
-    var(--mint);
-
-  border-radius:
-    17px;
-
-}
-
-
-.stat:nth-child(2) {
-
-  background:
-    var(--lime);
-
-}
-
-
-.stat:nth-child(3) {
-
-  background:
-    var(--cream);
-
-}
-
-
-.stat b {
-
-  display:
-    block;
-
-  margin-top:
-    7px;
-
-  font-size:
-    clamp(28px,5vw,38px);
-
-}
-
-
-.grid {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:
-    10px;
-
-}
-
-
-.activity,
-.reward,
-.search-result {
-
-  width:
-    100%;
-
-  min-height:
-    105px;
-
-  padding:
-    15px;
-
-  color:
-    var(--green-900);
-
-  text-align:
-    left;
-
-  background:
-    white;
-
-  border:
-    1px solid var(--border);
-
-  border-radius:
-    17px;
-
-}
-
-
-.activity.selected {
-
-  background:
-    var(--green-100);
-
-  border:
-    2px solid var(--green-600);
-
-}
-
-
-.photo {
-
-  width:
-    100%;
-
-  max-height:
-    520px;
-
-  margin-top:
-    12px;
-
-  object-fit:
-    contain;
-
-  border-radius:
-    18px;
-
-}
-
-
-/* ==========================================================
-   FLOATING ADMIN REGISTER
-   ========================================================== */
-
-.admin-register-fab {
-
-  position:
-    fixed;
-
-  z-index:
-    500;
-
-  left:
-    max(
-      14px,
-      env(safe-area-inset-left)
-    );
-
-  bottom:
-    calc(
-      16px +
-      env(safe-area-inset-bottom)
-    );
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    7px;
-
-  min-height:
-    42px;
-
-  padding:
-    9px 13px;
-
-  color:
-    var(--green-800);
-
-  background:
-    rgba(255,255,255,.95);
-
-  border:
-    1px solid var(--green-300);
-
-  border-radius:
-    999px;
-
-  box-shadow:
-    0 10px 28px
-    rgba(35,73,60,.15);
-
-  font-size:
-    13px;
-
-  font-weight:
-    900;
-
-  backdrop-filter:
-    blur(12px);
-
-}
-
-
-/* ==========================================================
-   MODAL
-   ========================================================== */
-
-.modal {
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    5000;
-
-  display:
-    grid;
-
-  place-items:
-    center;
-
-  padding:
-    16px;
-
-}
-
-
-.modal-bg {
-
-  position:
-    absolute;
-
-  inset:
-    0;
-
-  background:
-    rgba(22,49,41,.58);
-
-  backdrop-filter:
-    blur(7px);
-
-}
-
-
-.modal-card {
-
-  position:
-    relative;
-
-  z-index:
-    1;
-
-  width:
-    min(430px,100%);
-
-  padding:
-    22px;
-
-  background:
-    white;
-
-  border-radius:
-    24px;
-
-  box-shadow:
-    var(--shadow-lg);
-
-}
-
-
-.modal-card h3 {
-
-  margin-bottom:
-    5px;
-
-}
-
-
-/* ==========================================================
-   ADMIN REGISTER PAGE
-   ========================================================== */
-
-.admin-register-header {
-
-  display:
-    flex;
-
-  align-items:
-    flex-start;
-
-  justify-content:
-    space-between;
-
-  gap:
-    14px;
-
-}
-
-
-.admin-chip {
-
-  display:
-    inline-block;
-
-  padding:
-    5px 9px;
-
-  color:
-    var(--green-800);
-
-  background:
-    var(--green-100);
-
-  border-radius:
-    999px;
-
-  font-size:
-    11px;
-
-  font-weight:
-    900;
-
-}
-
-
-.form-grid {
-
-  display:
-    grid;
-
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
-  gap:
-    8px 12px;
-
-  margin-top:
-    15px;
-
-}
-
-
-.full {
-
-  grid-column:
-    1 / -1;
-
-}
-
-
-.consent {
-
-  display:
-    flex;
-
-  align-items:
-    flex-start;
-
-  gap:
-    9px;
-
-  margin-top:
-    15px;
-
-  padding:
-    13px;
-
-  color:
-    #597067;
-
-  background:
-    var(--green-50);
-
-  border-radius:
-    13px;
-
-  font-size:
-    13px;
-
-}
-
-
-/* ==========================================================
-   STATUS / LOADING
-   ========================================================== */
-
-#status {
-
-  margin:
-    10px 0 80px;
-
-  padding:
-    12px;
-
-  color:
-    var(--green-800);
-
-  text-align:
-    center;
-
-  background:
-    var(--green-50);
-
-  border-radius:
-    13px;
-
-}
-
-
-#status.error {
-
-  color:
-    var(--danger);
-
-  background:
-    var(--rose);
-
-}
-
-
-.overlay {
-
-  position:
-    fixed;
-
-  inset:
-    0;
-
-  z-index:
-    9999;
-
-  display:
-    grid;
-
-  place-items:
-    center;
-
-  background:
-    rgba(247,252,249,.88);
-
-  backdrop-filter:
-    blur(7px);
-
-}
-
-
-.loading-box {
-
-  min-width:
-    210px;
-
-  padding:
-    21px;
-
-  text-align:
-    center;
-
-  background:
-    white;
-
-  border-radius:
-    18px;
-
-  box-shadow:
-    var(--shadow-lg);
-
-  font-weight:
-    900;
-
-}
-
-
-/* ==========================================================
-   MOBILE
-   ========================================================== */
-
-@media(max-width:720px) {
-
-  header {
-
-    padding:
-      13px 15px;
-
-  }
-
-
-  main {
-
-    padding:
-      10px;
-
-  }
-
-
-  .card {
-
-    padding:
-      17px;
-
-    border-radius:
-      20px;
-
-  }
-
-
-  .tabs {
-
-    gap:
-      6px;
-
-  }
-
-
-  .tab {
-
-    min-height:
-      58px;
-
-    padding:
-      6px;
-
-    font-size:
-      14px;
-
-  }
-
-
-  .stats {
-
-    gap:
-      7px;
-
-  }
-
-
-  .stat {
-
-    padding:
-      11px;
-
-  }
-
-
-  .stat small {
-
-    font-size:
-      12px;
-
-  }
-
-
-  .grid {
-
-    gap:
-      8px;
-
-  }
-
-
-  .activity {
-
-    padding:
-      13px;
-
-  }
-
-
-  .form-grid {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-
-  .full {
-
-    grid-column:
-      auto;
-
-  }
-
-
-  .admin-register-fab {
-
-    max-width:
-      190px;
-
-    font-size:
-      12px;
-
-  }
-
-}
-
-
-@media(max-width:390px) {
-
-  .grid {
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- ==========================================================
-     LOADING
-     ========================================================== -->
-
-<div
-  id="loading"
-  class="overlay hidden">
-
-  <div
-    id="loadingText"
-    class="loading-box">
-
-    กำลังทำงาน...
-
+<header class="topbar">
+  <div class="brandmark">
+    <span class="brand-icon">🌿</span>
+    <span>พกสุข</span>
   </div>
 
-</div>
+  <nav class="nav">
+    <button id="tabQr" class="active" onclick="showQr()"><span class="ico">📷</span> QR</button>
+    <button id="tabSearch" onclick="showSearch()"><span class="ico">🔎</span> ค้นสมาชิก</button>
+    <button id="tabReward" onclick="showRewardSearch()"><span class="ico">🎁</span> แลกแต้ม</button>
+  </nav>
 
-
-<!-- ==========================================================
-     HEADER
-     ========================================================== -->
-
-<header>
-
-  <div class="header-inner">
-
-    <div>
-
-      <div class="brand">
-        ♥ ระบบพกสุข
-      </div>
-
-      <div class="subtitle">
-        Central Station
-      </div>
-
-    </div>
-
-  </div>
-
+  <button class="admin-button" onclick="openAdminRegister()">🔐 ลงทะเบียนสมาชิก</button>
 </header>
 
-
 <main>
+  <div class="workspace">
 
-
-<!-- ==========================================================
-     TABS
-     ========================================================== -->
-
-<div class="card tabs">
-
-  <button
-    id="tabQr"
-    class="tab active"
-    onclick="showQr()">
-
-    📷 QR
-
-  </button>
-
-
-  <button
-    id="tabSearch"
-    class="tab"
-    onclick="showSearch()">
-
-    🔎 ค้นชื่อ
-
-  </button>
-
-
-  <button
-    id="tabReward"
-    class="tab"
-    onclick="showRewardSearch()">
-
-    🎁 แลกแต้ม
-
-  </button>
-
-</div>
-
-
-<!-- ==========================================================
-     NORMAL QR
-     ========================================================== -->
-
-<section
-  id="qrSection"
-  class="card">
-
-  <h2>
-    สแกน QR
-  </h2>
-
-  <p class="muted">
-    สำหรับสมาชิกที่ลงทะเบียนแล้ว
-  </p>
-
-  <div id="reader"></div>
-
-</section>
-
-
-<!-- ==========================================================
-     SEARCH
-     ========================================================== -->
-
-<section
-  id="searchSection"
-  class="card hidden">
-
-  <h2>
-    ค้นหาสมาชิก
-  </h2>
-
-
-  <input
-    id="searchInput"
-    class="input"
-    placeholder="ชื่อ หรือ Member ID"
-    oninput="searchChanged()">
-
-
-  <div id="searchResults"></div>
-
-</section>
-
-
-<!-- ==========================================================
-     MEMBER
-     ========================================================== -->
-
-<section
-  id="memberSection"
-  class="hidden">
-
-
-  <div class="card">
-
-    <div
-      id="memberName"
-      class="member-name">
-    </div>
-
-
-    <div
-      id="memberId"
-      class="muted">
-    </div>
-
-
-    <div class="stats">
-
-      <div class="stat">
-
-        <small>
-          คะแนนสะสม
-        </small>
-
-        <b id="lifetimePoints">
-          0
-        </b>
-
+    <section class="panel left-panel">
+      <div id="qrPanel">
+        <h2 class="panel-title">📷 สแกน QR สมาชิก</h2>
+        <p class="panel-subtitle">วางบัตร QR ไว้หน้ากล้องเพื่อเปิดข้อมูลสมาชิก</p>
+        <div class="scanner-wrap"><div id="reader"></div></div>
       </div>
 
-
-      <div class="stat">
-
-        <small>
-          แต้มคงเหลือ
-        </small>
-
-        <b id="availablePoints">
-          0
-        </b>
-
+      <div id="searchPanel" class="hidden">
+        <h2 class="panel-title" id="searchTitle">🔎 ค้นหาสมาชิก</h2>
+        <p class="panel-subtitle">ค้นหาด้วยชื่อหรือรหัสสมาชิก</p>
+        <input id="searchInput" class="search-input" placeholder="พิมพ์ชื่อ หรือ Member ID" autocomplete="off">
+        <div id="searchResults" class="search-results"></div>
       </div>
 
-
-      <div class="stat">
-
-        <small>
-          อันดับ
-        </small>
-
-        <b id="rank">
-          -
-        </b>
-
+      <div id="registerPanel" class="hidden">
+        <h2 class="panel-title">📝 ลงทะเบียนสมาชิก</h2>
+        <p class="panel-subtitle">กรอกข้อมูลพื้นฐานเพื่อผูกสมาชิกกับ QR Code</p>
+        <div class="form-label">QR Code</div>
+        <input id="regQrDisplay" class="form-input" readonly>
+        <label class="form-label" for="regName">ชื่อ-นามสกุล *</label>
+        <input id="regName" class="form-input" placeholder="กรอกชื่อและนามสกุล">
+        <label class="form-label" for="regBirthYear">ปีเกิด พ.ศ.</label>
+        <input id="regBirthYear" class="form-input" type="number" inputmode="numeric" placeholder="เช่น 2500">
+        <label style="display:flex;gap:10px;align-items:flex-start;margin-top:15px;font-size:14px">
+          <input id="regConsent" type="checkbox" style="width:20px;height:20px;flex-shrink:0">
+          <span>ยินยอมให้ใช้ข้อมูลเท่าที่จำเป็นเพื่อจัดการสมาชิกและกิจกรรม</span>
+        </label>
+        <div class="modal-actions">
+          <button class="secondary-button" onclick="cancelRegistration()">ยกเลิก</button>
+          <button class="primary-button" onclick="submitRegistration()">บันทึกสมาชิก</button>
+        </div>
       </div>
 
-    </div>
+      <div id="leftStatus" class="status">กำลังเชื่อมต่อระบบ...</div>
+    </section>
+
+    <section class="panel right-panel">
+      <div id="emptyMember" class="empty-state">
+        <div class="empty-icon">🌱</div>
+        <strong>พร้อมให้บริการ</strong>
+        <p>สแกน QR หรือค้นหาสมาชิกเพื่อเริ่มใช้งาน</p>
+      </div>
+
+      <div id="memberPanel" class="hidden" style="display:flex;flex-direction:column;height:100%;min-height:0">
+        <div class="member-head">
+          <div>
+            <div id="memberName" class="member-name"></div>
+            <div id="memberId" class="member-id"></div>
+          </div>
+          <span class="member-badge">สมาชิก</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><small>คะแนนสะสม</small><b id="lifetimePoints">0</b></div>
+          <div class="stat"><small>แต้มคงเหลือ</small><b id="availablePoints">0</b></div>
+          <div class="stat"><small>อันดับ</small><b id="memberRank">-</b></div>
+        </div>
+
+        <div id="activityArea" style="display:flex;flex-direction:column;min-height:0;flex:1">
+          <div class="section-heading">
+            <h3>เลือกกิจกรรม</h3>
+            <span class="muted" style="font-size:13px">เลือก 1 กิจกรรม</span>
+          </div>
+          <div id="activities" class="activity-grid"></div>
+
+          <div class="right-bottom">
+            <p id="selectedActivityNote" class="selected-activity-note">กรุณาเลือกกิจกรรมก่อนถ่ายภาพ</p>
+            <div class="photo-row">
+              <img id="photoPreview" class="photo-preview hidden" alt="ภาพยืนยัน">
+              <button id="captureButton" class="secondary-button capture-button" onclick="openCapture()" disabled>📸 ถ่ายภาพยืนยัน</button>
+              <button id="submitButton" class="primary-button" onclick="submitCheckin()" disabled>บันทึก</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="rewardArea" class="hidden" style="min-height:0;overflow:auto">
+          <div class="section-heading"><h3>🎁 ของรางวัล</h3></div>
+          <div id="rewards" class="reward-grid"></div>
+        </div>
+      </div>
+    </section>
 
   </div>
-
-
-  <div
-    id="activityCard"
-    class="card">
-
-    <h3>
-      เลือกกิจกรรม
-    </h3>
-
-
-    <div
-      id="activities"
-      class="grid">
-    </div>
-
-  </div>
-
-
-  <div
-    id="photoCard"
-    class="card">
-
-    <h3>
-      ภาพยืนยันกิจกรรม
-    </h3>
-
-
-    <input
-      id="photoInput"
-      type="file"
-      accept="image/*"
-      capture="environment"
-      class="input"
-      onchange="photoChanged(event)">
-
-
-    <img
-      id="photoPreview"
-      class="photo hidden"
-      alt="ภาพยืนยัน">
-
-
-    <button
-      class="btn"
-      onclick="submitCheckin()">
-
-      ยืนยันกิจกรรม
-
-    </button>
-
-  </div>
-
-
-  <div
-    id="rewardCard"
-    class="card hidden">
-
-    <h3>
-      ของรางวัล
-    </h3>
-
-
-    <div
-      id="rewards"
-      class="grid">
-    </div>
-
-  </div>
-
-
-</section>
-
-
-<!-- ==========================================================
-     ADMIN REGISTER SCANNER
-     ========================================================== -->
-
-<section
-  id="adminScannerSection"
-  class="card hidden">
-
-  <div class="admin-register-header">
-
-    <div>
-
-      <span class="admin-chip">
-        ADMIN
-      </span>
-
-      <h2>
-        สแกน QR เพื่อลงทะเบียน
-      </h2>
-
-      <p class="muted">
-        สแกนเฉพาะ QR ที่ยังไม่ได้ผูกสมาชิก
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <div id="adminReader"></div>
-
-
-  <button
-    class="btn outline"
-    onclick="cancelAdminRegistration()">
-
-    กลับหน้าหลัก
-
-  </button>
-
-</section>
-
-
-<!-- ==========================================================
-     ADMIN REGISTER FORM
-     ========================================================== -->
-
-<section
-  id="adminRegisterSection"
-  class="card hidden">
-
-  <div class="admin-register-header">
-
-    <div>
-
-      <span class="admin-chip">
-        ADMIN REGISTRATION
-      </span>
-
-      <h2>
-        ลงทะเบียนสมาชิกใหม่
-      </h2>
-
-      <p class="muted">
-        QR ต้องอยู่ในสถานะพร้อมลงทะเบียน
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <div class="form-grid">
-
-    <div class="full">
-
-      <label class="label">
-        QR Code
-      </label>
-
-      <input
-        id="regQrDisplay"
-        class="input"
-        readonly>
-
-    </div>
-
-
-    <div class="full">
-
-      <label class="label">
-        ชื่อ-นามสกุล *
-      </label>
-
-      <input
-        id="regName"
-        class="input">
-
-    </div>
-
-
-    <div>
-
-      <label class="label">
-        ปีเกิด พ.ศ. *
-      </label>
-
-      <input
-        id="regBirthYear"
-        class="input"
-        inputmode="numeric">
-
-    </div>
-
-
-    <div>
-
-      <label class="label">
-        เบอร์โทร
-      </label>
-
-      <input
-        id="regPhone"
-        class="input"
-        inputmode="tel">
-
-    </div>
-
-
-    <div>
-
-      <label class="label">
-        บ้านเลขที่
-      </label>
-
-      <input
-        id="regHouseNo"
-        class="input">
-
-    </div>
-
-
-    <div>
-
-      <label class="label">
-        หมู่
-      </label>
-
-      <input
-        id="regVillageNo"
-        class="input">
-
-    </div>
-
-
-    <div class="full">
-
-      <label class="label">
-        ตำบล
-      </label>
-
-      <input
-        id="regSubdistrict"
-        class="input">
-
-    </div>
-
-  </div>
-
-
-  <label class="consent">
-
-    <input
-      id="regConsent"
-      type="checkbox">
-
-    <span>
-      ได้รับความยินยอมให้บันทึกข้อมูลตามวัตถุประสงค์ของระบบ
-    </span>
-
-  </label>
-
-
-  <button
-    class="btn"
-    onclick="adminRegisterMember()">
-
-    บันทึกสมาชิก
-
-  </button>
-
-
-  <button
-    class="btn outline"
-    onclick="rescanAdminQr()">
-
-    สแกน QR ใหม่
-
-  </button>
-
-
-  <button
-    class="btn outline"
-    onclick="cancelAdminRegistration()">
-
-    ยกเลิก
-
-  </button>
-
-</section>
-
-
-<!-- ==========================================================
-     STATUS
-     ========================================================== -->
-
-<div id="status">
-  กำลังเชื่อมต่อ...
-</div>
-
-
 </main>
 
-
-<!-- ==========================================================
-     SMALL FLOATING REGISTER BUTTON
-     ========================================================== -->
-
-<button
-  id="adminRegisterFab"
-  class="admin-register-fab"
-  onclick="openAdminRegisterLogin()">
-
-  ＋ ลงทะเบียนสมาชิกใหม่
-
-</button>
-
-
-<!-- ==========================================================
-     ADMIN LOGIN MODAL
-     ========================================================== -->
-
-<div
-  id="adminLoginModal"
-  class="modal hidden">
-
-  <div
-    class="modal-bg"
-    onclick="closeAdminLogin()">
-  </div>
-
-
+<!-- ADMIN PIN MODAL -->
+<div id="adminModal" class="modal hidden">
   <div class="modal-card">
-
-    <h3>
-      ยืนยันสิทธิ์เจ้าหน้าที่
-    </h3>
-
-
-    <p class="muted">
-      กรุณากรอกรหัส Admin ก่อนเข้าสู่เมนูลงทะเบียนสมาชิก
-    </p>
-
-
-    <label class="label">
-      รหัส Admin
-    </label>
-
-
-    <input
-      id="adminPin"
-      type="password"
-      inputmode="numeric"
-      class="input"
-      placeholder="••••"
-      onkeydown="
-        if(event.key==='Enter'){
-          adminLogin();
-        }
-      ">
-
-
-    <button
-      class="btn"
-      onclick="adminLogin()">
-
-      ยืนยัน
-
-    </button>
-
-
-    <button
-      class="btn outline"
-      onclick="closeAdminLogin()">
-
-      ยกเลิก
-
-    </button>
-
+    <h2 class="modal-title">🔐 เจ้าหน้าที่</h2>
+    <p class="modal-desc">กรอกรหัสเพื่อเปิดลงทะเบียนสมาชิก</p>
+    <label class="form-label" for="adminPin">รหัส PIN</label>
+    <input id="adminPin" class="form-input" type="password" inputmode="numeric" maxlength="8" placeholder="กรอกรหัส PIN">
+    <div class="modal-actions">
+      <button class="secondary-button" onclick="closeAdminModal()">ยกเลิก</button>
+      <button class="primary-button" onclick="adminLogin()">เข้าสู่ระบบ</button>
+    </div>
   </div>
-
 </div>
 
+<!-- CAMERA MODAL -->
+<div id="cameraModal" class="modal hidden">
+  <div class="modal-card camera-card">
+    <h2 class="modal-title">📸 ถ่ายภาพยืนยัน</h2>
+    <p class="modal-desc">จัดภาพให้อยู่ในกรอบ ระบบจะนับถอยหลังและถ่ายภาพอัตโนมัติ</p>
+    <div class="camera-stage">
+      <video id="captureVideo" autoplay playsinline muted></video>
+      <div id="countdown" class="countdown hidden"></div>
+    </div>
+    <div class="camera-actions">
+      <button class="secondary-button" onclick="closeCapture()">ยกเลิก</button>
+      <button id="startCountdownButton" class="primary-button" onclick="startCountdown()">เริ่มนับถอยหลัง 3–2–1</button>
+    </div>
+  </div>
+</div>
+
+<div id="loading" class="loading hidden"><div id="loadingText" class="loading-box">กำลังทำงาน...</div></div>
+<div id="toast" class="toast hidden"></div>
+<canvas id="photoCanvas" class="hidden"></canvas>
 
 <script>
+'use strict';
 
-/* ==========================================================
-   CONFIG
-   ========================================================== */
-
-const API =
-  'https://poksuk-central-api.rmuti8-esmartservice1-01.workers.dev/';
-
+const API = 'https://poksuk-central-api.rmuti8-esmartservice1-01.workers.dev/';
 
 const state = {
-
-  scanner:
-    null,
-
-  scannerContainer:
-    '',
-
-  running:
-    false,
-
-  locked:
-    false,
-
-  mode:
-    'QR',
-
-  scannedQr:
-    '',
-
-  registerQrToken:
-    '',
-
-  registerDisplayCode:
-    '',
-
-  adminToken:
-    '',
-
-  member:
-    null,
-
-  activityId:
-    '',
-
-  photo:
-    '',
-
-  activities:
-    []
-
+  mode:'QR',
+  scanner:null,
+  scannerRunning:false,
+  scannerBusy:false,
+  adminToken:'',
+  adminMode:false,
+  registerQrToken:'',
+  registerDisplayCode:'',
+  member:null,
+  activities:[],
+  selectedActivity:null,
+  photoDataUrl:'',
+  cameraStream:null,
+  countdownTimer:null,
+  searchTimer:null,
+  toastTimer:null
 };
 
+const $ = id => document.getElementById(id);
 
-let searchTimer =
-  null;
-
-
-/* ==========================================================
-   INIT
-   ========================================================== */
-
-window.addEventListener(
-  'load',
-  init
-);
-
-
-async function init() {
-
-  loading(
-    true,
-    'กำลังเชื่อมต่อระบบ...'
-  );
-
-
-  try {
-
-    const ping =
-      await api(
-        'PING'
-      );
-
-
-    const result =
-      await api(
-        'ACTIVITIES'
-      );
-
-
-    state.activities =
-      result.activities ||
-      [];
-
-
-    renderActivities();
-
-
-    /**
-     * Restore Admin session
-     */
-    try {
-
-      const saved =
-        sessionStorage.getItem(
-          'POKSUK_CENTRAL_ADMIN'
-        );
-
-
-      if (
-        saved
-      ) {
-
-        const verify =
-          await api(
-            'ADMIN_VERIFY',
-            {},
-            saved
-          );
-
-
-        if (
-          verify.success
-        ) {
-
-          state.adminToken =
-            saved;
-        }
-      }
-
-    } catch (error) {
-
-      try {
-
-        sessionStorage.removeItem(
-          'POKSUK_CENTRAL_ADMIN'
-        );
-
-      } catch (e) {}
-
-    }
-
-
-    setStatus(
-      'พร้อมใช้งาน'
-    );
-
-
-    await showQr();
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
 }
 
+function setStatus(text,error=false){
+  const el=$('leftStatus');
+  el.textContent=text || '';
+  el.classList.toggle('error',!!error);
+}
 
-/* ==========================================================
-   API
-   ========================================================== */
+function notify(text,error=false){
+  const el=$('toast');
+  el.textContent=text;
+  el.classList.toggle('error',!!error);
+  el.classList.remove('hidden');
+  clearTimeout(state.toastTimer);
+  state.toastTimer=setTimeout(()=>el.classList.add('hidden'),3500);
+}
 
-async function api(
-  action,
-  payload = {},
-  adminToken = ''
-) {
+function loading(on,text='กำลังทำงาน...'){
+  $('loadingText').textContent=text;
+  $('loading').classList.toggle('hidden',!on);
+}
 
-  const controller =
-    new AbortController();
+async function api(action,payload={},adminToken=''){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),25000);
+  try{
+    const request={action,payload};
+    if(adminToken) request.adminToken=adminToken;
 
+    const response=await fetch(API,{
+      method:'POST',
+      mode:'cors',
+      cache:'no-store',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(request),
+      signal:controller.signal
+    });
 
-  const timeout =
-    setTimeout(
-      function() {
-
-        controller.abort();
-
-      },
-      20000
-    );
-
-
-  try {
-
-    const request = {
-
-      action:
-        action,
-
-      payload:
-        payload
-
-    };
-
-
-    if (
-      adminToken
-    ) {
-
-      request.adminToken =
-        adminToken;
-    }
-
-
-    const response =
-      await fetch(
-        API,
-        {
-
-          method:
-            'POST',
-
-          mode:
-            'cors',
-
-          cache:
-            'no-store',
-
-          headers:{
-
-            'Content-Type':
-              'application/json'
-
-          },
-
-          body:
-            JSON.stringify(
-              request
-            ),
-
-          signal:
-            controller.signal
-
-        }
-      );
-
-
-    const raw =
-      await response.text();
-
-
+    const raw=await response.text();
     let data;
+    try{data=JSON.parse(raw)}catch(e){throw new Error('ระบบตอบกลับไม่ถูกต้อง')}
 
-
-    try {
-
-      data =
-        JSON.parse(
-          raw
-        );
-
-    } catch (error) {
-
-      throw new Error(
-        'API ตอบกลับไม่ถูกต้อง'
-      );
+    if(!response.ok || !data.success){
+      throw new Error(data.message || ('HTTP '+response.status));
     }
-
-
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-        data.message ||
-        (
-          'HTTP ' +
-          response.status
-        )
-      );
-    }
-
-
-    if (
-      !data.success
-    ) {
-
-      throw new Error(
-        data.message ||
-        'เกิดข้อผิดพลาด'
-      );
-    }
-
-
     return data;
-
-
-  } catch (error) {
-
-    if (
-      error.name ===
-      'AbortError'
-    ) {
-
-      throw new Error(
-        'เชื่อมต่อระบบนานเกินไป'
-      );
-    }
-
-
+  }catch(error){
+    if(error.name==='AbortError') throw new Error('การเชื่อมต่อนานเกินไป');
     throw error;
-
-
-  } finally {
-
-    clearTimeout(
-      timeout
-    );
+  }finally{
+    clearTimeout(timeout);
   }
 }
 
+function activateTab(id){
+  ['tabQr','tabSearch','tabReward'].forEach(x=>$(x).classList.remove('active'));
+  $(id).classList.add('active');
+}
 
-/* ==========================================================
-   CAMERA
-   ========================================================== */
+function hideLeftPanels(){
+  ['qrPanel','searchPanel','registerPanel'].forEach(id=>$(id).classList.add('hidden'));
+}
 
-async function startCamera(
-  containerId
-) {
+function showQr(){
+  state.mode='QR';
+  state.adminMode=false;
+  activateTab('tabQr');
+  hideLeftPanels();
+  $('qrPanel').classList.remove('hidden');
+  resetMember();
+  startScanner('reader');
+  setStatus('พร้อมสแกน QR สมาชิก');
+}
 
-  if (
-    state.running
-  ) {
+async function showSearch(){
+  state.mode='SEARCH';
+  state.adminMode=false;
+  activateTab('tabSearch');
+  await stopScanner();
+  hideLeftPanels();
+  $('searchPanel').classList.remove('hidden');
+  $('searchTitle').textContent='🔎 ค้นหาสมาชิก';
+  $('searchInput').value='';
+  $('searchResults').innerHTML='';
+  resetMember();
+  $('searchInput').focus();
+  setStatus('ค้นหาสมาชิกด้วยชื่อหรือ Member ID');
+}
 
-    await stopCamera();
+async function showRewardSearch(){
+  state.mode='REWARD';
+  state.adminMode=false;
+  activateTab('tabReward');
+  await stopScanner();
+  hideLeftPanels();
+  $('searchPanel').classList.remove('hidden');
+  $('searchTitle').textContent='🎁 ค้นหาสมาชิกเพื่อแลกแต้ม';
+  $('searchInput').value='';
+  $('searchResults').innerHTML='';
+  resetMember();
+  $('searchInput').focus();
+  setStatus('เลือกสมาชิกเพื่อดูของรางวัล');
+}
+
+function resetMember(){
+  state.member=null;
+  state.selectedActivity=null;
+  state.photoDataUrl='';
+  $('memberPanel').classList.add('hidden');
+  $('emptyMember').classList.remove('hidden');
+  $('photoPreview').classList.add('hidden');
+  $('captureButton').disabled=true;
+  $('submitButton').disabled=true;
+  $('activityArea').classList.remove('hidden');
+  $('rewardArea').classList.add('hidden');
+}
+
+async function startScanner(containerId){
+  await stopScanner();
+  if(!window.Html5Qrcode){
+    setStatus('ไม่สามารถโหลดระบบสแกน QR ได้',true);
+    return;
   }
+  try{
+    state.scanner=new Html5Qrcode(containerId);
+    const cameras=await Html5Qrcode.getCameras();
+    if(!cameras || !cameras.length) throw new Error('ไม่พบกล้อง');
 
-
-  try {
-
-    const cameras =
-      await Html5Qrcode
-        .getCameras();
-
-
-    if (
-      !cameras.length
-    ) {
-
-      throw new Error(
-        'ไม่พบกล้อง'
-      );
-    }
-
-
-    state.scannerContainer =
-      containerId;
-
-
-    state.scanner =
-      new Html5Qrcode(
-        containerId
-      );
-
-
-    const camera =
-      cameras[
-        cameras.length -
-        1
-      ];
-
+    const preferred=cameras.find(c=>/back|rear|environment/i.test(c.label)) || cameras[cameras.length-1];
 
     await state.scanner.start(
-
-      camera.id,
-
-      {
-
-        fps:
-          10,
-
-        qrbox:{
-
-          width:
-            260,
-
-          height:
-            260
-
+      preferred.id,
+      {fps:10,qrbox:{width:250,height:250},aspectRatio:1},
+      async decodedText=>{
+        if(state.scannerBusy) return;
+        state.scannerBusy=true;
+        await stopScanner();
+        if(state.adminMode){
+          await handleAdminQr(decodedText);
+        }else{
+          await handleMemberQr(decodedText);
         }
-
       },
-
-      qrSuccess,
-
-      function(){}
-
+      ()=>{}
     );
-
-
-    state.running =
-      true;
-
-
-  } catch (error) {
-
-    state.running =
-      false;
-
-
-    setStatus(
-      'เปิดกล้องไม่ได้: ' +
-      message(
-        error
-      ),
-      true
-    );
+    state.scannerRunning=true;
+  }catch(error){
+    setStatus('เปิดกล้องไม่ได้: '+(error.message||error),true);
   }
 }
 
-
-async function stopCamera() {
-
-  if (
-    !state.scanner
-  ) {
-
-    state.running =
-      false;
-
-    return;
+async function stopScanner(){
+  if(state.scanner){
+    try{
+      if(state.scannerRunning) await state.scanner.stop();
+      await state.scanner.clear();
+    }catch(e){}
   }
-
-
-  try {
-
-    if (
-      state.running
-    ) {
-
-      await state.scanner.stop();
-    }
-
-
-    state.scanner.clear();
-
-  } catch (error) {}
-
-
-  state.scanner =
-    null;
-
-
-  state.scannerContainer =
-    '';
-
-
-  state.running =
-    false;
+  state.scanner=null;
+  state.scannerRunning=false;
 }
 
-
-/* ==========================================================
-   QR RESULT
-   ========================================================== */
-
-async function qrSuccess(
-  value
-) {
-
-  if (
-    state.locked ||
-    !value
-  ) {
-
-    return;
-  }
-
-
-  state.locked =
-    true;
-
-
-  /**
-   * Admin registration scanner
-   */
-  if (
-    state.mode ===
-    'ADMIN_REGISTER_SCAN'
-  ) {
-
-    await handleAdminRegistrationQr(
-      value
-    );
-
-    return;
-  }
-
-
-  await handleNormalQr(
-    value
-  );
-}
-
-
-/* ==========================================================
-   NORMAL QR
-   ========================================================== */
-
-async function handleNormalQr(
-  value
-) {
-
-  state.scannedQr =
-    String(
-      value
-    );
-
-
-  loading(
-    true,
-    'กำลังตรวจสอบ QR...'
-  );
-
-
-  try {
-
-    const result =
-      await api(
-        'PREVIEW',
-        {
-
-          scannedQr:
-            state.scannedQr
-
-        }
-      );
-
-
-    if (
-      result.needsRegistration
-    ) {
-
-      /**
-       * ห้ามเปิดฟอร์มลงทะเบียนจากโหมดปกติ
-       */
-      setStatus(
-        'QR นี้ยังไม่ได้ลงทะเบียน กรุณาให้เจ้าหน้าที่ใช้เมนู “ลงทะเบียนสมาชิกใหม่”',
-        true
-      );
-
-
-      state.scannedQr =
-        '';
-
-
-      state.locked =
-        false;
-
-
+async function handleMemberQr(value){
+  loading(true,'กำลังตรวจสอบ QR...');
+  try{
+    const result=await api('PREVIEW',{scannedQr:String(value)});
+    if(result.needsRegistration){
+      setStatus('QR นี้ยังไม่ได้ลงทะเบียน กรุณาให้เจ้าหน้าที่ลงทะเบียน',true);
+      notify('QR ยังไม่ได้ลงทะเบียน',true);
+      state.scannerBusy=false;
+      await startScanner('reader');
       return;
     }
-
-
-    await stopCamera();
-
-
-    openMember(
-      result
-    );
-
-
-  } catch (error) {
-
-    state.scannedQr =
-      '';
-
-
-    state.locked =
-      false;
-
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
+    await openMember(result);
+    setStatus('เปิดข้อมูลสมาชิกเรียบร้อย');
+  }catch(error){
+    setStatus(error.message,true);
+    notify(error.message,true);
+    state.scannerBusy=false;
+    await startScanner('reader');
+  }finally{
+    loading(false);
   }
 }
 
-
-/* ==========================================================
-   ADMIN LOGIN
-   ========================================================== */
-
-function openAdminRegisterLogin() {
-
-  /**
-   * ถ้ามี session อยู่แล้ว
-   */
-  if (
-    state.adminToken
-  ) {
-
-    beginAdminRegistration();
-
-    return;
-  }
-
-
-  document
-    .getElementById(
-      'adminPin'
-    )
-    .value =
-      '';
-
-
-  show(
-    'adminLoginModal'
-  );
-
-
-  setTimeout(
-    function() {
-
-      document
-        .getElementById(
-          'adminPin'
-        )
-        .focus();
-
-    },
-    100
-  );
-}
-
-
-function closeAdminLogin() {
-
-  hide(
-    'adminLoginModal'
-  );
-}
-
-
-async function adminLogin() {
-
-  const pin =
-    val(
-      'adminPin'
-    );
-
-
-  if (
-    !pin
-  ) {
-
-    setStatus(
-      'กรุณากรอกรหัส Admin',
-      true
-    );
-
-    return;
-  }
-
-
-  loading(
-    true,
-    'กำลังตรวจสอบสิทธิ์...'
-  );
-
-
-  try {
-
-    const result =
-      await api(
-        'ADMIN_LOGIN',
-        {
-
-          pin:
-            pin
-
-        }
-      );
-
-
-    state.adminToken =
-      result.adminToken;
-
-
-    try {
-
-      sessionStorage.setItem(
-        'POKSUK_CENTRAL_ADMIN',
-        state.adminToken
-      );
-
-    } catch (error) {}
-
-
-    closeAdminLogin();
-
-
-    await beginAdminRegistration();
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
-}
-
-
-/* ==========================================================
-   ADMIN REGISTRATION FLOW
-   ========================================================== */
-
-async function beginAdminRegistration() {
-
-  /**
-   * ตรวจ session ก่อน
-   */
-  try {
-
-    await api(
-      'ADMIN_VERIFY',
-      {},
-      state.adminToken
-    );
-
-  } catch (error) {
-
-    state.adminToken =
-      '';
-
-
-    try {
-
-      sessionStorage.removeItem(
-        'POKSUK_CENTRAL_ADMIN'
-      );
-
-    } catch (e) {}
-
-
-    openAdminRegisterLogin();
-
-    return;
-  }
-
-
-  await stopCamera();
-
-
-  resetMemberState();
-
-
-  state.mode =
-    'ADMIN_REGISTER_SCAN';
-
-
-  state.locked =
-    false;
-
-
-  hideAll();
-
-
-  show(
-    'adminScannerSection'
-  );
-
-
-  setStatus(
-    'สแกน QR Code ที่ต้องการใช้ลงทะเบียนสมาชิกใหม่'
-  );
-
-
-  await startCamera(
-    'adminReader'
-  );
-}
-
-
-async function handleAdminRegistrationQr(
-  value
-) {
-
-  loading(
-    true,
-    'กำลังตรวจสอบ QR สำหรับลงทะเบียน...'
-  );
-
-
-  try {
-
-    const result =
-      await api(
-        'PREVIEW',
-        {
-
-          scannedQr:
-            String(
-              value
-            )
-
-        }
-      );
-
-
-    if (
-      !result.needsRegistration
-    ) {
-
-      state.locked =
-        false;
-
-
-      setStatus(
-        'QR Code นี้มีสมาชิกใช้งานแล้ว กรุณาสแกน QR ใหม่',
-        true
-      );
-
-      return;
-    }
-
-
-    await stopCamera();
-
-
-    state.registerQrToken =
-      result.qrToken;
-
-
-    state.registerDisplayCode =
-      result.displayCode;
-
-
-    clearRegistrationForm();
-
-
-    document
-      .getElementById(
-        'regQrDisplay'
-      )
-      .value =
-        result.displayCode ||
-        'QR พร้อมลงทะเบียน';
-
-
-    hideAll();
-
-
-    show(
-      'adminRegisterSection'
-    );
-
-
-    setStatus(
-      'QR พร้อมลงทะเบียน กรุณากรอกข้อมูลสมาชิก'
-    );
-
-
-  } catch (error) {
-
-    state.locked =
-      false;
-
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
-}
-
-
-async function adminRegisterMember() {
-
-  if (
-    !state.adminToken
-  ) {
-
-    openAdminRegisterLogin();
-
-    return;
-  }
-
-
-  if (
-    !state.registerQrToken
-  ) {
-
-    setStatus(
-      'กรุณาสแกน QR ก่อนลงทะเบียน',
-      true
-    );
-
-    return;
-  }
-
-
-  const fullName =
-    val(
-      'regName'
-    );
-
-
-  const birthYear =
-    val(
-      'regBirthYear'
-    );
-
-
-  const consent =
-    document
-      .getElementById(
-        'regConsent'
-      )
-      .checked;
-
-
-  if (
-    !fullName
-  ) {
-
-    setStatus(
-      'กรุณากรอกชื่อ-นามสกุล',
-      true
-    );
-
-    return;
-  }
-
-
-  if (
-    !birthYear
-  ) {
-
-    setStatus(
-      'กรุณากรอกปีเกิด พ.ศ.',
-      true
-    );
-
-    return;
-  }
-
-
-  if (
-    !consent
-  ) {
-
-    setStatus(
-      'กรุณายืนยันว่าได้รับความยินยอม',
-      true
-    );
-
-    return;
-  }
-
-
-  loading(
-    true,
-    'กำลังบันทึกสมาชิก...'
-  );
-
-
-  try {
-
-    const result =
-      await api(
-
-        'REGISTER_MEMBER',
-
-        {
-
-          qrToken:
-            state.registerQrToken,
-
-          fullName:
-            fullName,
-
-          birthYearBE:
-            birthYear,
-
-          phone:
-            val(
-              'regPhone'
-            ),
-
-          houseNo:
-            val(
-              'regHouseNo'
-            ),
-
-          villageNo:
-            val(
-              'regVillageNo'
-            ),
-
-          subdistrict:
-            val(
-              'regSubdistrict'
-            ),
-
-          consentAccepted:
-            true
-
-        },
-
-        state.adminToken
-
-      );
-
-
-    alert(
-      'ลงทะเบียนสำเร็จ\n' +
-      result.fullName +
-      '\n' +
-      result.memberId
-    );
-
-
-    state.registerQrToken =
-      '';
-
-
-    state.registerDisplayCode =
-      '';
-
-
-    await beginAdminRegistration();
-
-
-  } catch (error) {
-
-    /**
-     * ถ้า session หมดอายุ
-     */
-    if (
-      message(
-        error
-      ).includes(
-        'Session'
-      ) ||
-      message(
-        error
-      ).includes(
-        'Admin'
-      )
-    ) {
-
-      state.adminToken =
-        '';
-
-
-      try {
-
-        sessionStorage.removeItem(
-          'POKSUK_CENTRAL_ADMIN'
-        );
-
-      } catch (e) {}
-    }
-
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
-}
-
-
-async function rescanAdminQr() {
-
-  state.registerQrToken =
-    '';
-
-
-  state.registerDisplayCode =
-    '';
-
-
-  await beginAdminRegistration();
-}
-
-
-async function cancelAdminRegistration() {
-
-  await stopCamera();
-
-
-  state.mode =
-    'QR';
-
-
-  state.locked =
-    false;
-
-
-  state.registerQrToken =
-    '';
-
-
-  hideAll();
-
-
-  show(
-    'qrSection'
-  );
-
-
-  activate(
-    'tabQr'
-  );
-
-
-  setStatus(
-    'พร้อมสแกน QR สมาชิก'
-  );
-
-
-  await startCamera(
-    'reader'
-  );
-}
-
-
-function clearRegistrationForm() {
-
-  [
-    'regName',
-    'regBirthYear',
-    'regPhone',
-    'regHouseNo',
-    'regVillageNo',
-    'regSubdistrict'
-  ]
-    .forEach(
-      function(id) {
-
-        const input =
-          document.getElementById(
-            id
-          );
-
-
-        if (
-          input
-        ) {
-
-          input.value =
-            '';
-        }
-
-      }
-    );
-
-
-  document
-    .getElementById(
-      'regConsent'
-    )
-    .checked =
-      false;
-}
-
-
-/* ==========================================================
-   TABS
-   ========================================================== */
-
-async function showQr() {
-
-  state.mode =
-    'QR';
-
-
-  state.locked =
-    false;
-
-
-  activate(
-    'tabQr'
-  );
-
-
-  await stopCamera();
-
-
-  resetMemberState();
-
-
-  hideAll();
-
-
-  show(
-    'qrSection'
-  );
-
-
-  setStatus(
-    'พร้อมสแกน QR สมาชิก'
-  );
-
-
-  await startCamera(
-    'reader'
-  );
-}
-
-
-async function showSearch() {
-
-  state.mode =
-    'SEARCH';
-
-
-  state.locked =
-    false;
-
-
-  activate(
-    'tabSearch'
-  );
-
-
-  await stopCamera();
-
-
-  resetMemberState();
-
-
-  hideAll();
-
-
-  show(
-    'searchSection'
-  );
-
-
-  setStatus(
-    'ค้นหาสมาชิกด้วยชื่อหรือ Member ID'
-  );
-}
-
-
-async function showRewardSearch() {
-
-  state.mode =
-    'REWARD';
-
-
-  state.locked =
-    false;
-
-
-  activate(
-    'tabReward'
-  );
-
-
-  await stopCamera();
-
-
-  resetMemberState();
-
-
-  hideAll();
-
-
-  show(
-    'searchSection'
-  );
-
-
-  setStatus(
-    'ค้นหาสมาชิกเพื่อแลกแต้ม'
-  );
-}
-
-
-function activate(
-  id
-) {
-
-  document
-    .querySelectorAll(
-      '.tab'
-    )
-    .forEach(
-      function(tab) {
-
-        tab
-          .classList
-          .remove(
-            'active'
-          );
-
-      }
-    );
-
-
-  const selected =
-    document.getElementById(
-      id
-    );
-
-
-  if (
-    selected
-  ) {
-
-    selected
-      .classList
-      .add(
-        'active'
-      );
-  }
-}
-
-
-/* ==========================================================
-   SEARCH
-   ========================================================== */
-
-function searchChanged() {
-
-  clearTimeout(
-    searchTimer
-  );
-
-
-  searchTimer =
-    setTimeout(
-      searchMembers,
-      350
-    );
-}
-
-
-async function searchMembers() {
-
-  const query =
-    val(
-      'searchInput'
-    );
-
-
-  const root =
-    document.getElementById(
-      'searchResults'
-    );
-
-
-  if (
-    query.length <
-    2
-  ) {
-
-    root.innerHTML =
-      '';
-
-    return;
-  }
-
-
-  try {
-
-    const result =
-      await api(
-        'SEARCH_MEMBER',
-        {
-          query:
-            query
-        }
-      );
-
-
-    root.innerHTML =
-      (
-        result.members ||
-        []
-      )
-        .map(
-          function(row) {
-
-            return `
-
-              <button
-                class="search-result"
-                onclick="selectMember('${escapeJs(row.memberId)}')">
-
-                <b>
-                  ${escapeHtml(row.fullName)}
-                </b>
-
-                <br>
-
-                <small>
-                  ${escapeHtml(row.memberId)}
-                </small>
-
-              </button>
-
-            `;
-
-          }
-        )
-        .join('');
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-  }
-}
-
-
-async function selectMember(
-  memberId
-) {
-
-  loading(
-    true,
-    'กำลังโหลดสมาชิก...'
-  );
-
-
-  try {
-
-    const result =
-      await api(
-        'PREVIEW_MEMBER',
-        {
-          memberId:
-            memberId
-        }
-      );
-
-
-    openMember(
-      result
-    );
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
-}
-
-
-/* ==========================================================
-   MEMBER
-   ========================================================== */
-
-async function openMember(
-  member
-) {
-
-  state.member =
-    member;
-
-
-  hideAll();
-
-
-  show(
-    'memberSection'
-  );
-
-
-  document
-    .getElementById(
-      'memberName'
-    )
-    .textContent =
-      member.fullName;
-
-
-  document
-    .getElementById(
-      'memberId'
-    )
-    .textContent =
-      member.memberId;
-
-
-  document
-    .getElementById(
-      'lifetimePoints'
-    )
-    .textContent =
-      member.lifetimePoints;
-
-
-  document
-    .getElementById(
-      'availablePoints'
-    )
-    .textContent =
-      member.availablePoints;
-
-
-  document
-    .getElementById(
-      'rank'
-    )
-    .textContent =
-      member.currentRank
-        ? '#' +
-          member.currentRank
-        : '-';
-
-
-  if (
-    state.mode ===
-    'REWARD'
-  ) {
-
-    hide(
-      'activityCard'
-    );
-
-
-    hide(
-      'photoCard'
-    );
-
-
-    show(
-      'rewardCard'
-    );
-
-
+async function openMember(member){
+  state.member=member;
+  state.selectedActivity=null;
+  state.photoDataUrl='';
+  $('emptyMember').classList.add('hidden');
+  $('memberPanel').classList.remove('hidden');
+
+  $('memberName').textContent=member.fullName||'สมาชิก';
+  $('memberId').textContent='Member ID: '+(member.memberId||'-');
+  $('lifetimePoints').textContent=Number(member.lifetimePoints||0).toLocaleString('th-TH');
+  $('availablePoints').textContent=Number(member.availablePoints??member.totalPoints??0).toLocaleString('th-TH');
+  $('memberRank').textContent=member.currentRank||'-';
+
+  $('photoPreview').classList.add('hidden');
+  $('captureButton').disabled=true;
+  $('submitButton').disabled=true;
+
+  $('activityArea').classList.toggle('hidden',state.mode==='REWARD');
+  $('rewardArea').classList.toggle('hidden',state.mode!=='REWARD');
+
+  if(state.mode==='REWARD'){
     await loadRewards();
+  }else{
+    await loadActivities();
+  }
+}
 
+async function loadActivities(){
+  try{
+    const result=await api('ACTIVITIES');
+    state.activities=result.activities||[];
+    renderActivities();
+  }catch(error){
+    notify(error.message,true);
+  }
+}
 
-  } else {
+function renderActivities(){
+  $('activities').innerHTML=state.activities.map(a=>{
+    const type=String(a.type||a.activityType||'').toUpperCase();
+    const cls=type==='MOU'?'mou':(type==='HEALTH_CHECK'?'pending':'');
+    const selected=state.selectedActivity===a.activityId?'selected':'';
+    const point=Number(a.point||0);
+    const approval=a.requireApproval?'รออนุมัติ':'';
+    return `
+      <button class="activity ${cls} ${selected}" onclick="selectActivity('${escapeHtml(a.activityId)}')">
+        <span class="activity-icon">${escapeHtml(a.icon||'🌿')}</span>
+        <span class="activity-name">${escapeHtml(a.name||a.activityName)}</span>
+        <span class="activity-point">+${point} คะแนน ${approval}</span>
+      </button>`;
+  }).join('');
+}
 
-    show(
-      'activityCard'
-    );
+function selectActivity(id){
+  const a=state.activities.find(x=>(x.activityId||x.id)===id);
+  if(!a) return;
+  state.selectedActivity=id;
+  state.photoDataUrl='';
+  $('photoPreview').classList.add('hidden');
+  $('captureButton').disabled=false;
+  $('submitButton').disabled=true;
+  $('selectedActivityNote').textContent='เลือกแล้ว: '+(a.name||a.activityName)+' กรุณาถ่ายภาพยืนยัน';
+  renderActivities();
+}
 
+function searchChanged(){
+  clearTimeout(state.searchTimer);
+  state.searchTimer=setTimeout(searchMembers,300);
+}
 
-    show(
-      'photoCard'
-    );
+async function searchMembers(){
+  const query=$('searchInput').value.trim();
+  const root=$('searchResults');
+  if(query.length<2){
+    root.innerHTML='<p class="muted">พิมพ์อย่างน้อย 2 ตัวอักษร</p>';
+    return;
+  }
+  try{
+    const result=await api('SEARCH_MEMBER',{query});
+    root.innerHTML=(result.members||[]).map(m=>`
+      <button class="search-result" onclick="chooseMember('${escapeHtml(m.memberId)}')">
+        <span><b>${escapeHtml(m.fullName)}</b><small>${escapeHtml(m.memberId)}</small></span>
+        <span>เลือก ›</span>
+      </button>`).join('') || '<p class="muted">ไม่พบสมาชิก</p>';
+  }catch(error){
+    root.innerHTML='<p class="muted">'+escapeHtml(error.message)+'</p>';
+  }
+}
 
+async function chooseMember(memberId){
+  loading(true,'กำลังโหลดสมาชิก...');
+  try{
+    const member=await api('PREVIEW_MEMBER',{memberId});
+    await openMember(member);
+    setStatus('เลือกสมาชิก '+member.fullName+' แล้ว');
+  }catch(error){
+    notify(error.message,true);
+  }finally{
+    loading(false);
+  }
+}
 
-    hide(
-      'rewardCard'
-    );
+/* CAMERA CAPTURE */
+async function openCapture(){
+  if(!state.selectedActivity){
+    notify('กรุณาเลือกกิจกรรมก่อน',true);
+    return;
+  }
+  await stopScanner();
+  try{
+    state.cameraStream=await navigator.mediaDevices.getUserMedia({
+      audio:false,
+      video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}}
+    });
+    $('captureVideo').srcObject=state.cameraStream;
+    $('cameraModal').classList.remove('hidden');
+    $('countdown').classList.add('hidden');
+    $('startCountdownButton').disabled=false;
+  }catch(error){
+    notify('ไม่สามารถเปิดกล้องได้ กรุณาอนุญาตการใช้กล้องและเปิดเว็บผ่าน HTTPS',true);
+  }
+}
+
+function stopCaptureStream(){
+  if(state.cameraStream){
+    state.cameraStream.getTracks().forEach(track=>track.stop());
+    state.cameraStream=null;
+  }
+  $('captureVideo').srcObject=null;
+}
+
+function closeCapture(){
+  clearInterval(state.countdownTimer);
+  stopCaptureStream();
+  $('cameraModal').classList.add('hidden');
+}
+
+function startCountdown(){
+  $('startCountdownButton').disabled=true;
+  let n=3;
+  const el=$('countdown');
+  el.classList.remove('hidden');
+  el.textContent=n;
+
+  state.countdownTimer=setInterval(()=>{
+    n--;
+    if(n>0){
+      el.textContent=n;
+    }else{
+      clearInterval(state.countdownTimer);
+      el.textContent='📸';
+      setTimeout(captureFrame,250);
+    }
+  },1000);
+}
+
+function captureFrame(){
+  const video=$('captureVideo');
+  const canvas=$('photoCanvas');
+  if(!video.videoWidth){
+    notify('กล้องยังไม่พร้อม กรุณาลองใหม่',true);
+    closeCapture();
+    return;
+  }
+  const maxSide=1000;
+  const ratio=Math.min(1,maxSide/Math.max(video.videoWidth,video.videoHeight));
+  canvas.width=Math.round(video.videoWidth*ratio);
+  canvas.height=Math.round(video.videoHeight*ratio);
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  state.photoDataUrl=canvas.toDataURL('image/jpeg',0.72);
+  $('photoPreview').src=state.photoDataUrl;
+  $('photoPreview').classList.remove('hidden');
+  $('submitButton').disabled=false;
+  $('selectedActivityNote').textContent='ถ่ายภาพเรียบร้อย พร้อมบันทึกกิจกรรม';
+  closeCapture();
+  notify('ถ่ายภาพสำเร็จ');
+}
+
+async function submitCheckin(){
+  if(!state.member || !state.selectedActivity || !state.photoDataUrl){
+    notify('กรุณาเลือกกิจกรรมและถ่ายภาพก่อน',true);
+    return;
+  }
+  loading(true,'กำลังบันทึกกิจกรรม...');
+  try{
+    const result=await api('CHECKIN',{
+      memberId:state.member.memberId,
+      activityId:state.selectedActivity,
+      photoDataUrl:state.photoDataUrl
+    });
+    notify(result.message||'บันทึกสำเร็จ');
+    setStatus(result.message||'บันทึกสำเร็จ');
+    const member=await api('PREVIEW_MEMBER',{memberId:state.member.memberId});
+    await openMember(member);
+    state.scannerBusy=false;
+  }catch(error){
+    notify(error.message,true);
+    setStatus(error.message,true);
+  }finally{
+    loading(false);
+  }
+}
+
+/* REWARDS */
+async function loadRewards(){
+  if(!state.member) return;
+  try{
+    const result=await api('REWARDS',{memberId:state.member.memberId});
+    $('availablePoints').textContent=Number(result.availablePoints||0).toLocaleString('th-TH');
+    $('lifetimePoints').textContent=Number(result.lifetimePoints||0).toLocaleString('th-TH');
+    $('rewards').innerHTML=(result.rewards||[]).map(r=>`
+      <div class="reward-card">
+        <b>🎁 ${escapeHtml(r.rewardName)}</b>
+        <small>${Number(r.pointsRequired)} คะแนน · คงเหลือ ${Number(r.stock)} ชิ้น</small>
+        <button onclick="redeem('${escapeHtml(r.rewardId)}')">แลกรางวัล</button>
+      </div>`).join('')||'<p class="muted">ยังไม่มีของรางวัลพร้อมแลก</p>';
+  }catch(error){
+    notify(error.message,true);
+  }
+}
+
+async function redeem(rewardId){
+  if(!state.member) return;
+  if(!confirm('ยืนยันการแลกของรางวัลนี้หรือไม่?')) return;
+  loading(true,'กำลังแลกของรางวัล...');
+  try{
+    const result=await api('REDEEM',{
+      memberId:state.member.memberId,
+      rewardId
+    });
+    notify(result.message||'แลกรางวัลสำเร็จ');
+    const member=await api('PREVIEW_MEMBER',{memberId:state.member.memberId});
+    await openMember(member);
+  }catch(error){
+    notify(error.message,true);
+  }finally{
+    loading(false);
+  }
+}
+
+/* ADMIN REGISTRATION */
+function openAdminRegister(){
+  state.adminMode=true;
+  if(state.adminToken){
+    verifyAdminAndScan();
+  }else{
+    $('adminPin').value='';
+    $('adminModal').classList.remove('hidden');
+    $('adminPin').focus();
+  }
+}
+
+function closeAdminModal(){
+  $('adminModal').classList.add('hidden');
+}
+
+async function adminLogin(){
+  const pin=$('adminPin').value.trim();
+  if(!pin){
+    notify('กรุณากรอกรหัส PIN',true);
+    return;
+  }
+  loading(true,'กำลังตรวจสอบสิทธิ์...');
+  try{
+    const result=await api('ADMIN_LOGIN',{pin});
+    state.adminToken=result.adminToken;
+    try{sessionStorage.setItem('POKSUK_CENTRAL_ADMIN',state.adminToken)}catch(e){}
+    closeAdminModal();
+    await verifyAdminAndScan();
+  }catch(error){
+    notify(error.message,true);
+  }finally{
+    loading(false);
+  }
+}
+
+async function verifyAdminAndScan(){
+  try{
+    await api('ADMIN_VERIFY',{},state.adminToken);
+    state.adminMode=true;
+    state.scannerBusy=false;
+    state.mode='ADMIN';
+    resetMember();
+    hideLeftPanels();
+    $('qrPanel').classList.remove('hidden');
+    $('qrPanel').querySelector('.panel-title').textContent='🔐 สแกน QR เพื่อลงทะเบียน';
+    $('qrPanel').querySelector('.panel-subtitle').textContent='สแกน QR ที่ยังไม่เคยผูกกับสมาชิก';
+    setStatus('โหมดเจ้าหน้าที่: พร้อมสแกน QR');
+    await startScanner('reader');
+  }catch(error){
+    state.adminToken='';
+    try{sessionStorage.removeItem('POKSUK_CENTRAL_ADMIN')}catch(e){}
+    notify('กรุณาเข้าสู่ระบบเจ้าหน้าที่ใหม่',true);
+    openAdminRegister();
+  }
+}
+
+async function handleAdminQr(value){
+  loading(true,'กำลังตรวจสอบ QR...');
+  try{
+    const result=await api('PREVIEW',{scannedQr:String(value)});
+    if(!result.needsRegistration){
+      setStatus('QR นี้ลงทะเบียนแล้ว กรุณาใช้ QR ใบอื่น',true);
+      state.scannerBusy=false;
+      await startScanner('reader');
+      return;
+    }
+    state.registerQrToken=result.qrToken;
+    state.registerDisplayCode=result.displayCode||'';
+    $('regQrDisplay').value=state.registerDisplayCode;
+    $('regName').value='';
+    $('regBirthYear').value='';
+    $('regConsent').checked=false;
+    hideLeftPanels();
+    $('registerPanel').classList.remove('hidden');
+    setStatus('QR พร้อมลงทะเบียน กรุณากรอกชื่อและปีเกิด');
+  }catch(error){
+    setStatus(error.message,true);
+    state.scannerBusy=false;
+    await startScanner('reader');
+  }finally{
+    loading(false);
+  }
+}
+
+async function submitRegistration(){
+  if(!state.registerQrToken){
+    notify('ไม่พบ QR ที่พร้อมลงทะเบียน',true);
+    return;
+  }
+  const fullName=$('regName').value.trim();
+  const birthYearBE=$('regBirthYear').value.trim();
+  const consentAccepted=$('regConsent').checked;
+
+  if(!fullName){
+    notify('กรุณากรอกชื่อ-นามสกุล',true);
+    $('regName').focus();
+    return;
+  }
+  if(!consentAccepted){
+    notify('กรุณายืนยันความยินยอม',true);
+    return;
   }
 
+  loading(true,'กำลังบันทึกสมาชิก...');
+  try{
+    const result=await api('REGISTER_MEMBER',{
+      qrToken:state.registerQrToken,
+      fullName,
+      birthYearBE,
+      consentAccepted:true
+    },state.adminToken);
 
-  setStatus(
-    'สมาชิกพร้อมทำรายการ'
-  );
+    notify('ลงทะเบียนสำเร็จ '+result.fullName);
+    state.registerQrToken='';
+    state.registerDisplayCode='';
+    state.adminMode=true;
+    $('regName').value='';
+    $('regBirthYear').value='';
+    $('regConsent').checked=false;
+    hideLeftPanels();
+    $('qrPanel').classList.remove('hidden');
+    $('qrPanel').querySelector('.panel-title').textContent='🔐 สแกน QR เพื่อลงทะเบียน';
+    $('qrPanel').querySelector('.panel-subtitle').textContent='สแกน QR ที่ยังไม่เคยผูกกับสมาชิก';
+    resetMember();
+    setStatus('ลงทะเบียนสำเร็จ พร้อมสแกน QR ใบถัดไป');
+    state.scannerBusy=false;
+    await startScanner('reader');
+  }catch(error){
+    notify(error.message,true);
+    setStatus(error.message,true);
+  }finally{
+    loading(false);
+  }
 }
 
-
-/* ==========================================================
-   ACTIVITIES
-   ========================================================== */
-
-function renderActivities() {
-
-  const root =
-    document.getElementById(
-      'activities'
-    );
-
-
-  root.innerHTML =
-    state.activities
-      .map(
-        function(activity) {
-
-          return `
-
-            <button
-              id="activity-${escapeHtml(activity.activityId)}"
-              class="activity"
-              onclick="selectActivity('${escapeJs(activity.activityId)}')">
-
-              <b>
-
-                ${escapeHtml(activity.icon)}
-
-                ${escapeHtml(activity.activityName)}
-
-              </b>
-
-              <br>
-
-              <small>
-
-                ${
-                  activity.activityType ===
-                  'HEALTH_CHECK'
-                    ? 'รออนุมัติ +' +
-                      activity.point
-                    : '+' +
-                      activity.point +
-                      ' คะแนน'
-                }
-
-              </small>
-
-            </button>
-
-          `;
-
-        }
-      )
-      .join('');
+async function cancelRegistration(){
+  state.registerQrToken='';
+  state.adminMode=false;
+  state.scannerBusy=false;
+  await showQr();
 }
 
+/* INITIALIZE */
+async function initialize(){
+  try{
+    loading(true,'กำลังเชื่อมต่อระบบ...');
+    await api('PING');
+    const activities=await api('ACTIVITIES');
+    state.activities=activities.activities||[];
 
-function selectActivity(
-  id
-) {
-
-  state.activityId =
-    id;
-
-
-  document
-    .querySelectorAll(
-      '.activity'
-    )
-    .forEach(
-      function(button) {
-
-        button
-          .classList
-          .remove(
-            'selected'
-          );
-
+    try{
+      const saved=sessionStorage.getItem('POKSUK_CENTRAL_ADMIN');
+      if(saved){
+        const verified=await api('ADMIN_VERIFY',{},saved);
+        if(verified.success) state.adminToken=saved;
       }
-    );
-
-
-  const button =
-    document.getElementById(
-      'activity-' +
-      id
-    );
-
-
-  if (
-    button
-  ) {
-
-    button
-      .classList
-      .add(
-        'selected'
-      );
-  }
-}
-
-
-/* ==========================================================
-   PHOTO
-   ========================================================== */
-
-async function photoChanged(
-  event
-) {
-
-  const file =
-    event.target.files[0];
-
-
-  if (
-    !file
-  ) {
-
-    return;
-  }
-
-
-  loading(
-    true,
-    'กำลังย่อภาพ...'
-  );
-
-
-  try {
-
-    state.photo =
-      await resize(
-        file
-      );
-
-
-    const image =
-      document.getElementById(
-        'photoPreview'
-      );
-
-
-    image.src =
-      state.photo;
-
-
-    image
-      .classList
-      .remove(
-        'hidden'
-      );
-
-
-  } catch (error) {
-
-    state.photo =
-      '';
-
-
-    setStatus(
-      'เตรียมภาพไม่สำเร็จ',
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
-}
-
-
-function resize(
-  file
-) {
-
-  return new Promise(
-    function(
-      resolve,
-      reject
-    ) {
-
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        function(event) {
-
-          const image =
-            new Image();
-
-
-          image.onload =
-            function() {
-
-              const maxSide =
-                800;
-
-
-              const ratio =
-                Math.min(
-
-                  1,
-
-                  maxSide /
-                  image.width,
-
-                  maxSide /
-                  image.height
-
-                );
-
-
-              const canvas =
-                document.createElement(
-                  'canvas'
-                );
-
-
-              canvas.width =
-                Math.round(
-                  image.width *
-                  ratio
-                );
-
-
-              canvas.height =
-                Math.round(
-                  image.height *
-                  ratio
-                );
-
-
-              const context =
-                canvas.getContext(
-                  '2d'
-                );
-
-
-              context.drawImage(
-                image,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-              );
-
-
-              resolve(
-                canvas.toDataURL(
-                  'image/jpeg',
-                  .72
-                )
-              );
-
-            };
-
-
-          image.onerror =
-            reject;
-
-
-          image.src =
-            event.target.result;
-
-        };
-
-
-      reader.onerror =
-        reject;
-
-
-      reader.readAsDataURL(
-        file
-      );
-
-    }
-  );
-}
-
-
-/* ==========================================================
-   CHECK-IN
-   ========================================================== */
-
-async function submitCheckin() {
-
-  if (
-    !state.member
-  ) {
-
-    setStatus(
-      'ไม่พบสมาชิก',
-      true
-    );
-
-    return;
-  }
-
-
-  if (
-    !state.activityId
-  ) {
-
-    setStatus(
-      'กรุณาเลือกกิจกรรม',
-      true
-    );
-
-    return;
-  }
-
-
-  if (
-    !state.photo
-  ) {
-
-    setStatus(
-      'กรุณาถ่ายภาพยืนยัน',
-      true
-    );
-
-    return;
-  }
-
-
-  loading(
-    true,
-    'กำลังบันทึกกิจกรรม...'
-  );
-
-
-  try {
-
-    const payload = {
-
-      memberId:
-        state.member.memberId,
-
-      activityId:
-        state.activityId,
-
-      photoDataUrl:
-        state.photo
-
-    };
-
-
-    if (
-      state.scannedQr
-    ) {
-
-      payload.scannedQr =
-        state.scannedQr;
+    }catch(e){
+      state.adminToken='';
+      try{sessionStorage.removeItem('POKSUK_CENTRAL_ADMIN')}catch(ignore){}
     }
 
-
-    const result =
-      await api(
-        'CHECKIN',
-        payload
-      );
-
-
-    alert(
-      result.message
-    );
-
-
+    setStatus('พร้อมใช้งาน');
     await showQr();
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
+  }catch(error){
+    setStatus(error.message,true);
+  }finally{
+    loading(false);
   }
 }
 
+$('searchInput').addEventListener('input',searchChanged);
+$('adminPin').addEventListener('keydown',e=>{
+  if(e.key==='Enter') adminLogin();
+});
+$('regName').addEventListener('keydown',e=>{
+  if(e.key==='Enter') submitRegistration();
+});
 
-/* ==========================================================
-   REWARDS
-   ========================================================== */
-
-async function loadRewards() {
-
-  try {
-
-    const result =
-      await api(
-        'REWARDS',
-        {
-
-          memberId:
-            state.member.memberId
-
-        }
-      );
-
-
-    document
-      .getElementById(
-        'availablePoints'
-      )
-      .textContent =
-        result.availablePoints;
-
-
-    document
-      .getElementById(
-        'rewards'
-      )
-      .innerHTML =
-        (
-          result.rewards ||
-          []
-        )
-          .map(
-            function(reward) {
-
-              return `
-
-                <button
-                  class="reward"
-                  onclick="redeem('${escapeJs(reward.rewardId)}','${escapeJs(reward.rewardName)}',${Number(reward.pointsRequired)})">
-
-                  <b>
-                    🎁
-                    ${escapeHtml(reward.rewardName)}
-                  </b>
-
-                  <br>
-
-                  <small>
-                    ${reward.pointsRequired}
-                    แต้ม
-                    • เหลือ
-                    ${reward.stock}
-                  </small>
-
-                </button>
-
-              `;
-
-            }
-          )
-          .join('');
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
+window.addEventListener('beforeunload',()=>{
+  stopCaptureStream();
+  if(state.scanner && state.scannerRunning){
+    try{state.scanner.stop()}catch(e){}
   }
-}
+});
 
-
-async function redeem(
-  rewardId,
-  rewardName,
-  points
-) {
-
-  if (
-    !confirm(
-      'ยืนยันแลก ' +
-      rewardName +
-      ' ใช้ ' +
-      points +
-      ' แต้ม?'
-    )
-  ) {
-
-    return;
-  }
-
-
-  loading(
-    true,
-    'กำลังแลกแต้ม...'
-  );
-
-
-  try {
-
-    const result =
-      await api(
-        'REDEEM',
-        {
-
-          memberId:
-            state.member.memberId,
-
-          rewardId:
-            rewardId
-
-        }
-      );
-
-
-    alert(
-      result.message +
-      '\nแต้มคงเหลือ ' +
-      result.availablePoints
-    );
-
-
-    await loadRewards();
-
-
-  } catch (error) {
-
-    setStatus(
-      message(
-        error
-      ),
-      true
-    );
-
-
-  } finally {
-
-    loading(
-      false
-    );
-  }
-}
-
-
-/* ==========================================================
-   RESET / UI
-   ========================================================== */
-
-function resetMemberState() {
-
-  state.member =
-    null;
-
-
-  state.scannedQr =
-    '';
-
-
-  state.activityId =
-    '';
-
-
-  state.photo =
-    '';
-
-
-  state.locked =
-    false;
-
-
-  document
-    .querySelectorAll(
-      '.activity'
-    )
-    .forEach(
-      function(button) {
-
-        button
-          .classList
-          .remove(
-            'selected'
-          );
-
-      }
-    );
-
-
-  const image =
-    document.getElementById(
-      'photoPreview'
-    );
-
-
-  if (
-    image
-  ) {
-
-    image.src =
-      '';
-
-
-    image
-      .classList
-      .add(
-        'hidden'
-      );
-  }
-
-
-  const input =
-    document.getElementById(
-      'photoInput'
-    );
-
-
-  if (
-    input
-  ) {
-
-    input.value =
-      '';
-  }
-}
-
-
-function hideAll() {
-
-  [
-
-    'qrSection',
-
-    'searchSection',
-
-    'memberSection',
-
-    'adminScannerSection',
-
-    'adminRegisterSection'
-
-  ]
-    .forEach(
-      hide
-    );
-}
-
-
-function show(
-  id
-) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  if (
-    element
-  ) {
-
-    element
-      .classList
-      .remove(
-        'hidden'
-      );
-  }
-}
-
-
-function hide(
-  id
-) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  if (
-    element
-  ) {
-
-    element
-      .classList
-      .add(
-        'hidden'
-      );
-  }
-}
-
-
-function loading(
-  enabled,
-  text
-) {
-
-  if (
-    enabled
-  ) {
-
-    document
-      .getElementById(
-        'loadingText'
-      )
-      .textContent =
-        text ||
-        'กำลังทำงาน...';
-
-
-    show(
-      'loading'
-    );
-
-
-  } else {
-
-    hide(
-      'loading'
-    );
-  }
-}
-
-
-function setStatus(
-  text,
-  error
-) {
-
-  const element =
-    document.getElementById(
-      'status'
-    );
-
-
-  element.textContent =
-    text ||
-    '';
-
-
-  element.className =
-    error
-      ? 'error'
-      : '';
-}
-
-
-function val(
-  id
-) {
-
-  const element =
-    document.getElementById(
-      id
-    );
-
-
-  return element
-    ? String(
-        element.value ||
-        ''
-      ).trim()
-    : '';
-}
-
-
-function message(
-  error
-) {
-
-  return (
-    error &&
-    error.message
-      ? error.message
-      : String(
-          error
-        )
-  );
-}
-
-
-function escapeHtml(
-  value
-) {
-
-  return String(
-    value ||
-    ''
-  )
-    .replace(
-      /&/g,
-      '&amp;'
-    )
-    .replace(
-      /</g,
-      '&lt;'
-    )
-    .replace(
-      />/g,
-      '&gt;'
-    )
-    .replace(
-      /"/g,
-      '&quot;'
-    )
-    .replace(
-      /'/g,
-      '&#39;'
-    );
-}
-
-
-function escapeJs(
-  value
-) {
-
-  return String(
-    value ||
-    ''
-  )
-    .replace(
-      /\\/g,
-      '\\\\'
-    )
-    .replace(
-      /'/g,
-      "\\'"
-    );
-}
-
+initialize();
 </script>
-
 </body>
 </html>
