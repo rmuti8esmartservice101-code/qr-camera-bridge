@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f1f8f4">
-<title>พกสุข</title>
+<title>ระบบพกสุข | Central Station</title>
 
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
@@ -22,7 +22,6 @@
   --text:#203b32;
   --muted:#71847b;
   --border:#dce9e1;
-  --white:#fff;
   --danger:#c74c4c;
   --shadow:0 8px 28px rgba(30,75,55,.08);
 }
@@ -30,305 +29,715 @@
 *{box-sizing:border-box}
 
 html,body{
-  margin:0;width:100%;height:100%;
+  margin:0;
+  width:100%;
+  min-height:100%;
   font-family:"Noto Sans Thai",Tahoma,Arial,sans-serif;
-  color:var(--text);background:#f3f8f5
+  color:var(--text);
+  background:#f3f8f5;
 }
 
-body{overflow:hidden;font-size:16px}
+body{font-size:16px}
 button,input{font:inherit}
 button{cursor:pointer}
 .hidden{display:none!important}
 
 .topbar{
-  height:68px;background:#fff;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 26px;gap:16px;
+  min-height:68px;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 26px;
+  gap:16px;
+  flex-wrap:wrap;
 }
 
 .brandmark{
-  display:flex;align-items:center;gap:10px;
-  font-size:25px;font-weight:900;color:var(--green)
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:25px;
+  font-weight:900;
+  color:var(--green);
 }
 
 .brand-icon{
-  width:42px;height:42px;border-radius:14px;
-  background:var(--mint);display:grid;place-items:center;font-size:26px
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:var(--mint);
+  display:grid;
+  place-items:center;
+  font-size:26px;
 }
 
-.nav{display:flex;align-items:center;gap:9px}
+.nav{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
 
 .nav button{
-  border:1px solid transparent;background:transparent;color:#53685e;
-  border-radius:13px;padding:10px 17px;font-weight:800;font-size:16px;
-  display:flex;align-items:center;gap:9px
+  border:1px solid transparent;
+  background:transparent;
+  color:#53685e;
+  border-radius:13px;
+  padding:10px 17px;
+  font-weight:800;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  gap:9px;
 }
 
 .nav button .ico{font-size:23px}
 
 .nav button.active{
-  background:var(--green);color:white;box-shadow:0 5px 15px #167b612c
+  background:var(--green);
+  color:white;
+  box-shadow:0 5px 15px #167b612c;
 }
 
 .admin-button{
-  border:1px solid var(--border);background:#fff;color:var(--green-dark);
-  border-radius:13px;padding:10px 15px;font-weight:800
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--green-dark);
+  border-radius:13px;
+  padding:10px 15px;
+  font-weight:800;
 }
 
-.admin-button:hover,.nav button:hover{background:var(--mint)}
+.admin-button:hover,.nav button:hover{
+  background:var(--mint);
+}
 
 main{
-  height:calc(100dvh - 68px);padding:16px 20px 18px;
-  max-width:1600px;margin:auto
+  min-height:calc(100vh - 68px);
+  padding:16px 20px 18px;
+  max-width:1600px;
+  margin:auto;
 }
 
 .workspace{
-  height:100%;display:grid;
+  min-height:calc(100vh - 104px);
+  display:grid;
   grid-template-columns:minmax(340px,.88fr) minmax(520px,1.35fr);
-  gap:16px;min-height:0
+  gap:16px;
 }
 
 .panel{
-  background:#fff;border:1px solid var(--border);border-radius:22px;
-  box-shadow:var(--shadow);padding:19px;min-height:0;overflow:hidden
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  padding:19px;
+  min-height:0;
+  overflow:hidden;
 }
 
 .left-panel,.right-panel{
-  display:flex;flex-direction:column;min-height:0
+  display:flex;
+  flex-direction:column;
+  min-height:0;
 }
 
-.panel-title{font-size:22px;font-weight:900;margin:0 0 5px}
-.panel-subtitle{font-size:14px;color:var(--muted);margin:0 0 13px}
+.panel-title{
+  font-size:22px;
+  font-weight:900;
+  margin:0 0 5px;
+}
+
+.panel-subtitle{
+  font-size:14px;
+  color:var(--muted);
+  margin:0 0 13px;
+}
 
 .scanner-wrap{
-  flex:1;min-height:220px;display:flex;align-items:center;
-  justify-content:center;border-radius:18px;background:#f6faf7;
-  border:1px dashed #c8ddd1;overflow:hidden
+  min-height:280px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  background:#f6faf7;
+  border:1px dashed #c8ddd1;
+  overflow:hidden;
 }
 
-#reader{width:100%;max-width:520px}
-#reader video{border-radius:14px;object-fit:cover}
+#reader{
+  width:100%;
+  max-width:520px;
+}
+
+#reader video{
+  border-radius:14px;
+  object-fit:cover;
+}
+
+#reader__scan_region{
+  min-height:220px;
+}
 
 .status{
-  margin-top:12px;padding:11px 14px;background:var(--mint2);
-  border-radius:12px;color:var(--green-dark);
-  font-weight:700;min-height:44px
+  margin-top:12px;
+  padding:11px 14px;
+  background:var(--mint2);
+  border-radius:12px;
+  color:var(--green-dark);
+  font-weight:700;
+  min-height:44px;
 }
 
-.status.error{background:var(--pink);color:var(--danger)}
+.status.error{
+  background:var(--pink);
+  color:var(--danger);
+}
 
 .muted{color:var(--muted)}
 
 .search-input,.form-input{
-  width:100%;height:54px;border:1px solid var(--border);
-  border-radius:13px;padding:0 16px;background:#fbfdfb;
-  font-size:18px;outline:none
+  width:100%;
+  min-height:54px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:0 16px;
+  background:#fbfdfb;
+  font-size:18px;
+  outline:none;
 }
 
 .search-input:focus,.form-input:focus{
-  border-color:var(--green);box-shadow:0 0 0 3px #167b6117
+  border-color:var(--green);
+  box-shadow:0 0 0 3px #167b6117;
 }
 
-.search-results{overflow:auto;min-height:0;margin-top:10px}
+.search-results{
+  overflow:auto;
+  min-height:0;
+  margin-top:10px;
+}
 
 .search-result{
-  width:100%;padding:13px 15px;margin-bottom:8px;
-  border:1px solid var(--border);border-radius:13px;
-  background:#fff;text-align:left;display:flex;
-  justify-content:space-between;align-items:center;gap:12px
+  width:100%;
+  padding:13px 15px;
+  margin-bottom:8px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:#fff;
+  text-align:left;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
 }
 
-.search-result:hover{background:var(--mint2);border-color:#9bcbb4}
+.search-result:hover{
+  background:var(--mint2);
+  border-color:#9bcbb4;
+}
+
 .search-result b{font-size:17px}
-.search-result small{display:block;color:var(--muted);margin-top:3px}
+.search-result small{
+  display:block;
+  color:var(--muted);
+  margin-top:3px;
+}
 
 .empty-state{
-  height:100%;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;
-  color:var(--muted);padding:25px
+  min-height:420px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
 }
 
-.empty-icon{font-size:76px;line-height:1.2;margin-bottom:13px}
-.empty-state strong{font-size:21px;color:#52695e}
+.empty-icon{
+  font-size:76px;
+  line-height:1.2;
+  margin-bottom:13px;
+}
+
+.empty-state strong{
+  font-size:21px;
+  color:#52695e;
+}
 
 .member-head{
-  display:flex;justify-content:space-between;align-items:flex-start;
-  gap:14px;padding:4px 2px 15px;border-bottom:1px solid var(--border)
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  padding:4px 2px 15px;
+  border-bottom:1px solid var(--border);
 }
 
-.member-name{font-size:27px;font-weight:900;line-height:1.3}
-.member-id{font-size:14px;color:var(--muted);margin-top:3px}
+.member-name{
+  font-size:27px;
+  font-weight:900;
+  line-height:1.3;
+}
+
+.member-id{
+  font-size:14px;
+  color:var(--muted);
+  margin-top:3px;
+}
 
 .member-badge{
-  padding:7px 12px;border-radius:99px;background:var(--mint);
-  color:var(--green-dark);font-size:13px;font-weight:900;white-space:nowrap
+  padding:7px 12px;
+  border-radius:99px;
+  background:var(--mint);
+  color:var(--green-dark);
+  font-size:13px;
+  font-weight:900;
+  white-space:nowrap;
 }
 
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:14px 0;
+}
 
 .stat{
-  border-radius:15px;padding:13px 14px;background:var(--mint2);
-  border:1px solid #e3eee7
+  border-radius:15px;
+  padding:13px 14px;
+  background:var(--mint2);
+  border:1px solid #e3eee7;
 }
 
 .stat:nth-child(2){background:var(--cream)}
 .stat:nth-child(3){background:var(--blue)}
-.stat small{display:block;font-size:13px;color:var(--muted);font-weight:700}
-.stat b{display:block;font-size:27px;font-weight:900;margin-top:3px}
 
-.section-heading{
-  display:flex;align-items:center;justify-content:space-between;margin:7px 0 11px
+.stat small{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:700;
 }
 
-.section-heading h3{margin:0;font-size:19px}
+.stat b{
+  display:block;
+  font-size:27px;
+  font-weight:900;
+  margin-top:3px;
+}
+
+.section-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:7px 0 11px;
+}
+
+.section-heading h3{
+  margin:0;
+  font-size:19px;
+}
 
 .activity-grid,.reward-grid{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;overflow:auto;padding:2px 2px 8px;min-height:0
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  overflow:auto;
+  padding:2px 2px 8px;
+  min-height:0;
 }
 
 .activity{
-  min-height:112px;border:1px solid var(--border);border-radius:16px;
-  background:#fff;padding:12px 8px;text-align:center;color:var(--text);
-  display:flex;flex-direction:column;justify-content:center;
-  align-items:center;gap:5px;transition:.15s
+  min-height:112px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+  padding:12px 8px;
+  text-align:center;
+  color:var(--text);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  transition:.15s;
 }
 
 .activity:hover{
-  transform:translateY(-2px);border-color:#9bcbb4;background:var(--mint2)
+  transform:translateY(-2px);
+  border-color:#9bcbb4;
+  background:var(--mint2);
 }
 
-.activity.selected{border:2px solid var(--green);background:var(--mint)}
-.activity .activity-icon{font-size:38px;line-height:1.2}
-.activity .activity-name{font-size:15px;font-weight:900;line-height:1.3}
-.activity .activity-point{font-size:13px;color:var(--green);font-weight:800}
+.activity.selected{
+  border:2px solid var(--green);
+  background:var(--mint);
+}
+
+.activity .activity-icon{
+  font-size:38px;
+  line-height:1.2;
+}
+
+.activity .activity-name{
+  font-size:15px;
+  font-weight:900;
+  line-height:1.3;
+}
+
+.activity .activity-point{
+  font-size:13px;
+  color:var(--green);
+  font-weight:800;
+}
+
 .activity.pending{background:var(--cream)}
 .activity.mou{background:#f3efff}
 
-.right-bottom{margin-top:auto;padding-top:12px}
+.right-bottom{
+  margin-top:auto;
+  padding-top:12px;
+}
 
-.photo-row{display:flex;gap:10px;align-items:center}
+.photo-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
 
 .photo-preview{
-  width:78px;height:78px;border-radius:13px;object-fit:cover;
-  border:1px solid var(--border);background:#f5f8f6
+  width:78px;
+  height:78px;
+  border-radius:13px;
+  object-fit:cover;
+  border:1px solid var(--border);
+  background:#f5f8f6;
 }
 
 .primary-button,.secondary-button,.danger-button{
-  min-height:52px;border:0;border-radius:14px;
-  padding:11px 18px;font-weight:900;font-size:17px
+  min-height:52px;
+  border:0;
+  border-radius:14px;
+  padding:11px 18px;
+  font-weight:900;
+  font-size:17px;
 }
 
-.primary-button{background:var(--green);color:#fff}
+.primary-button{
+  background:var(--green);
+  color:#fff;
+}
+
 .primary-button:hover{background:var(--green-dark)}
-.primary-button:disabled{opacity:.45;cursor:not-allowed}
+.primary-button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
 
 .secondary-button{
-  background:var(--mint);color:var(--green-dark);border:1px solid #cce6d8
+  background:var(--mint);
+  color:var(--green-dark);
+  border:1px solid #cce6d8;
 }
 
-.danger-button{background:var(--pink);color:var(--danger)}
+.danger-button{
+  background:var(--pink);
+  color:var(--danger);
+}
+
 .full{width:100%}
 .capture-button{flex:1}
 
-.selected-activity-note{font-size:14px;color:var(--muted);margin:0 0 9px}
-
-.reward-card{border:1px solid var(--border);border-radius:15px;padding:14px;background:#fff}
-.reward-card b{font-size:17px;display:block}
-.reward-card small{display:block;color:var(--muted);margin:5px 0 10px}
-
-.reward-card button{
-  width:100%;min-height:40px;border:0;border-radius:10px;
-  background:var(--green);color:#fff;font-weight:800
+.selected-activity-note{
+  font-size:14px;
+  color:var(--muted);
+  margin:0 0 9px;
 }
 
+.reward-card{
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  background:#fff;
+}
+
+.reward-card b{
+  font-size:17px;
+  display:block;
+}
+
+.reward-card small{
+  display:block;
+  color:var(--muted);
+  margin:5px 0 10px;
+}
+
+.reward-card button{
+  width:100%;
+  min-height:40px;
+  border:0;
+  border-radius:10px;
+  background:var(--green);
+  color:#fff;
+  font-weight:800;
+}
+
+/* MODALS */
+
 .modal{
-  position:fixed;inset:0;background:#122b2299;z-index:1000;
-  display:grid;place-items:center;padding:18px
+  position:fixed;
+  inset:0;
+  background:#122b2299;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:18px;
 }
 
 .modal-card{
-  width:min(480px,100%);background:#fff;border-radius:22px;
-  padding:23px;box-shadow:0 25px 80px #0003;
-  max-height:92dvh;overflow:auto
+  width:min(480px,100%);
+  background:#fff;
+  border-radius:22px;
+  padding:23px;
+  box-shadow:0 25px 80px #0003;
+  max-height:92vh;
+  overflow:auto;
 }
 
-.modal-title{font-size:23px;font-weight:900;margin:0 0 5px}
-.modal-desc{color:var(--muted);margin:0 0 17px}
-.form-label{display:block;font-weight:800;margin:12px 0 5px}
-.modal-actions{display:flex;gap:9px;margin-top:17px}
+.modal-title{
+  font-size:23px;
+  font-weight:900;
+  margin:0 0 5px;
+}
+
+.modal-desc{
+  color:var(--muted);
+  margin:0 0 17px;
+}
+
+.form-label{
+  display:block;
+  font-weight:800;
+  margin:12px 0 5px;
+}
+
+.modal-actions{
+  display:flex;
+  gap:9px;
+  margin-top:17px;
+}
+
 .modal-actions>*{flex:1}
 
-.camera-card{width:min(720px,100%);text-align:center}
+.camera-card{
+  width:min(720px,100%);
+  text-align:center;
+}
 
 .camera-stage{
-  position:relative;background:#101c17;border-radius:17px;
-  overflow:hidden;aspect-ratio:4/3;margin:14px 0
+  position:relative;
+  background:#101c17;
+  border-radius:17px;
+  overflow:hidden;
+  aspect-ratio:4/3;
+  margin:14px 0;
 }
 
-#captureVideo{width:100%;height:100%;object-fit:cover}
+#captureVideo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
 .countdown{
-  position:absolute;inset:0;display:grid;place-items:center;
-  color:#fff;font-size:100px;font-weight:900;
-  text-shadow:0 4px 20px #000;background:#0003
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:100px;
+  font-weight:900;
+  text-shadow:0 4px 20px #000;
+  background:#0003;
 }
 
-.camera-actions{display:flex;gap:10px}
+.camera-actions{
+  display:flex;
+  gap:10px;
+}
+
 .camera-actions>*{flex:1}
 
 .camera-device-label{
-  display:inline-block;padding:6px 12px;border-radius:30px;
-  background:var(--mint);color:var(--green-dark);
-  font-size:13px;font-weight:800;margin-bottom:8px
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:30px;
+  background:var(--mint);
+  color:var(--green-dark);
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:8px;
 }
 
+/* LOADING AND TOAST */
+
 .loading{
-  position:fixed;inset:0;background:#ffffffcf;z-index:2000;
-  display:grid;place-items:center;backdrop-filter:blur(4px)
+  position:fixed;
+  inset:0;
+  background:#ffffffcf;
+  z-index:2000;
+  display:grid;
+  place-items:center;
+  backdrop-filter:blur(4px);
 }
 
 .loading-box{
-  padding:23px 30px;background:#fff;border-radius:18px;
-  box-shadow:var(--shadow);font-weight:900
+  padding:23px 30px;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  font-weight:900;
 }
 
 .toast{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-  z-index:3000;background:#173f35;color:#fff;padding:13px 20px;
-  border-radius:13px;box-shadow:var(--shadow);
-  font-weight:800;max-width:90%
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:3000;
+  background:#173f35;
+  color:#fff;
+  padding:13px 20px;
+  border-radius:13px;
+  box-shadow:var(--shadow);
+  font-weight:800;
+  max-width:90%;
+  text-align:center;
 }
 
 .toast.error{background:#9f3737}
 
-@media(min-width:721px) and (max-height:760px){
-  .topbar{height:60px}
-  main{height:calc(100dvh - 60px);padding:10px 16px}
-  .panel{padding:14px;border-radius:18px}
-  .scanner-wrap{min-height:190px}
-  .activity{min-height:94px}
-  .activity .activity-icon{font-size:32px}
-  .stats{margin:10px 0}
-  .stat{padding:9px 12px}
-  .stat b{font-size:23px}
+/* CENTER ALERT */
+
+.center-alert-overlay{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(15,35,27,.78);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
+.center-alert-box{
+  width:min(560px,95vw);
+  background:#fff;
+  border-radius:26px;
+  padding:35px 28px;
+  text-align:center;
+  box-shadow:0 20px 70px rgba(0,0,0,.28);
+  animation:centerAlertPop .25s ease-out;
+}
+
+.center-alert-icon{
+  font-size:76px;
+  line-height:1.2;
+  margin-bottom:15px;
+}
+
+.center-alert-title{
+  font-size:30px;
+  font-weight:900;
+  color:#b54735;
+  margin-bottom:14px;
+  line-height:1.4;
+}
+
+.center-alert-message{
+  font-size:22px;
+  font-weight:700;
+  line-height:1.7;
+  color:#33483e;
+  white-space:pre-line;
+  overflow-wrap:anywhere;
+}
+
+.center-alert-countdown{
+  font-size:16px;
+  color:#71847b;
+  margin-top:20px;
+  font-weight:700;
+}
+
+.center-alert-button{
+  width:100%;
+  min-height:60px;
+  margin-top:22px;
+  border:0;
+  border-radius:15px;
+  background:#167b61;
+  color:#fff;
+  font-size:20px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.center-alert-button:hover{background:#105b49}
+
+@keyframes centerAlertPop{
+  from{opacity:0;transform:scale(.88)}
+  to{opacity:1;transform:scale(1)}
+}
+
+/* RESPONSIVE */
+
 @media(max-width:900px){
-  body{overflow:auto}
-  .topbar{height:auto;min-height:64px;padding:10px 13px;flex-wrap:wrap}
+  .topbar{
+    min-height:64px;
+    padding:10px 13px;
+  }
+
   .brandmark{font-size:20px}
   .brand-icon{width:36px;height:36px}
-  .nav{order:3;width:100%;justify-content:space-between}
-  .nav button{flex:1;justify-content:center;padding:9px 5px;font-size:14px}
+
+  .nav{
+    order:3;
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .nav button{
+    flex:1;
+    justify-content:center;
+    padding:9px 5px;
+    font-size:14px;
+  }
+
   .nav button .ico{font-size:20px}
   .admin-button{font-size:13px}
-  main{height:auto;min-height:calc(100dvh - 110px);padding:10px}
-  .workspace{height:auto;grid-template-columns:1fr}
-  .panel{min-height:330px;padding:15px}
-  .left-panel{min-height:300px}
+
+  main{
+    min-height:calc(100vh - 110px);
+    padding:10px;
+  }
+
+  .workspace{
+    min-height:0;
+    grid-template-columns:1fr;
+  }
+
+  .panel{padding:15px}
+  .left-panel{min-height:330px}
   .right-panel{min-height:460px}
-  .activity-grid,.reward-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+  .activity-grid,.reward-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
   .scanner-wrap{min-height:260px}
 }
 
@@ -340,6 +749,12 @@ main{
   .activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .photo-row{align-items:stretch}
   .photo-preview{width:68px;height:68px}
+
+  .center-alert-box{padding:28px 20px}
+  .center-alert-icon{font-size:62px}
+  .center-alert-title{font-size:25px}
+  .center-alert-message{font-size:19px}
+  .center-alert-button{font-size:18px}
 }
 </style>
 </head>
@@ -349,16 +764,18 @@ main{
 <header class="topbar">
   <div class="brandmark">
     <span class="brand-icon">🌿</span>
-    <span>พกสุข</span>
+    <span>ระบบพกสุข</span>
   </div>
 
   <nav class="nav">
     <button id="tabQr" class="active" onclick="showQr()">
       <span class="ico">📷</span> QR
     </button>
+
     <button id="tabSearch" onclick="showSearch()">
       <span class="ico">🔎</span> ค้นสมาชิก
     </button>
+
     <button id="tabReward" onclick="showRewardSearch()">
       <span class="ico">🎁</span> แลกแต้ม
     </button>
@@ -379,6 +796,7 @@ main{
         <p class="panel-subtitle">
           วางบัตร QR ไว้หน้ากล้องเพื่อเปิดข้อมูลสมาชิก
         </p>
+
         <div class="scanner-wrap">
           <div id="reader"></div>
         </div>
@@ -387,28 +805,38 @@ main{
       <div id="searchPanel" class="hidden">
         <h2 class="panel-title" id="searchTitle">🔎 ค้นหาสมาชิก</h2>
         <p class="panel-subtitle">ค้นหาด้วยชื่อหรือรหัสสมาชิก</p>
-        <input id="searchInput" class="search-input"
-          placeholder="พิมพ์ชื่อ หรือ Member ID" autocomplete="off">
+
+        <input
+          id="searchInput"
+          class="search-input"
+          placeholder="พิมพ์ชื่อ หรือ Member ID"
+          autocomplete="off">
+
         <div id="searchResults" class="search-results"></div>
       </div>
 
       <div id="registerPanel" class="hidden">
         <h2 class="panel-title">📝 ลงทะเบียนสมาชิก</h2>
-        <p class="panel-subtitle">กรอกข้อมูลพื้นฐานเพื่อผูกสมาชิกกับ QR Code</p>
+        <p class="panel-subtitle">
+          กรอกข้อมูลพื้นฐานเพื่อผูกสมาชิกกับ QR Code
+        </p>
 
-        <div class="form-label">QR Code</div>
+        <label class="form-label" for="regQrDisplay">QR Code</label>
         <input id="regQrDisplay" class="form-input" readonly>
 
         <label class="form-label" for="regName">ชื่อ-นามสกุล *</label>
         <input id="regName" class="form-input" placeholder="กรอกชื่อและนามสกุล">
 
         <label class="form-label" for="regBirthYear">ปีเกิด พ.ศ.</label>
-        <input id="regBirthYear" class="form-input" type="number"
-          inputmode="numeric" placeholder="เช่น 2500">
+        <input
+          id="regBirthYear"
+          class="form-input"
+          type="number"
+          inputmode="numeric"
+          placeholder="เช่น 2500">
 
         <label style="display:flex;gap:10px;align-items:flex-start;margin-top:15px;font-size:14px">
-          <input id="regConsent" type="checkbox"
-            style="width:20px;height:20px;flex-shrink:0">
+          <input id="regConsent" type="checkbox" style="width:20px;height:20px;flex-shrink:0">
           <span>ยินยอมให้ใช้ข้อมูลเท่าที่จำเป็นเพื่อจัดการสมาชิกและกิจกรรม</span>
         </label>
 
@@ -429,7 +857,9 @@ main{
         <p>สแกน QR หรือค้นหาสมาชิกเพื่อเริ่มใช้งาน</p>
       </div>
 
-      <div id="memberPanel" class="hidden"
+      <div
+        id="memberPanel"
+        class="hidden"
         style="display:flex;flex-direction:column;height:100%;min-height:0">
 
         <div class="member-head">
@@ -445,17 +875,20 @@ main{
             <small>คะแนนสะสม</small>
             <b id="lifetimePoints">0</b>
           </div>
+
           <div class="stat">
             <small>แต้มคงเหลือ</small>
             <b id="availablePoints">0</b>
           </div>
+
           <div class="stat">
             <small>อันดับ</small>
             <b id="memberRank">-</b>
           </div>
         </div>
 
-        <div id="activityArea"
+        <div
+          id="activityArea"
           style="display:flex;flex-direction:column;min-height:0;flex:1">
 
           <div class="section-heading">
@@ -472,12 +905,20 @@ main{
 
             <div class="photo-row">
               <img id="photoPreview" class="photo-preview hidden" alt="ภาพยืนยัน">
-              <button id="captureButton" class="secondary-button capture-button"
-                onclick="openCapture()" disabled>
+
+              <button
+                id="captureButton"
+                class="secondary-button capture-button"
+                onclick="openCapture()"
+                disabled>
                 📸 ถ่ายภาพยืนยัน
               </button>
-              <button id="submitButton" class="primary-button"
-                onclick="submitCheckin()" disabled>
+
+              <button
+                id="submitButton"
+                class="primary-button"
+                onclick="submitCheckin()"
+                disabled>
                 บันทึก
               </button>
             </div>
@@ -489,19 +930,25 @@ main{
           <div id="rewards" class="reward-grid"></div>
         </div>
       </div>
-
     </section>
+
   </div>
 </main>
 
+<!-- ADMIN PIN MODAL -->
 <div id="adminModal" class="modal hidden">
   <div class="modal-card">
     <h2 class="modal-title">🔐 เจ้าหน้าที่</h2>
     <p class="modal-desc">กรอกรหัสเพื่อเปิดลงทะเบียนสมาชิก</p>
 
     <label class="form-label" for="adminPin">รหัส PIN</label>
-    <input id="adminPin" class="form-input" type="password"
-      inputmode="numeric" maxlength="8" placeholder="กรอกรหัส PIN">
+    <input
+      id="adminPin"
+      class="form-input"
+      type="password"
+      inputmode="numeric"
+      maxlength="8"
+      placeholder="กรอกรหัส PIN">
 
     <div class="modal-actions">
       <button class="secondary-button" onclick="closeAdminModal()">ยกเลิก</button>
@@ -510,14 +957,18 @@ main{
   </div>
 </div>
 
+<!-- CAMERA MODAL -->
 <div id="cameraModal" class="modal hidden">
   <div class="modal-card camera-card">
     <h2 class="modal-title">📸 ถ่ายภาพยืนยัน</h2>
+
     <p class="modal-desc">
       จัดภาพให้อยู่ในกรอบ ระบบจะนับถอยหลังและถ่ายภาพอัตโนมัติ
     </p>
 
-    <div id="cameraDeviceLabel" class="camera-device-label">กล้อง EMEET</div>
+    <div id="cameraDeviceLabel" class="camera-device-label">
+      กล้อง EMEET
+    </div>
 
     <div class="camera-stage">
       <video id="captureVideo" autoplay playsinline muted></video>
@@ -526,9 +977,40 @@ main{
 
     <div class="camera-actions">
       <button class="secondary-button" onclick="closeCapture()">ยกเลิก</button>
-      <button id="startCountdownButton" class="primary-button"
-        onclick="startCountdown()">เริ่มนับถอยหลัง 3–2–1</button>
+
+      <button
+        id="startCountdownButton"
+        class="primary-button"
+        onclick="startCountdown()">
+        เริ่มนับถอยหลัง 3–2–1
+      </button>
     </div>
+  </div>
+</div>
+
+<!-- CENTER ALERT -->
+<div id="centerAlert" class="center-alert-overlay hidden">
+  <div class="center-alert-box">
+    <div id="centerAlertIcon" class="center-alert-icon">⚠️</div>
+
+    <div id="centerAlertTitle" class="center-alert-title">
+      กิจกรรมนี้ไม่สามารถรับคะแนนได้
+    </div>
+
+    <div id="centerAlertMessage" class="center-alert-message">
+      สมาชิกทำรายการนี้แล้วในวันนี้
+    </div>
+
+    <div id="centerAlertCountdown" class="center-alert-countdown">
+      ระบบจะกลับไปหน้าสแกน QR ใน 4 วินาที
+    </div>
+
+    <button
+      type="button"
+      class="center-alert-button"
+      onclick="closeCenterAlert()">
+      กลับไปสแกน QR Code
+    </button>
   </div>
 </div>
 
@@ -542,13 +1024,20 @@ main{
 <script>
 'use strict';
 
-const API = 'https://poksuk-central-api.rmuti8-esmartservice1-01.workers.dev/';
+/* =========================================
+   CONFIGURATION
+========================================= */
+
+const API =
+  'https://poksuk-central-api.rmuti8-esmartservice1-01.workers.dev/';
 
 const state = {
   mode:'QR',
+
   scanner:null,
   scannerRunning:false,
   scannerBusy:false,
+  scannerStarting:false,
 
   adminToken:'',
   adminMode:false,
@@ -569,14 +1058,22 @@ const state = {
   scannerStoppedForCapture:false,
 
   countdownTimer:null,
-  toastTimer:null,
   searchTimer:null,
+  toastTimer:null,
 
-  checkinSubmitting:false,
-  scannerStarting:false
+  checkinSubmitting:false
 };
 
 const $ = id => document.getElementById(id);
+
+let centerAlertTimer = null;
+let centerAlertCountdownTimer = null;
+let centerAlertClosing = false;
+
+
+/* =========================================
+   BASIC UI HELPERS
+========================================= */
 
 function escapeHtml(value){
   return String(value ?? '').replace(/[&<>"']/g, c => ({
@@ -612,52 +1109,6 @@ function loading(on,message='กำลังทำงาน...'){
   $('loading').classList.toggle('hidden',!on);
 }
 
-async function api(action,payload={},adminToken=''){
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),25000);
-
-  try{
-    const request={action,payload};
-
-    if(adminToken){
-      request.adminToken=adminToken;
-    }
-
-    const response=await fetch(API,{
-      method:'POST',
-      mode:'cors',
-      cache:'no-store',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(request),
-      signal:controller.signal
-    });
-
-    const raw=await response.text();
-    let data;
-
-    try{
-      data=JSON.parse(raw);
-    }catch(e){
-      throw new Error('ระบบตอบกลับไม่ถูกต้อง');
-    }
-
-    if(!response.ok || !data.success){
-      throw new Error(data.message || ('HTTP '+response.status));
-    }
-
-    return data;
-
-  }catch(error){
-    if(error.name==='AbortError'){
-      throw new Error('การเชื่อมต่อนานเกินไป');
-    }
-    throw error;
-
-  }finally{
-    clearTimeout(timeout);
-  }
-}
-
 function activateTab(id){
   ['tabQr','tabSearch','tabReward'].forEach(x=>{
     $(x).classList.remove('active');
@@ -672,9 +1123,70 @@ function hideLeftPanels(){
   });
 }
 
-/* =====================================================
-   CAMERA SELECTION - EMEET ONLY
-===================================================== */
+
+/* =========================================
+   API CONNECTION
+========================================= */
+
+async function api(action,payload={},adminToken=''){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),25000);
+
+  try{
+    const request={
+      action,
+      payload
+    };
+
+    if(adminToken){
+      request.adminToken=adminToken;
+    }
+
+    const response=await fetch(API,{
+      method:'POST',
+      mode:'cors',
+      cache:'no-store',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(request),
+      signal:controller.signal
+    });
+
+    const raw=await response.text();
+
+    let data;
+
+    try{
+      data=JSON.parse(raw);
+    }catch(e){
+      throw new Error('ระบบตอบกลับไม่ถูกต้อง');
+    }
+
+    if(!response.ok || !data.success){
+      throw new Error(
+        data.message || ('HTTP '+response.status)
+      );
+    }
+
+    return data;
+
+  }catch(error){
+    if(error.name==='AbortError'){
+      throw new Error('การเชื่อมต่อนานเกินไป');
+    }
+
+    throw error;
+
+  }finally{
+    clearTimeout(timeout);
+  }
+}
+
+
+/* =========================================
+   CAMERA DEVICE: EMEET
+========================================= */
 
 async function findEmeetCamera(){
   if(
@@ -691,16 +1203,13 @@ async function findEmeetCamera(){
   const emeet=cameras.find(d=>/emeet/i.test(d.label||''));
 
   if(!emeet){
-    const labels=cameras.map(d=>d.label||'กล้องไม่ระบุชื่อ');
-
     throw new Error(
-      'ไม่พบกล้อง EMEET กรุณาตรวจสอบสาย USB และการอนุญาตกล้อง'
-      +(labels.length?' พบกล้อง: '+labels.join(', '):'')
+      'ไม่พบกล้อง EMEET กรุณาตรวจสอบสาย USB และสิทธิ์การใช้กล้อง'
     );
   }
 
   state.cameraDeviceId=emeet.deviceId;
-  state.cameraLabel=emeet.label||'EMEET';
+  state.cameraLabel=emeet.label || 'EMEET';
 
   return emeet;
 }
@@ -709,7 +1218,7 @@ async function selectEmeetForScanner(){
   const cameras=await Html5Qrcode.getCameras();
 
   if(!cameras || !cameras.length){
-    throw new Error('ไม่พบกล้อง กรุณาตรวจสอบการเชื่อมต่อกล้อง USB');
+    throw new Error('ไม่พบกล้อง กรุณาตรวจสอบการเชื่อมต่อ');
   }
 
   let preferred=cameras.find(c=>/emeet/i.test(c.label||''));
@@ -736,25 +1245,23 @@ async function selectEmeetForScanner(){
   }
 
   state.cameraDeviceId=preferred.id;
-  state.cameraLabel=preferred.label||'EMEET';
+  state.cameraLabel=preferred.label || 'EMEET';
 
   return preferred;
 }
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+
+/* =========================================
+   NAVIGATION: QR
+========================================= */
 
 async function showQr(){
-  // ป้องกันการเริ่มสแกนซ้อนกัน
   if(state.scannerStarting){
     return;
   }
 
   state.mode='QR';
   state.adminMode=false;
-
-  // ปลดล็อกการอ่าน QR สำหรับสมาชิกคนใหม่
   state.scannerBusy=false;
 
   activateTab('tabQr');
@@ -769,10 +1276,8 @@ async function showQr(){
   $('qrPanel').querySelector('.panel-subtitle').textContent=
     'วางบัตร QR ไว้หน้ากล้องเพื่อเปิดข้อมูลสมาชิก';
 
-  // ล้างข้อมูลสมาชิกและภาพเดิม
   resetMember();
 
-  // เริ่มกล้องใหม่ด้วย deviceId เดิม
   await startScanner('reader');
 
   if(state.scannerRunning){
@@ -797,8 +1302,8 @@ async function showSearch(){
   await stopScanner();
 
   hideLeftPanels();
-  $('searchPanel').classList.remove('hidden');
 
+  $('searchPanel').classList.remove('hidden');
   $('searchTitle').textContent='🔎 ค้นหาสมาชิก';
   $('searchInput').value='';
   $('searchResults').innerHTML='';
@@ -806,6 +1311,7 @@ async function showSearch(){
   resetMember();
 
   $('searchInput').focus();
+
   setStatus('ค้นหาสมาชิกด้วยชื่อหรือ Member ID');
 }
 
@@ -819,8 +1325,8 @@ async function showRewardSearch(){
   await stopScanner();
 
   hideLeftPanels();
-  $('searchPanel').classList.remove('hidden');
 
+  $('searchPanel').classList.remove('hidden');
   $('searchTitle').textContent='🎁 ค้นหาสมาชิกเพื่อแลกแต้ม';
   $('searchInput').value='';
   $('searchResults').innerHTML='';
@@ -828,6 +1334,7 @@ async function showRewardSearch(){
   resetMember();
 
   $('searchInput').focus();
+
   setStatus('เลือกสมาชิกเพื่อดูของรางวัล');
 }
 
@@ -852,9 +1359,10 @@ function resetMember(){
     'กรุณาเลือกกิจกรรมก่อนถ่ายภาพ';
 }
 
-/* =====================================================
+
+/* =========================================
    QR SCANNER
-===================================================== */
+========================================= */
 
 async function startScanner(containerId){
   if(state.scannerStarting){
@@ -864,7 +1372,6 @@ async function startScanner(containerId){
   state.scannerStarting=true;
 
   try{
-    // หยุดตัวสแกนเดิมก่อนทุกครั้ง
     await stopScanner();
 
     if(!window.Html5Qrcode){
@@ -888,7 +1395,6 @@ async function startScanner(containerId){
           return;
         }
 
-        // ล็อกทันที ป้องกันการอ่าน QR เดิมซ้ำ
         state.scannerBusy=true;
 
         if(state.adminMode){
@@ -916,7 +1422,7 @@ async function startScanner(containerId){
       true
     );
 
-    notify(error.message||'เปิดกล้องไม่ได้',true);
+    notify(error.message || 'เปิดกล้องไม่ได้',true);
 
   }finally{
     state.scannerStarting=false;
@@ -927,7 +1433,6 @@ async function stopScanner(){
   const oldScanner=state.scanner;
   const wasRunning=state.scannerRunning;
 
-  // ป้องกันการเรียก stop ซ้ำ
   state.scanner=null;
   state.scannerRunning=false;
 
@@ -950,9 +1455,10 @@ async function stopScanner(){
   }
 }
 
-/* =====================================================
+
+/* =========================================
    MEMBER QR
-===================================================== */
+========================================= */
 
 async function handleMemberQr(value){
   loading(true,'กำลังตรวจสอบ QR...');
@@ -980,9 +1486,6 @@ async function handleMemberQr(value){
       'เปิดข้อมูลสมาชิกเรียบร้อย กรุณาเลือกกิจกรรม'
     );
 
-    // คงล็อก QR ไว้ระหว่างที่สมาชิกทำรายการ
-    // จะปลดล็อกเมื่อบันทึกสำเร็จและกลับหน้าสแกน
-
   }catch(error){
     setStatus(error.message,true);
     notify(error.message,true);
@@ -1002,17 +1505,20 @@ async function openMember(member){
   $('emptyMember').classList.add('hidden');
   $('memberPanel').classList.remove('hidden');
 
-  $('memberName').textContent=member.fullName||'สมาชิก';
-  $('memberId').textContent='Member ID: '+(member.memberId||'-');
+  $('memberName').textContent=member.fullName || 'สมาชิก';
+
+  $('memberId').textContent=
+    'Member ID: '+(member.memberId || '-');
 
   $('lifetimePoints').textContent=
-    Number(member.lifetimePoints||0).toLocaleString('th-TH');
+    Number(member.lifetimePoints || 0).toLocaleString('th-TH');
 
   $('availablePoints').textContent=
-    Number(member.availablePoints??member.totalPoints??0)
-      .toLocaleString('th-TH');
+    Number(
+      member.availablePoints ?? member.totalPoints ?? 0
+    ).toLocaleString('th-TH');
 
-  $('memberRank').textContent=member.currentRank||'-';
+  $('memberRank').textContent=member.currentRank || '-';
 
   $('photoPreview').src='';
   $('photoPreview').classList.add('hidden');
@@ -1037,15 +1543,16 @@ async function openMember(member){
   }
 }
 
-/* =====================================================
+
+/* =========================================
    ACTIVITIES
-===================================================== */
+========================================= */
 
 async function loadActivities(){
   try{
     const result=await api('ACTIVITIES');
 
-    state.activities=result.activities||[];
+    state.activities=result.activities || [];
 
     renderActivities();
 
@@ -1057,7 +1564,7 @@ async function loadActivities(){
 function renderActivities(){
   $('activities').innerHTML=state.activities.map(a=>{
     const type=String(
-      a.type||a.activityType||''
+      a.type || a.activityType || ''
     ).toUpperCase();
 
     const cls=
@@ -1065,23 +1572,26 @@ function renderActivities(){
       type==='HEALTH_CHECK'?'pending':'';
 
     const selected=
-      state.selectedActivity===a.activityId?'selected':'';
+      state.selectedActivity===String(a.activityId || a.id)
+        ?'selected':'';
 
-    const point=Number(a.point||0);
+    const point=Number(a.point || 0);
 
     const approval=
       a.requireApproval?'รออนุมัติ':'';
 
     return `
-      <button class="activity ${cls} ${selected}"
-        onclick="selectActivity('${escapeHtml(a.activityId)}')">
+      <button
+        type="button"
+        class="activity ${cls} ${selected}"
+        onclick="selectActivity('${escapeHtml(a.activityId || a.id)}')">
 
         <span class="activity-icon">
-          ${escapeHtml(a.icon||'🌿')}
+          ${escapeHtml(a.icon || '🌿')}
         </span>
 
         <span class="activity-name">
-          ${escapeHtml(a.name||a.activityName)}
+          ${escapeHtml(a.name || a.activityName || '')}
         </span>
 
         <span class="activity-point">
@@ -1093,11 +1603,11 @@ function renderActivities(){
 }
 
 function selectActivity(id){
-  const a=state.activities.find(x=>
-    String(x.activityId||x.id)===String(id)
+  const activity=state.activities.find(a=>
+    String(a.activityId || a.id)===String(id)
   );
 
-  if(!a){
+  if(!activity){
     notify('ไม่พบกิจกรรมที่เลือก',true);
     return;
   }
@@ -1112,17 +1622,20 @@ function selectActivity(id){
   $('submitButton').disabled=true;
 
   $('selectedActivityNote').textContent=
-    'เลือกแล้ว: '+(a.name||a.activityName)+' กรุณาถ่ายภาพยืนยัน';
+    'เลือกแล้ว: '+(activity.name || activity.activityName)+
+    ' กรุณาถ่ายภาพยืนยัน';
 
   renderActivities();
 }
 
-/* =====================================================
+
+/* =========================================
    MEMBER SEARCH
-===================================================== */
+========================================= */
 
 function searchChanged(){
   clearTimeout(state.searchTimer);
+
   state.searchTimer=setTimeout(searchMembers,300);
 }
 
@@ -1138,18 +1651,20 @@ async function searchMembers(){
   try{
     const result=await api('SEARCH_MEMBER',{query});
 
-    root.innerHTML=(result.members||[]).map(m=>`
-      <button class="search-result"
-        onclick="chooseMember('${escapeHtml(m.memberId)}')">
+    root.innerHTML=(result.members || []).map(member=>`
+      <button
+        type="button"
+        class="search-result"
+        onclick="chooseMember('${escapeHtml(member.memberId)}')">
 
         <span>
-          <b>${escapeHtml(m.fullName)}</b>
-          <small>${escapeHtml(m.memberId)}</small>
+          <b>${escapeHtml(member.fullName)}</b>
+          <small>${escapeHtml(member.memberId)}</small>
         </span>
 
         <span>เลือก ›</span>
       </button>
-    `).join('')||'<p class="muted">ไม่พบสมาชิก</p>';
+    `).join('') || '<p class="muted">ไม่พบสมาชิก</p>';
 
   }catch(error){
     root.innerHTML=
@@ -1175,11 +1690,13 @@ async function chooseMember(memberId){
   }
 }
 
-/* =====================================================
-   CAMERA CAPTURE - EMEET
-===================================================== */
 
-async function getScannerVideoStream_(){
+/* =========================================
+   CAMERA CAPTURE
+   ใช้กล้อง EMEET ตัวเดียวกับ QR Scanner
+========================================= */
+
+async function getScannerVideoStream(){
   const video=document.querySelector('#reader video');
 
   if(!video || !video.srcObject){
@@ -1190,7 +1707,10 @@ async function getScannerVideoStream_(){
 
   const tracks=stream.getVideoTracks();
 
-  if(!tracks.length || tracks.every(t=>t.readyState!=='live')){
+  if(
+    !tracks.length ||
+    tracks.every(track=>track.readyState!=='live')
+  ){
     return null;
   }
 
@@ -1210,9 +1730,9 @@ async function openCapture(){
 
     let stream=null;
 
-    // ถ้ากำลังสแกน QR อยู่ ให้ใช้ Stream เดิม
+    // ใช้กล้องจาก QR Scanner ก่อน หากยังทำงานอยู่
     if(state.scannerRunning){
-      stream=await getScannerVideoStream_();
+      stream=await getScannerVideoStream();
 
       if(stream){
         state.captureStream=stream;
@@ -1220,8 +1740,7 @@ async function openCapture(){
       }
     }
 
-    // กรณีเข้าจากค้นหาสมาชิก หรือไม่มี Stream เดิม
-    // เปิด EMEET ด้วย deviceId ที่ระบุเท่านั้น
+    // ถ้าไม่มี Stream ให้เปิดกล้อง EMEET ด้วย deviceId
     if(!stream){
       if(!state.cameraDeviceId){
         await findEmeetCamera();
@@ -1258,21 +1777,24 @@ async function openCapture(){
     $('startCountdownButton').disabled=false;
 
   }catch(error){
-    stopCaptureStream_();
+    stopCaptureStream();
 
     notify(
-      'เปิดกล้อง EMEET ไม่ได้: '+(error.message||error),
+      'เปิดกล้อง EMEET ไม่ได้: '+(error.message || error),
       true
     );
   }
 }
 
-function stopCaptureStream_(){
+function stopCaptureStream(){
   const video=$('captureVideo');
 
-  // หยุดเฉพาะ Stream ที่เปิดแยกสำหรับถ่ายภาพ
-  // ถ้าใช้ Stream ของ QR scanner ห้ามหยุด track
-  if(state.captureStream && !state.captureUsesScanner){
+  // หยุดเฉพาะกล้องที่เปิดแยก
+  // ห้ามหยุด Stream ที่ QR Scanner กำลังใช้อยู่
+  if(
+    state.captureStream &&
+    !state.captureUsesScanner
+  ){
     state.captureStream.getTracks().forEach(track=>{
       track.stop();
     });
@@ -1291,10 +1813,11 @@ async function closeCapture(){
   clearInterval(state.countdownTimer);
   state.countdownTimer=null;
 
-  stopCaptureStream_();
+  stopCaptureStream();
 
   $('cameraModal').classList.add('hidden');
   $('countdown').classList.add('hidden');
+
   $('startCountdownButton').disabled=false;
 
   if(state.scannerStoppedForCapture){
@@ -1314,20 +1837,20 @@ function startCountdown(){
 
   $('startCountdownButton').disabled=true;
 
-  let n=3;
+  let number=3;
 
   const el=$('countdown');
 
   el.classList.remove('hidden');
-  el.textContent=n;
+  el.textContent=number;
 
   clearInterval(state.countdownTimer);
 
   state.countdownTimer=setInterval(()=>{
-    n--;
+    number--;
 
-    if(n>0){
-      el.textContent=n;
+    if(number>0){
+      el.textContent=number;
     }else{
       clearInterval(state.countdownTimer);
       state.countdownTimer=null;
@@ -1359,15 +1882,15 @@ function captureFrame(){
   canvas.width=Math.round(video.videoWidth*ratio);
   canvas.height=Math.round(video.videoHeight*ratio);
 
-  const ctx=canvas.getContext('2d');
+  const context=canvas.getContext('2d');
 
-  if(!ctx){
+  if(!context){
     notify('ไม่สามารถเตรียมภาพถ่ายได้',true);
     closeCapture();
     return;
   }
 
-  ctx.drawImage(
+  context.drawImage(
     video,
     0,
     0,
@@ -1390,12 +1913,113 @@ function captureFrame(){
   notify('ถ่ายภาพสำเร็จจากกล้อง '+state.cameraLabel);
 }
 
-/* =====================================================
+
+/* =========================================
+   CENTER ALERT
+========================================= */
+
+function showCenterAlert(
+  message,
+  title='กิจกรรมนี้ไม่สามารถรับคะแนนได้'
+){
+  clearTimeout(centerAlertTimer);
+  clearInterval(centerAlertCountdownTimer);
+
+  centerAlertClosing=false;
+
+  $('centerAlertIcon').textContent='⚠️';
+  $('centerAlertTitle').textContent=title;
+  $('centerAlertMessage').textContent=message;
+
+  $('centerAlert').classList.remove('hidden');
+
+  let seconds=4;
+
+  $('centerAlertCountdown').textContent=
+    'ระบบจะกลับไปหน้าสแกน QR ใน '+seconds+' วินาที';
+
+  centerAlertCountdownTimer=setInterval(()=>{
+    seconds--;
+
+    if(seconds>0){
+      $('centerAlertCountdown').textContent=
+        'ระบบจะกลับไปหน้าสแกน QR ใน '+seconds+' วินาที';
+    }else{
+      clearInterval(centerAlertCountdownTimer);
+      centerAlertCountdownTimer=null;
+    }
+  },1000);
+
+  centerAlertTimer=setTimeout(()=>{
+    closeCenterAlert();
+  },4000);
+}
+
+async function closeCenterAlert(){
+  if(centerAlertClosing){
+    return;
+  }
+
+  centerAlertClosing=true;
+
+  clearTimeout(centerAlertTimer);
+  clearInterval(centerAlertCountdownTimer);
+
+  centerAlertTimer=null;
+  centerAlertCountdownTimer=null;
+
+  $('centerAlert').classList.add('hidden');
+
+  state.checkinSubmitting=false;
+
+  // กลับหน้าสแกนและเริ่มกล้อง EMEET ใหม่
+  await showQr();
+
+  if(state.scannerRunning){
+    setStatus(
+      'พร้อมสแกน QR สมาชิกคนถัดไปด้วยกล้อง '+state.cameraLabel
+    );
+  }else{
+    setStatus(
+      'แจ้งเตือนแล้ว แต่ยังเปิดกล้องไม่ได้ กรุณาตรวจสอบกล้อง EMEET',
+      true
+    );
+  }
+
+  centerAlertClosing=false;
+}
+
+
+/* =========================================
    CHECK-IN
-===================================================== */
+========================================= */
+
+function isDuplicateOrNoPointError(message){
+  const text=String(message || '');
+
+  const patterns=[
+    /ทำรายการซ้ำ/,
+    /รายการซ้ำ/,
+    /กิจกรรมซ้ำ/,
+    /ทำกิจกรรมแล้ว/,
+    /ทำรายการแล้ว/,
+    /แล้วในวันนี้/,
+    /วันนี้.*แล้ว/,
+    /เคย.*วันนี้/,
+    /ครบ.*วัน/,
+    /ไม่สามารถรับคะแนน/,
+    /ไม่ได้คะแนน/,
+    /ไม่รับคะแนน/,
+    /ไม่มีสิทธิ์รับคะแนน/,
+    /หมดสิทธิ์รับคะแนน/,
+    /คะแนน.*ไม่ได้/,
+    /รับคะแนน.*ไม่ได้/
+  ];
+
+  return patterns.some(pattern=>pattern.test(text));
+}
 
 async function submitCheckin(){
-
   if(state.checkinSubmitting){
     return;
   }
@@ -1405,88 +2029,83 @@ async function submitCheckin(){
     !state.selectedActivity ||
     !state.photoDataUrl
   ){
-    notify('กรุณาเลือกกิจกรรมและถ่ายภาพก่อน',true);
+    notify('กรุณาเลือกกิจกรรมและถ่ายภาพก่อนบันทึก',true);
     return;
   }
 
-  // ป้องกันการกดบันทึกซ้ำ
   state.checkinSubmitting=true;
 
-  const memberName=state.member.fullName||'สมาชิก';
-
   $('submitButton').disabled=true;
+
+  const memberName=state.member.fullName || 'สมาชิก';
 
   loading(true,'กำลังบันทึกกิจกรรม...');
 
   try{
-
     const result=await api('CHECKIN',{
-
       memberId:state.member.memberId,
-
       activityId:state.selectedActivity,
-
       photoDataUrl:state.photoDataUrl
-
     });
-
-    // เมื่อ API ตอบว่าสำเร็จแล้ว
-    // ไม่ต้องโหลดสมาชิกเดิมกลับมาอีก
-    notify(result.message||'บันทึกกิจกรรมสำเร็จ');
-
-    // ล้างสถานะการทำรายการก่อนกลับหน้าสแกน
-    state.checkinSubmitting=false;
 
     loading(false);
 
-    // กลับหน้าสแกน QR อัตโนมัติ
-    // showQr จะล้างสมาชิกเดิมและเริ่มกล้อง EMEET ใหม่
+    state.checkinSubmitting=false;
+
+    notify(result.message || 'บันทึกกิจกรรมสำเร็จ');
+
+    // บันทึกสำเร็จแล้ว กลับหน้าสแกนทันที
     await showQr();
 
     if(state.scannerRunning){
-
       setStatus(
         'บันทึกกิจกรรมของ '+memberName+
         ' สำเร็จแล้ว พร้อมสแกนสมาชิกคนถัดไป'
       );
-
     }else{
-
       setStatus(
         'บันทึกสำเร็จ แต่เปิดกล้องไม่ได้ กรุณาตรวจสอบกล้อง EMEET',
         true
       );
-
     }
 
   }catch(error){
+    loading(false);
 
-    // กรณีบันทึกไม่สำเร็จ ให้คงข้อมูลสมาชิกไว้
-    // เพื่อให้ตรวจสอบและลองใหม่ได้
+    const errorMessage=String(
+      error.message || 'เกิดข้อผิดพลาดในการบันทึก'
+    );
+
+    if(isDuplicateOrNoPointError(errorMessage)){
+      // ไม่กลับหน้าสแกนทันที ให้แสดงข้อความ 4 วินาที
+      // จากนั้นจึงล้างข้อมูลสมาชิกเดิมและเริ่มกล้องใหม่
+      showCenterAlert(
+        errorMessage,
+        'กิจกรรมนี้ไม่สามารถรับคะแนนได้'
+      );
+
+      return;
+    }
+
+    // ข้อผิดพลาดอื่น เช่น เน็ตหลุด ให้คงหน้าสมาชิกไว้
     state.checkinSubmitting=false;
 
     $('submitButton').disabled=false;
 
-    loading(false);
-
-    notify(
-      error.message||'ไม่สามารถบันทึกกิจกรรมได้',
-      true
-    );
-
-    setStatus(
-      error.message||'เกิดข้อผิดพลาดในการบันทึก',
-      true
-    );
+    notify(errorMessage,true);
+    setStatus(errorMessage,true);
   }
 }
 
-/* =====================================================
+
+/* =========================================
    REWARDS
-===================================================== */
+========================================= */
 
 async function loadRewards(){
-  if(!state.member) return;
+  if(!state.member){
+    return;
+  }
 
   try{
     const result=await api('REWARDS',{
@@ -1494,23 +2113,27 @@ async function loadRewards(){
     });
 
     $('availablePoints').textContent=
-      Number(result.availablePoints||0).toLocaleString('th-TH');
+      Number(result.availablePoints || 0).toLocaleString('th-TH');
 
     $('lifetimePoints').textContent=
-      Number(result.lifetimePoints||0).toLocaleString('th-TH');
+      Number(result.lifetimePoints || 0).toLocaleString('th-TH');
 
-    $('rewards').innerHTML=(result.rewards||[]).map(r=>`
+    $('rewards').innerHTML=(result.rewards || []).map(reward=>`
       <div class="reward-card">
-        <b>🎁 ${escapeHtml(r.rewardName)}</b>
+        <b>🎁 ${escapeHtml(reward.rewardName)}</b>
+
         <small>
-          ${Number(r.pointsRequired)} คะแนน ·
-          คงเหลือ ${Number(r.stock)} ชิ้น
+          ${Number(reward.pointsRequired)} คะแนน ·
+          คงเหลือ ${Number(reward.stock)} ชิ้น
         </small>
-        <button onclick="redeem('${escapeHtml(r.rewardId)}')">
+
+        <button
+          type="button"
+          onclick="redeem('${escapeHtml(reward.rewardId)}')">
           แลกรางวัล
         </button>
       </div>
-    `).join('')||'<p class="muted">ยังไม่มีของรางวัลพร้อมแลก</p>';
+    `).join('') || '<p class="muted">ยังไม่มีของรางวัลพร้อมแลก</p>';
 
   }catch(error){
     notify(error.message,true);
@@ -1518,7 +2141,9 @@ async function loadRewards(){
 }
 
 async function redeem(rewardId){
-  if(!state.member) return;
+  if(!state.member){
+    return;
+  }
 
   if(!confirm('ยืนยันการแลกของรางวัลนี้หรือไม่?')){
     return;
@@ -1532,7 +2157,7 @@ async function redeem(rewardId){
       rewardId
     });
 
-    notify(result.message||'แลกรางวัลสำเร็จ');
+    notify(result.message || 'แลกรางวัลสำเร็จ');
 
     const member=await api('PREVIEW_MEMBER',{
       memberId:state.member.memberId
@@ -1548,9 +2173,10 @@ async function redeem(rewardId){
   }
 }
 
-/* =====================================================
+
+/* =========================================
    ADMIN REGISTRATION
-===================================================== */
+========================================= */
 
 function openAdminRegister(){
   state.adminMode=true;
@@ -1588,7 +2214,7 @@ async function adminLogin(){
         'POKSUK_CENTRAL_ADMIN',
         state.adminToken
       );
-    }catch(e){}
+    }catch(error){}
 
     closeAdminModal();
 
@@ -1613,6 +2239,7 @@ async function verifyAdminAndScan(){
     resetMember();
 
     hideLeftPanels();
+
     $('qrPanel').classList.remove('hidden');
 
     $('qrPanel').querySelector('.panel-title').textContent=
@@ -1621,9 +2248,7 @@ async function verifyAdminAndScan(){
     $('qrPanel').querySelector('.panel-subtitle').textContent=
       'สแกน QR ที่ยังไม่เคยผูกกับสมาชิก';
 
-    setStatus(
-      'โหมดเจ้าหน้าที่: พร้อมสแกน QR ด้วยกล้อง '+state.cameraLabel
-    );
+    setStatus('โหมดเจ้าหน้าที่: พร้อมสแกน QR');
 
     await startScanner('reader');
 
@@ -1658,7 +2283,7 @@ async function handleAdminQr(value){
     }
 
     state.registerQrToken=result.qrToken;
-    state.registerDisplayCode=result.displayCode||'';
+    state.registerDisplayCode=result.displayCode || '';
 
     $('regQrDisplay').value=state.registerDisplayCode;
     $('regName').value='';
@@ -1666,13 +2291,13 @@ async function handleAdminQr(value){
     $('regConsent').checked=false;
 
     hideLeftPanels();
+
     $('registerPanel').classList.remove('hidden');
 
     setStatus('QR พร้อมลงทะเบียน กรุณากรอกชื่อและปีเกิด');
 
   }catch(error){
     setStatus(error.message,true);
-    notify(error.message,true);
 
     state.scannerBusy=false;
 
@@ -1712,17 +2337,20 @@ async function submitRegistration(){
       consentAccepted:true
     },state.adminToken);
 
-    notify('ลงทะเบียนสำเร็จ '+result.fullName);
+    notify('ลงทะเบียนสำเร็จ '+(result.fullName || fullName));
 
     state.registerQrToken='';
     state.registerDisplayCode='';
+
     state.adminMode=true;
+    state.mode='ADMIN';
 
     $('regName').value='';
     $('regBirthYear').value='';
     $('regConsent').checked=false;
 
     hideLeftPanels();
+
     $('qrPanel').classList.remove('hidden');
 
     $('qrPanel').querySelector('.panel-title').textContent=
@@ -1735,7 +2363,6 @@ async function submitRegistration(){
 
     state.scannerBusy=false;
 
-    // เริ่มกล้องใหม่เพื่อสแกน QR ถัดไป
     await startScanner('reader');
 
     if(state.scannerRunning){
@@ -1753,15 +2380,17 @@ async function submitRegistration(){
 
 async function cancelRegistration(){
   state.registerQrToken='';
+  state.registerDisplayCode='';
   state.adminMode=false;
   state.scannerBusy=false;
 
   await showQr();
 }
 
-/* =====================================================
+
+/* =========================================
    INITIALIZE
-===================================================== */
+========================================= */
 
 async function initialize(){
   try{
@@ -1771,7 +2400,7 @@ async function initialize(){
 
     const activities=await api('ACTIVITIES');
 
-    state.activities=activities.activities||[];
+    state.activities=activities.activities || [];
 
     try{
       const saved=sessionStorage.getItem('POKSUK_CENTRAL_ADMIN');
@@ -1783,7 +2412,7 @@ async function initialize(){
           state.adminToken=saved;
         }
       }
-    }catch(e){
+    }catch(error){
       state.adminToken='';
 
       try{
@@ -1803,9 +2432,10 @@ async function initialize(){
   }
 }
 
-/* =====================================================
-   EVENTS / CLEANUP
-===================================================== */
+
+/* =========================================
+   EVENT LISTENERS
+========================================= */
 
 $('searchInput').addEventListener('input',searchChanged);
 
@@ -1824,7 +2454,10 @@ $('regName').addEventListener('keydown',event=>{
 window.addEventListener('beforeunload',()=>{
   clearInterval(state.countdownTimer);
 
-  if(state.captureStream && !state.captureUsesScanner){
+  if(
+    state.captureStream &&
+    !state.captureUsesScanner
+  ){
     state.captureStream.getTracks().forEach(track=>{
       track.stop();
     });
@@ -1833,12 +2466,15 @@ window.addEventListener('beforeunload',()=>{
   if(state.scanner && state.scannerRunning){
     try{
       state.scanner.stop();
-    }catch(e){}
+    }catch(error){}
   }
 });
 
-initialize();
-</script>
 
+/* START APPLICATION */
+
+initialize();
+
+</script>
 </body>
 </html>
